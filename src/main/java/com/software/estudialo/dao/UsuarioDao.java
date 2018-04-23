@@ -35,6 +35,8 @@ public interface UsuarioDao {
 	
 	public Usuario  obtenerUsuarioPorUsernameCompletoSinPassword(String username);
 	
+	
+	
 	/*
 	 * Busca el usuario por existencia por username
 	 * 

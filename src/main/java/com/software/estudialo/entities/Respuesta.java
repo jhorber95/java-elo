@@ -52,6 +52,8 @@ public class Respuesta {
 	/** The Constant TIPO_DATOS. */
 	public static final String TIPO_DATOS = "Datos.";
 	
+	public static final String TOKEN_RESET_PASSWORD = "Token generado exitosamente";
+	
 
 	/** The exito. */
 	boolean exito;

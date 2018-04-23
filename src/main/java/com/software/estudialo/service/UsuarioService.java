@@ -10,7 +10,7 @@ import com.software.estudialo.entities.Usuario;
 /**
  * The Interface UsuarioService.
  *
- * @author LUIS
+ * @author LUIS & Jhorkman Bernal
  */
 public interface UsuarioService {
 	
@@ -49,6 +49,7 @@ public interface UsuarioService {
 	public void  modificarUsuario(int id, Usuario usuario);
 	
 	public void  modificarUsuarioDatosPerfil(int id, Usuario usuario);
+	
 	
 	
 	
