@@ -41,7 +41,7 @@ public class MailServiceImpl implements MailService {
 	            helper.setTo(mail.getTo());
 	            helper.setText(html, true);
 	            helper.setSubject(mail.getSubject());
-	            helper.setFrom(mail.getFrom());
+	            helper.setFrom("info@estudialo.co");
 
 	            emailSender.send(message);
 	        } catch (Exception e){
