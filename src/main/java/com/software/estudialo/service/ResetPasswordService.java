@@ -1,6 +1,6 @@
 package com.software.estudialo.service;
 
-public interface ResetPassword {
+public interface ResetPasswordService {
 	
 	public void resetPassword(String email);
 	
