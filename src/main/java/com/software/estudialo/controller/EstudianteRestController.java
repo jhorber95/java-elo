@@ -68,7 +68,7 @@ public class EstudianteRestController {
 		return new ResponseEntity<List<Object>>(listaInscripcionesEstudiantes, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Lista las inscripciones del estudiante, debe proporcionar el id del usuario estudiante")
+	@ApiOperation(value = "Elimina las inscripciones del estudiante, debe proporcionar el id de la inscripcion y el id del tipoOfrece")
 	@GetMapping(url + "/eliminarInscripciones/{idinscripcion}/{idTipoOfrece}")
 	@PreAuthorize("hasAuthority('ROLE_ESTUDIANTE')")
 	public ResponseEntity<Respuesta> eliminarInscripcionesEstudiante(

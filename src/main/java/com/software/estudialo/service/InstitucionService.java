@@ -3,6 +3,8 @@
  */
 package com.software.estudialo.service;
 
+import java.util.List;
+
 import com.software.estudialo.entities.Institucion;
 import com.software.estudialo.entities.JSONRespuesta;
 
@@ -66,8 +68,8 @@ public interface InstitucionService {
 	
 	public JSONRespuesta listarInstitucionesAdmin(String search, int start, int length, int draw, int posicion, String direccion);
 	
-	
-	
 	public JSONRespuesta listarInstitucionesFinancieras(String search, int start, int length, int draw, int posicion, String direccion);
+	
+	public List<Institucion> listaIntituciones(); 
 
 }

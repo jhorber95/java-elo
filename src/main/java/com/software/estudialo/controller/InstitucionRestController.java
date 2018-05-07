@@ -89,6 +89,27 @@ public class InstitucionRestController {
 		return new ResponseEntity<JSONRespuesta>(listInstituciones, HttpStatus.OK);
 	}
 	
+	/**
+	 * Obtener institucion.
+	 *
+	 * @param id the id
+	 * @return the response entity
+	 */
+	@GetMapping(url + "/todas")
+	@ApiOperation(value = "obtiene todas las instituciones" )	
+    public ResponseEntity<RespuestaGeneral> listaInstituciones() {
+		logger.debug("listaInstituciones -- Obtener instituciones");
+		 
+		
+		List<Institucion> instituciones = institucionService.listaIntituciones();
+		
+		RespuestaGeneral rg = new RespuestaGeneral();
+		rg.setExito(true);
+		rg.setCodigo(200);
+		rg.setData(instituciones);
+        return new ResponseEntity<RespuestaGeneral>(rg, HttpStatus.OK);
+    }
+	
 	
 	@PostMapping(url + "/dataTables")
 	@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')")

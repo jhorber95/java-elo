@@ -59,7 +59,8 @@ public class EventoRestController {
 	
 	@ApiOperation(value = "Lista las eventos de una institucion, debe proporcionar el id de la institucion")
 	@GetMapping(url + "/institucion/{idInstitucion}")
-	@PreAuthorize("hasAuthority('ROLE_INSTITUCION')")
+	//@PreAuthorize("hasAuthority('ROLE_INSTITUCION')")
+	@PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR')  or hasAuthority('ROLE_INSTITUCION')")
 	public ResponseEntity<List<Evento>> getEventosInstitucion(@PathVariable(value = "idInstitucion") int idInstitucion) {
 		
 		logger.debug("getEventosInstitucion --- listando los eventos de una institucion");
@@ -212,7 +213,7 @@ public class EventoRestController {
 	 */
 	@ApiOperation(value = "Adiciona evento")
 	@PostMapping(url)
-	@PreAuthorize("hasAuthority('ROLE_INSTITUCION')")
+	@PreAuthorize("hasAuthority('ROLE_INSTITUCION') or hasAuthority('ROLE_ADMINISTRADOR')")
 	public ResponseEntity<Respuesta> adicionarEvento(@RequestBody Evento evento) {				
 		int idEvento = eventoService.agregarEvento(evento);
 		Respuesta respuesta = new Respuesta();
@@ -233,7 +234,7 @@ public class EventoRestController {
 	 */
 	@ApiOperation(value = "Modifica una evento - proporciona el id y el objeto evento")
 	@PutMapping(url + "/{id}")	
-	@PreAuthorize("hasAuthority('ROLE_INSTITUCION')")
+	@PreAuthorize("hasAuthority('ROLE_INSTITUCION') or hasAuthority('ROLE_ADMINISTRADOR')")
 	public ResponseEntity<Respuesta> modificarEvento(@PathVariable int id, @RequestBody Evento evento) {		
 		eventoService.modificarEvento(id, evento);		
 		Respuesta respuesta = new Respuesta();
@@ -252,7 +253,7 @@ public class EventoRestController {
 	 */
 	@ApiOperation(value = "Elimina una evento (Cambio de estado a eliminado) - proporciona el id")
 	@DeleteMapping(url + "/{id}")
-	@PreAuthorize("hasAuthority('ROLE_INSTITUCION')")
+	@PreAuthorize("hasAuthority('ROLE_INSTITUCION') or hasAuthority('ROLE_ADMINISTRADOR')")
 	public ResponseEntity<Respuesta> eliminarEvento(@PathVariable int id) {
 
 		eventoService.eliminarEvento(id);

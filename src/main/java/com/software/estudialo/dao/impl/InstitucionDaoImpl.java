@@ -703,6 +703,27 @@ public class InstitucionDaoImpl implements InstitucionDao{
 	}
 
 
+
+	@Override
+	public List<Institucion> listaIntituciones() {
+		logger.debug("lista  -- Buscando usuario por username (email) pero sin password, pero con roles ");
+
+		String SQL = "SELECT i.inst_id, i.inst_nombre, i.inst_nit, i.inst_latitud, i.inst_longitud, i.inst_direccion, i.inst_telefono, "
+				+ "i.inst_url, i.inst_descripcion, i.inst_email, i.inst_tipo_institucion, i.inst_estado, i.inst_imagen "
+				+ "FROM institucion i WHERE  i.inst_estado IN (1, 2)  ";
+
+		List<Institucion> institucionResponse = jdbcTemplate.query(SQL,  new RowMapper<Institucion>() {
+			public Institucion mapRow(ResultSet rs, int rowNum ) throws SQLException{
+				Institucion institucion = obtenerInstitucion(rs.getInt("inst_id"));
+				return institucion;
+			}
+		});
+
+		System.out.println("listaIntituciones -- Saliendo listado instituciones");
+		return institucionResponse;
+	}
+
+
 	
 	
 }

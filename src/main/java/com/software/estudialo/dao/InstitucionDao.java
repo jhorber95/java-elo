@@ -3,6 +3,8 @@
  */
 package com.software.estudialo.dao;
 
+import java.util.List;
+
 import com.software.estudialo.entities.Institucion;
 import com.software.estudialo.entities.JSONRespuesta;
 import com.software.estudialo.entities.Usuario;
@@ -125,5 +127,7 @@ public interface InstitucionDao {
 	public boolean modificarImagenInstitucion(int idInstitucion, String newFileName);
 	
 	public Boolean existenciaInstitucionPorUsername(String username);
+	
+	public List<Institucion> listaIntituciones();
 	
 }

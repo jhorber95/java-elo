@@ -3,6 +3,8 @@
  */
 package com.software.estudialo.service.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -233,6 +235,15 @@ public class InstitucionServiceImpl implements InstitucionService{
 		logger.debug("listarInstituciones Admin -- listar instituciones por el admin");
 		JSONRespuesta listaInstituciones = institucionDao.listarInstitucionesAdmin(search, start, length, draw, posicion, direccion); 
 		return listaInstituciones; 
+	}
+
+	@Override
+	public List<Institucion> listaIntituciones() {
+		logger.debug("Listar instituciones");
+		
+		List<Institucion> instituciones = institucionDao.listaIntituciones();
+		logger.debug("--- JB Saliendo ListaInstituciones");
+		return instituciones;
 	}
 	
 }
