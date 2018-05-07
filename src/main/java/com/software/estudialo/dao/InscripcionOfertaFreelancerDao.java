@@ -103,6 +103,8 @@ public interface InscripcionOfertaFreelancerDao {
 	
 	public List<InscripcionOfertaFreelancer> obtenerInscripcionesOfertasFreelancerDeEstudiante(int idEstudiante);
 	
+	public boolean eliminarInscripcionFreelancer(int idInscripcion);
+	
 	
 
 }

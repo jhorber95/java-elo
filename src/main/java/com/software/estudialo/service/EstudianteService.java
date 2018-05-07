@@ -21,5 +21,7 @@ public interface EstudianteService {
 	 * @return the list
 	 */
 	public List<Object> listarInscripcionesEstudiante(int idUsuario);
+	
+	public void eliminarInscripcion(int idInscripcion,  int idTipoOfrece);
 
 }

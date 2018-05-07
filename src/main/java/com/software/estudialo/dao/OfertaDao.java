@@ -266,5 +266,6 @@ public interface OfertaDao {
 	
 	public List<Oferta> getOfertasOfrecidasFreelancer(int idFreelancer);
 	
+	
 
 }

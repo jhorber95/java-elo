@@ -67,6 +67,11 @@ public interface InscripcionOfertaInstitucionService {
 	public JSONRespuesta listarPreInscripcionesOfertaFreelancer(int idInstitucion, String search, int start, int length,
 			int draw, int posicion, String direccion);
 	
+	/*
+	 * Eliminar inscripcion a una oferta independientemente si es una institucion o freelancer
+	 * */
+	
+	
 	
 	
 }

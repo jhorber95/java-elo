@@ -79,7 +79,28 @@ public class EstudianteServiceImpl implements EstudianteService {
 		
 		return inscripciones;
 	}
-	
+
+
+	@Override
+	public void eliminarInscripcion(int idInscripcion, int idTipoOfrece) {
+
+		logger.debug("---JB Dentro de eliminarInscripción");
+		
+		Boolean eliminado = false;
+		
+		if (idTipoOfrece == 1) {
+			logger.debug("Eliminar inscripcion de institucion");
+			eliminado = inscripcionOfertaInstitucionDao.eliminarInscripcionInstitucion(idInscripcion);
+			
+		}else {
+			logger.debug("Eliminar inscripcion de freelancer");
+			eliminado = inscripcionOfertaFreelancerDao.eliminarInscripcionFreelancer(idInscripcion);
+		}
+		logger.debug("---JB Saliendo de eliminarInscripción");
+	}
+
+
+
 	
 	
 	

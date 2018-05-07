@@ -135,4 +135,6 @@ public interface OfertaService {
 	public List<Oferta> getOfertasOfrecidasFreelancer(int idFreelancer);
 	
 	
+	
+	
 }

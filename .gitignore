@@ -9,6 +9,9 @@ target/
 .settings
 .springBeans
 
+/src/main/resources/static
+target/
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

@@ -534,6 +534,26 @@ JSONRespuesta respuesta = new JSONRespuesta();
 		}
 		
 	}
+
+	@Override
+	public boolean eliminarInscripcionInstitucion(int idInscripcion) {
+		logger.debug("---JB Dentro de eliminarInscripcionInstitucion");
+		
+		String sql = "UPDATE inscripcion_oferta_institucion SET ioi_estado=7" + 
+					 " WHERE ioi_id=?";
+		
+		int resultado1 = jdbcTemplate.update(sql, idInscripcion);
+
+		if (resultado1 > 0) {
+			logger.debug("--- INSCRIPCION ELIMINADA -----");
+			return true;
+		} else {
+			logger.debug("No se pudo ELIMINAR LA INSCRIPCION DE INSTITUCION");
+			return false;
+		}
+	}
+
+
 	
 	
 	

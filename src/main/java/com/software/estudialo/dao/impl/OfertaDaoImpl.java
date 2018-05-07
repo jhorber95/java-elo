@@ -1597,4 +1597,5 @@ public class OfertaDaoImpl implements OfertaDao {
 		}
 	}
 
+	
 }

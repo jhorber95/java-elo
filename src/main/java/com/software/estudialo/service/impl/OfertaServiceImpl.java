@@ -118,7 +118,11 @@ public class OfertaServiceImpl implements OfertaService {
 		logger.debug("Iniciando Validaciones de adicion de oferta");
 
 		//|| oferta.getMunicipio() == null || oferta.getTipoOferta() == null || oferta.getIdOfrece() == 0 || oferta.getSubcategorias() == null) 
-		
+		/*
+		 * 07/05/2018  Jhorkman Bernal
+		 * 	
+		 * Para el registro de la oferta no va  ser obligatorio la modalidad y la jornada, se va a poner por defecto no disponible
+		 * */
 		if (oferta.getTitulo() == null || oferta.getDescripcion() == null || oferta.getPrecio().equals("") 
 				|| oferta.getTelefono() == null || oferta.getTipoOfrece() == null || oferta.getCategoria() == null
 				|| oferta.getMunicipio() == null || oferta.getTipoOferta() == null || oferta.getIdOfrece() == 0 
@@ -638,6 +642,8 @@ public class OfertaServiceImpl implements OfertaService {
 		logger.debug("--- SALIR DE ELIMINAR oferta -----");
 		
 	}
+
+	
 
 	
 

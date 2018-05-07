@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.software.estudialo.entities.JSONRespuesta;
 import com.software.estudialo.entities.Oferta;
+import com.software.estudialo.entities.Respuesta;
 import com.software.estudialo.service.EstudianteService;
 import com.software.estudialo.service.EventoService;
 
@@ -65,6 +66,24 @@ public class EstudianteRestController {
 		List<Object> listaInscripcionesEstudiantes = new ArrayList<Object>();
 		listaInscripcionesEstudiantes = estudianteService.listarInscripcionesEstudiante(idUsuario);
 		return new ResponseEntity<List<Object>>(listaInscripcionesEstudiantes, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "Lista las inscripciones del estudiante, debe proporcionar el id del usuario estudiante")
+	@GetMapping(url + "/eliminarInscripciones/{idinscripcion}/{idTipoOfrece}")
+	@PreAuthorize("hasAuthority('ROLE_ESTUDIANTE')")
+	public ResponseEntity<Respuesta> eliminarInscripcionesEstudiante(
+			@PathVariable(value = "idinscripcion") int idinscripcion, 
+			@PathVariable(value = "idTipoOfrece") int idTipoOfrece) {
+		
+		logger.debug("eliminarInscripcionesEstudiante --- eliminadno las inscripciones del estudiante");
+		
+		estudianteService.eliminarInscripcion( idinscripcion, idTipoOfrece);
+		
+		Respuesta respuesta = new Respuesta();
+		respuesta.setExito(true);
+		respuesta.setMensaje("Inscripción eliminada con exito");
+		respuesta.setBody(null);
+		return new ResponseEntity<Respuesta>(respuesta, HttpStatus.OK);
 	}
 	
 	

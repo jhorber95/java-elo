@@ -99,6 +99,11 @@ public interface InscripcionOfertaInstitucionDao {
 	
 	public List<InscripcionOfertaInstitucion> obtenerInscripcionOfertaInstitucionDeEstudiante(int idEstudiante);
 	
+	public boolean eliminarInscripcionInstitucion(int idInscripcion);
+
+
+	
+	
 	
 	
 }
