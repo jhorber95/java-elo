@@ -25,14 +25,16 @@ public class ResetPasswordController {
 	
 	private Logger logger = Logger.getLogger(ResetPasswordController.class);
 	
+	private static final String url = "/recuperacion-password";
+	
 	@Autowired
 	UsuarioService usuarioService;
 	
 	@Autowired
 	ResetPasswordService resetPassword;
 	
-	@PostMapping("/reset-password")
-	@ApiOperation(value = "Generate token" )
+	@PostMapping( url + "/generate-token")
+	@ApiOperation(value = "Generar token para la recuperación de la contraseña" )
 	public ResponseEntity<Respuesta> resetPassword(@RequestParam("email") String email){
 		
 		//Object user = usuarioService.obtenerUsuarioPorUsername(email);
@@ -45,6 +47,35 @@ public class ResetPasswordController {
 		respuesta.setMensaje(Respuesta.TOKEN_RESET_PASSWORD);
 		respuesta.setBody(null);
         return new ResponseEntity<Respuesta>(respuesta, HttpStatus.OK);
+	}
+	
+	@PostMapping(url + "/check-token")
+	@ApiOperation(value = "Se verifica si el token del usuario existe")
+	public ResponseEntity<Respuesta> updatePassword(@RequestParam("idUser") int idUser, @RequestParam("token") String token){
+		logger.debug(" --- Controller - Entrando a verificar token");
+		
+		resetPassword.existeToken(idUser, token);
+		
+		Respuesta respuesta = new Respuesta();
+		respuesta.setExito(true); 
+		respuesta.setMensaje(Respuesta.TOKEN_RESET_PASSWORD_EXIST);
+		respuesta.setBody(null);
+        return new ResponseEntity<Respuesta>(respuesta, HttpStatus.OK);
+	}
+	
+	@PostMapping(url + "/password-recovery-token")
+	@ApiOperation(value="Cambiar contraseña mediante token enviado al correo")
+	public ResponseEntity<Respuesta> cambiarPasswordByToken(@RequestParam("idUser") int idUser, @RequestParam("password") String password, @RequestParam("token") String token){
+		logger.debug(" --- Entrando a actualizar contraña mediante token");
+		
+		usuarioService.resetPassword(idUser, password,token );
+		
+		Respuesta respuesta = new Respuesta();
+		respuesta.setExito(true); 
+		respuesta.setMensaje(Respuesta.TOKEN_RESET_PASSWORD_EXIST);
+		respuesta.setBody(null);
+        return new ResponseEntity<Respuesta>(respuesta, HttpStatus.OK);
+		
 	}
 
 }

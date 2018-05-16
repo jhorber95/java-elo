@@ -10,7 +10,7 @@ import com.software.estudialo.entities.Usuario;
 import com.software.estudialo.exception.ObjectAlreadyExistException;
 import com.software.estudialo.service.ResetPasswordService;
 
-@Service(" ResetPasswordService")
+@Service("ResetPasswordService")
 public class ResetPasswordServiceImpl implements ResetPasswordService {
 	
 
@@ -34,6 +34,23 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 			throw new ObjectAlreadyExistException("El usuario NO existe");
 		}else {
 			resetPasswordDao.createPasswordToken(user);
+		}
+		
+	}
+
+	@Override
+	public boolean existeToken(int idUsuario, String token) {
+		
+		logger.debug("----- Service - Entrando verificar token");
+		boolean isToken = resetPasswordDao.existeToken(idUsuario, token);
+		
+		if(isToken) {
+			// resetPasswordDao.
+			logger.debug("----- Saliendo token existe");
+			return true;
+		}else {
+			throw new ObjectAlreadyExistException("No existe el token asignado ese usuario.");
+			// return false;
 		}
 		
 	}

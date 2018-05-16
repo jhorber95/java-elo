@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.software.estudialo.dao.InstitucionDao;
+import com.software.estudialo.dao.ResetPasswordDao;
 import com.software.estudialo.dao.UsuarioDao;
 import com.software.estudialo.entities.Institucion;
 import com.software.estudialo.entities.JSONRespuesta;
@@ -38,6 +39,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Autowired
 	InstitucionDao institucionDao;
+	
+	@Autowired
+	ResetPasswordDao resetPasswordDao;
 	
 	
 	/* (non-Javadoc)
@@ -352,8 +356,54 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 	}
 
-	
+	@Override
+	public void resetPassword(int idUsuario, String newPassword, String token) {
+		logger.debug("--- cambiarPassword -----");		
 		
+		
+		if (idUsuario <= 0 || newPassword.equalsIgnoreCase("") ) { 
+			throw new ValueNotPermittedException("No se permiten valores nulos");
+		} else {
+
+			// Buscamos que el usuario exista por nombre
+			Boolean existeUsuario = usuarioDao.buscarUsuario(idUsuario);
+
+			if (!existeUsuario) {
+				throw new ObjectNotFoundException("El usuario NO existe");
+			} else {
+				
+				Boolean existeToken = resetPasswordDao.existeToken(idUsuario, token);
+				
+				if(existeToken) {
+					String newPasswordEncripted = null;
+					try {
+						newPasswordEncripted = Encriptar.toSHA256PasswordEncoder(newPassword);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					// Aqui ya podemos MODIFICAR el usuario
+					try {
+						boolean returnModificacion = usuarioDao.cambiarPassword(idUsuario, newPasswordEncripted);
+
+						if (!returnModificacion) {
+							throw new DAOException("Ocurrio un inconveniente al insertar el registro en la base de datos");
+						}
+
+					} catch (DAOException daoe) {
+						daoe.printStackTrace();
+						throw new DAOException("Ocurrio un inconveniente al insertar el registro en la base de datos");
+					}					
+	
+				}else {
+					throw new DAOException("No existe token para la recuperación de contraseña");
+				}			
+			}
+
+		}
+		
+	}		
 }
 
 	

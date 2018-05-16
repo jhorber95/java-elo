@@ -54,6 +54,7 @@ public class Respuesta {
 	
 	public static final String TOKEN_RESET_PASSWORD = "Token generado exitosamente";
 	
+	public static final String TOKEN_RESET_PASSWORD_EXIST = "El token asignado a el usuario existe";
 
 	/** The exito. */
 	boolean exito;

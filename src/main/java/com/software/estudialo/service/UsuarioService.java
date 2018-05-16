@@ -26,6 +26,13 @@ public interface UsuarioService {
 	
 	
 	
+	/**
+	 * cuando el usuario olida la contraseña, solo se pide la nueva contraseña
+	 * */
+	public void resetPassword(int idUsuario,  String newPassword, String token);
+	
+	
+	
 	public Object  obtenerUsuarioPorUsername(String username);
 	
 	

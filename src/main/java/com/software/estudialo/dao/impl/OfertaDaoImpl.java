@@ -320,7 +320,10 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
 				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " + "WHERE ofe.ofe_estado IN (8) "
-				+ "AND (ofe.ofe_titulo ILIKE ? OR ofe.ofe_descripcion ILIKE ? OR cat.cat_nombre ILIKE ? OR tof.tof_nombre ILIKE ? OR tio.tio_nombre ILIKE ? OR mun.mun_nombre ILIKE ? OR est.est_nombre ILIKE ? ))";
+				+ "AND ( unaccent(ofe.ofe_titulo) ILIKE ? OR unaccent(ofe.ofe_descripcion) ILIKE ?  "
+				+ "OR unaccent(cat.cat_nombre) ILIKE ? OR  unaccent(tof.tof_nombre) ILIKE ? "
+				+ "OR  unaccent(tio.tio_nombre) ILIKE ? "
+				+ "OR  unaccent(mun.mun_nombre) ILIKE ? OR est.est_nombre ILIKE ? ))";
 		sql = sql + "as tabla where tabla.RowNumber between ? and ? ";
 
 		System.out.println(" 2 ::: Consulta realizada para las ofertas: " + sql);
