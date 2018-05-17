@@ -201,7 +201,7 @@ public class InstitucionRestController {
 	
 	@ApiOperation(value = "La institucion Modifica sus datos - proporciona el id y el objeto institucion")
 	@PutMapping(url + "/{id}")	
-	@PreAuthorize("hasAuthority('ROLE_INSTITUCION')")
+	@PreAuthorize("hasAuthority('ROLE_INSTITUCION') or hasAuthority('ROLE_ADMINISTRADOR')")
 	public ResponseEntity<Respuesta> modificarInstitucion(@PathVariable int id, @RequestBody Institucion institucion) {		
 		institucionService.modificarInstitucion(id, institucion);		
 		Respuesta respuesta = new Respuesta();
