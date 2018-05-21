@@ -410,7 +410,8 @@ public class OfertaDaoImpl implements OfertaDao {
 		int fin = start + length - 1;
 
 		String sql = "SELECT COUNT(*) as cant ";
-		sql = sql + "FROM oferta ofe " + "INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
+		sql = sql + "FROM oferta ofe " 
+				+ "INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
 				+ "INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
 				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
@@ -442,14 +443,15 @@ public class OfertaDaoImpl implements OfertaDao {
 			sql = sql + "AND ofe.ofe_precio >= ? ";
 			parametros.add(precioMinimo);
 		}
-		if (nombreOferta != "") {
+		if (nombreOferta.length() > 0) {
 			sql = sql + "AND ofe.ofe_titulo ILIKE ? ";
 			parametros.add("%" + nombreOferta + "%");
 		}
 		System.out.println(" =====================================");
-		System.out.println("  Parametros busqueda filtro");
+		System.out.println("  Parametros num filtrados busqueda filtro");
 		System.out.println(" =====================================");
 		System.out.println(parametros);
+		
 		sql = sql + "AND ofe.ofe_precio <= ? ";
 		parametros.add(precioMaximo);
 
@@ -465,7 +467,8 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
 				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
-				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " + "WHERE ofe.ofe_estado IN (8) ";
+				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " 
+				+ "WHERE ofe.ofe_estado IN (8) ";
 
 		ArrayList<Object> parametros2 = new ArrayList<Object>();
 
@@ -489,12 +492,21 @@ public class OfertaDaoImpl implements OfertaDao {
 			sql2 = sql2 + "AND ofe.ofe_precio >= ? ";
 			parametros2.add(precioMinimo);
 		}
+		if (nombreOferta.length() > 0) {
+			sql2 = sql2 + "AND ofe.ofe_titulo ILIKE ? ";
+			parametros2.add("%" + nombreOferta + "%");
+		}
 
 		sql2 = sql2 + "AND ofe.ofe_precio <= ? ";
 		parametros2.add(precioMaximo);
 
 		parametros2.add(start);
 		parametros2.add(fin);
+		
+		System.out.println(" ========================================================");
+		System.out.println("  Parametros  filtrados busqueda final  filtro");
+		System.out.println(" ========================================================");
+		System.out.println(parametros2);
 
 		sql2 = sql2 + ") as tabla where tabla.RowNumber between ? and ? ";
 

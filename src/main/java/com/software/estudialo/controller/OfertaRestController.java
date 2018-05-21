@@ -186,6 +186,9 @@ public class OfertaRestController {
 			@RequestParam(value = "stringCarrera", defaultValue = "") String nombreOferta) {
 		
 		logger.debug("getOfertas --- listando la oferta");
+		System.out.println(" =====================================");
+		System.out.println("Nombre oferta: " + nombreOferta);
+		System.out.println(" =====================================");
 		JSONRespuesta listaOferta = new JSONRespuesta();
 		listaOferta = ofertaService.listarOfertaFiltros(start, length, draw, posicion, direccion, categoria, municipio, tipoOfrece, tipoOferta, precioMinimo, precioMaximo, nombreOferta);
 		return new ResponseEntity<JSONRespuesta>(listaOferta, HttpStatus.OK);
