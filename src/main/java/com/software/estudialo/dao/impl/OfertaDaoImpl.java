@@ -288,11 +288,13 @@ public class OfertaDaoImpl implements OfertaDao {
 		int fin = start + length - 1;
 
 		String sql = "SELECT COUNT(*) as cant ";
-		sql = sql + "FROM oferta ofe " + "INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
+		sql = sql + "FROM oferta ofe " 
+				+ "INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
 				+ "INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
 				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
-				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " + "WHERE ofe.ofe_estado IN (8) ";
+				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " 
+				+ "WHERE ofe.ofe_estado IN (8) ";
 
 		int count = jdbcTemplate.queryForObject(sql, Integer.class);
 		logger.debug("* Cantidad de oferta =" + count);
@@ -312,7 +314,7 @@ public class OfertaDaoImpl implements OfertaDao {
 
 		System.out.println(" 1 ::: Consulta realizada para las ofertas: " + sql);
 
-		sql = "SELECT ofe_id, ofe_titulo, ofe_descripcion, cat_nombre, tof_nombre, tio_nombre, mun_nombre, est_nombre "
+		/*sql = "SELECT ofe_id, ofe_titulo, ofe_descripcion, cat_nombre, tof_nombre, tio_nombre, mun_nombre, est_nombre "
 				+ "from (select row_number() over(order by " + campos[posicion] + " " + direccion + ") AS RowNumber, "
 				+ "ofe.ofe_id, ofe.ofe_titulo, ofe.ofe_descripcion, cat.cat_nombre, tof.tof_nombre, tio.tio_nombre, mun.mun_nombre, est.est_nombre FROM oferta ofe "
 				+ "INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
@@ -324,6 +326,24 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "OR unaccent(cat.cat_nombre) ILIKE ? OR  unaccent(tof.tof_nombre) ILIKE ? "
 				+ "OR  unaccent(tio.tio_nombre) ILIKE ? "
 				+ "OR  unaccent(mun.mun_nombre) ILIKE ? OR est.est_nombre ILIKE ? ))";
+		sql = sql + "as tabla where tabla.RowNumber between ? and ? ";*/
+		
+		sql = "SELECT ofe_id, ofe_titulo, ofe_descripcion, cat_nombre, tof_nombre, tio_nombre, mun_nombre, est_nombre "
+				+ "from (select row_number() over(order by " + campos[posicion] + " " + direccion + ") AS RowNumber, "
+				+ "ofe.ofe_id, ofe.ofe_titulo, ofe.ofe_descripcion, cat.cat_nombre, tof.tof_nombre, tio.tio_nombre, mun.mun_nombre, est.est_nombre FROM oferta ofe "
+				+ "INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
+				+ "INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
+				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
+				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
+				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " 
+				+ "WHERE ofe.ofe_estado IN (8) "
+				+ "AND  ofe.ofe_titulo ILIKE ? "
+				+ "OR  ofe.ofe_descripcion ILIKE ?  "
+				+ "OR  cat.cat_nombre ILIKE ? "
+				+ "OR  tof.tof_nombre ILIKE ? "
+				+ "OR  tio.tio_nombre ILIKE ? "
+				+ "OR  mun.mun_nombre ILIKE ? "
+				+ "OR est.est_nombre ILIKE ? ) ";
 		sql = sql + "as tabla where tabla.RowNumber between ? and ? ";
 
 		System.out.println(" 2 ::: Consulta realizada para las ofertas: " + sql);
@@ -378,7 +398,7 @@ public class OfertaDaoImpl implements OfertaDao {
 	 */
 	@Override
 	public JSONRespuesta listarOfertaFiltros(int start, int length, int draw, int posicion, String direccion,
-			int categoria, int municipio, int tipoOfrece, int tipoOferta, int precioMinimo, int precioMaximo) {
+			int categoria, int municipio, int tipoOfrece, int tipoOferta, int precioMinimo, int precioMaximo, String nombreOferta) {
 
 		logger.debug(" listarOfertaFiltros ---- listar ofertas filtros");
 
@@ -390,11 +410,12 @@ public class OfertaDaoImpl implements OfertaDao {
 		int fin = start + length - 1;
 
 		String sql = "SELECT COUNT(*) as cant ";
-		sql = sql + "FROM oferta ofe " + "INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
+		sql = sql + "FROM oferta ofe " 
+				+ "INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
 				+ "INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
 				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
-				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " + "WHERE ofe.ofe_estado IN (8) ";
+				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id WHERE ofe.ofe_estado IN (8) ";
 
 		int count = jdbcTemplate.queryForObject(sql, Integer.class);
 		logger.debug("* Cantidad de oferta =" + count);
@@ -422,11 +443,20 @@ public class OfertaDaoImpl implements OfertaDao {
 			sql = sql + "AND ofe.ofe_precio >= ? ";
 			parametros.add(precioMinimo);
 		}
-
+		if (nombreOferta.length() > 0) {
+			sql = sql + "AND ofe.ofe_titulo ILIKE ? ";
+			parametros.add("%" + nombreOferta + "%");
+		}
+		System.out.println(" =====================================");
+		System.out.println("  Parametros num filtrados busqueda filtro");
+		System.out.println(" =====================================");
+		System.out.println(parametros);
+		
 		sql = sql + "AND ofe.ofe_precio <= ? ";
 		parametros.add(precioMaximo);
 
-		filtrados = jdbcTemplate.queryForObject(sql, parametros.toArray(), Integer.class);
+		 filtrados = jdbcTemplate.queryForObject(sql, parametros.toArray(), Integer.class);
+		// filtrados = jdbcTemplate.queryForObject(sql, new Object[] {categoria }, Integer.class);
 
 		System.out.println(" 1 ::: Consulta realizada para las ofertas: " + sql);
 
@@ -437,7 +467,8 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
 				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
-				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " + "WHERE ofe.ofe_estado IN (8) ";
+				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " 
+				+ "WHERE ofe.ofe_estado IN (8) ";
 
 		ArrayList<Object> parametros2 = new ArrayList<Object>();
 
@@ -461,12 +492,21 @@ public class OfertaDaoImpl implements OfertaDao {
 			sql2 = sql2 + "AND ofe.ofe_precio >= ? ";
 			parametros2.add(precioMinimo);
 		}
+		if (nombreOferta.length() > 0) {
+			sql2 = sql2 + "AND ofe.ofe_titulo ILIKE ? ";
+			parametros2.add("%" + nombreOferta + "%");
+		}
 
 		sql2 = sql2 + "AND ofe.ofe_precio <= ? ";
 		parametros2.add(precioMaximo);
 
 		parametros2.add(start);
 		parametros2.add(fin);
+		
+		System.out.println(" ========================================================");
+		System.out.println("  Parametros  filtrados busqueda final  filtro");
+		System.out.println(" ========================================================");
+		System.out.println(parametros2);
 
 		sql2 = sql2 + ") as tabla where tabla.RowNumber between ? and ? ";
 
