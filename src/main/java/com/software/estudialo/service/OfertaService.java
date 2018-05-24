@@ -95,6 +95,8 @@ public interface OfertaService {
 	 */
 	public JSONRespuesta listarOfertaBuscador(String search, int start, int length, int draw, int posicion, String direccion);
 	
+	public JSONRespuesta listarOfertas();
+	
 	
 	public List<Oferta> listarOfertasDestacadas();
 	

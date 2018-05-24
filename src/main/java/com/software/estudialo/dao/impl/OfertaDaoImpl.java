@@ -1640,5 +1640,51 @@ public class OfertaDaoImpl implements OfertaDao {
 		}
 	}
 
+	@Override
+	public JSONRespuesta listarOfertas() {
+		
+		logger.debug(" listarOferta ---- listar ofertas");
+
+		JSONRespuesta respuesta = new JSONRespuesta();
+		
+		String sql = "SELECT COUNT(*) as cant ";
+		sql = sql + "FROM oferta ofe INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
+				+ "INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
+				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
+				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
+				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " + "WHERE ofe.ofe_estado IN (8, 9) ";
+
+		int count = jdbcTemplate.queryForObject(sql, Integer.class);
+		logger.debug("* Cantidad de oferta =" + count);
+		int filtrados = count;
+		
+		sql = "SELECT ofe_id, ofe_titulo, ofe_descripcion, cat_nombre, tof_nombre, tio_nombre, mun_nombre, est_nombre " + 
+				"	from (select row_number() over(order by ofe_id ASC) AS RowNumber, " + 
+				"	ofe.ofe_id, ofe.ofe_titulo, ofe.ofe_descripcion, cat.cat_nombre, tof.tof_nombre, tio.tio_nombre, mun.mun_nombre, est.est_nombre FROM oferta ofe " + 
+				"	INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id " + 
+				"	INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id " + 
+				"	INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id " + 
+				"	INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id " + 
+				"	INNER JOIN estado est ON ofe.ofe_estado = est.est_id WHERE ofe.ofe_estado IN (8, 9)) as tabla;";
+		
+		List<Oferta> listaOferta = jdbcTemplate.query(sql,
+				new RowMapper<Oferta>() {
+
+					public Oferta mapRow(ResultSet rs, int rowNum) throws SQLException {
+						logger.debug("mapRow  ----- obteniendo ofertas");
+						Oferta nodo = obtenerOferta(rs.getInt("ofe_id"));
+						return nodo;
+					}
+				});
+
+		respuesta.setDraw(1);
+		respuesta.setRecordsFiltered(filtrados);
+		respuesta.setRecordsTotal(count);
+		respuesta.setData(listaOferta);
+		return respuesta;
+		
+		
+	}
+
 	
 }

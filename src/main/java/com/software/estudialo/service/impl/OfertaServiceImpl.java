@@ -644,6 +644,13 @@ public class OfertaServiceImpl implements OfertaService {
 		
 	}
 
+	@Override
+	public JSONRespuesta listarOfertas() {
+		logger.debug("-- JB listarOfertas -- listando ofertas");
+		JSONRespuesta listaOfertas = ofertaDao.listarOfertas();
+		return listaOfertas;
+	}
+
 	
 
 	
