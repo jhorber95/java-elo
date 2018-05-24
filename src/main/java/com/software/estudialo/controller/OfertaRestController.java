@@ -314,7 +314,7 @@ public class OfertaRestController {
 	
 	@ApiOperation(value = "Modifica una oferta para el usuario que creo la oferta - proporciona el id y el objeto oferta")
 	@PutMapping(url + "/{id}")	
-	@PreAuthorize("hasAuthority('ROLE_FREELANCER') or hasAuthority('ROLE_INSTITUCION')")
+	@PreAuthorize("hasAuthority('ROLE_FREELANCER') or hasAuthority('ROLE_INSTITUCION') or hasAuthority('ROLE_ADMINISTRADOR')")
 	public ResponseEntity<Respuesta> modificarOfertaGeneral(@PathVariable int id, @RequestBody Oferta oferta) {		
 		ofertaService.modificarOfertaGeneral(id, oferta);		
 		Respuesta respuesta = new Respuesta();
