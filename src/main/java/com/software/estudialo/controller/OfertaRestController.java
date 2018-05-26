@@ -121,12 +121,6 @@ public class OfertaRestController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Gets the ofertas buscador.
 	 *
@@ -140,7 +134,8 @@ public class OfertaRestController {
 	 */
 	@ApiOperation(value = "Lista las ofertas a traves de la variable search (Campo de Busqueda)")
 	@GetMapping(url + "/buscador")
-	public ResponseEntity<JSONRespuesta> getOfertasBuscador(@RequestParam(value = "search", defaultValue = "") String search,
+	public ResponseEntity<JSONRespuesta> getOfertasBuscador(
+			@RequestParam(value = "search", defaultValue = "") String search,
 			@RequestParam(value = "start", defaultValue = "1") int start,
 			@RequestParam(value = "length", defaultValue = "10") int length,
 			@RequestParam(value = "draw", defaultValue = "1") int draw,
@@ -150,6 +145,16 @@ public class OfertaRestController {
 		logger.debug("getOfertas --- listando la oferta");
 		JSONRespuesta listaOferta = new JSONRespuesta();
 		listaOferta = ofertaService.listarOfertaBuscador(search, start, length, draw, posicion, direccion);
+		return new ResponseEntity<JSONRespuesta>(listaOferta, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "Lista las ofertas a traves de la variable search (Campo de Busqueda)")
+	@GetMapping(url + "/all")
+	public ResponseEntity<JSONRespuesta> getAllOfertas() {
+		
+		logger.debug("getOfertas --- listando la oferta");
+		JSONRespuesta listaOferta = new JSONRespuesta();
+		listaOferta = ofertaService.listarOfertas();
 		return new ResponseEntity<JSONRespuesta>(listaOferta, HttpStatus.OK);
 	}
 

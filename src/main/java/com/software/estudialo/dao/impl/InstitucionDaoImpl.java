@@ -297,7 +297,7 @@ public class InstitucionDaoImpl implements InstitucionDao{
 	@Override
 	public Institucion obtenerInstitucionPorOferta(int idOferta) {
 		
-		logger.debug("obtenerInstitucion -- Buscando institucion por Id ");
+		logger.debug("*** JB obtenerInstitucion -- Buscando institucion por Id oferta ");
 
 		String SQL = "SELECT i.inst_id, i.inst_nombre, i.inst_nit, i.inst_latitud, i.inst_longitud, i.inst_direccion, i.inst_telefono, "
 				+ "i.inst_url, i.inst_descripcion, i.inst_email, i.inst_tipo_institucion, i.inst_estado, i.inst_imagen FROM institucion i "

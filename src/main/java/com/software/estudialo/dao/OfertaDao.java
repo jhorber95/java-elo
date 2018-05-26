@@ -7,6 +7,7 @@ package com.software.estudialo.dao;
 import com.software.estudialo.entities.Oferta;
 import com.software.estudialo.entities.ResultadoVocacional;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.software.estudialo.entities.Calificacion;
@@ -156,8 +157,11 @@ public interface OfertaDao {
 	 * @param posicion the posicion
 	 * @param direccion the direccion
 	 * @return the JSON respuesta
+	 * @throws SQLException 
 	 */
 	public JSONRespuesta listarOfertaBuscador(String search, int start, int length, int draw, int posicion, String direccion);
+	
+	public JSONRespuesta listarOfertas();
 	
 	
 	/**

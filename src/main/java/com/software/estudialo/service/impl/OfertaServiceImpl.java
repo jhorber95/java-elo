@@ -2,6 +2,7 @@
  * 
  */
 package com.software.estudialo.service.impl;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -83,7 +84,10 @@ public class OfertaServiceImpl implements OfertaService {
 	public JSONRespuesta listarOfertaBuscador(String search, int start, int length, int draw, int posicion,
 			String direccion) {
 		logger.debug("listarOfertaBuscador -- listar ofertas por el buscador");
-		JSONRespuesta listaOfertas = ofertaDao.listarOfertaBuscador(search, start, length, draw, posicion, direccion);
+		JSONRespuesta listaOfertas = new  JSONRespuesta();
+		
+			listaOfertas = ofertaDao.listarOfertaBuscador(search, start, length, draw, posicion, direccion);
+		
 		return listaOfertas;
 	}
 
@@ -133,11 +137,11 @@ public class OfertaServiceImpl implements OfertaService {
 		} else {
 
 			// Buscamos que el oferta exista
-			Boolean existeOferta = ofertaDao.buscarOferta(oferta);
+			// Boolean existeOferta = ofertaDao.buscarOferta(oferta);
 
-			if (existeOferta) {
+			/*if (existeOferta) {
 				throw new ObjectAlreadyExistException("Ya existe el oferta");
-			} else {
+			} else {*/
 
 				// Aqui ya podemos guardar el oferta
 				try {
@@ -157,7 +161,7 @@ public class OfertaServiceImpl implements OfertaService {
 					throw new DAOException("Ocurrio un inconveniente al insertar el registro en la base de datos");
 				}
 
-			}
+			//}
 
 		}
 
@@ -642,6 +646,13 @@ public class OfertaServiceImpl implements OfertaService {
 
 		logger.debug("--- SALIR DE ELIMINAR oferta -----");
 		
+	}
+
+	@Override
+	public JSONRespuesta listarOfertas() {
+		logger.debug("-- JB listarOfertas -- listando ofertas");
+		JSONRespuesta listaOfertas = ofertaDao.listarOfertas();
+		return listaOfertas;
 	}
 
 	

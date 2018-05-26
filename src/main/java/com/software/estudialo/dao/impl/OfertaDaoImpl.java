@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.software.estudialo.dao.impl;
 
 import java.sql.Connection;
@@ -276,9 +273,9 @@ public class OfertaDaoImpl implements OfertaDao {
 	 */
 	@Override
 	public JSONRespuesta listarOfertaBuscador(String search, int start, int length, int draw, int posicion,
-			String direccion) {
+			String direccion)  {
 
-		logger.debug(" listarOferta ---- listar ofertas");
+		logger.debug(" *** listarOferta ---- listar ofertas");
 
 		JSONRespuesta respuesta = new JSONRespuesta();
 
@@ -294,10 +291,10 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
 				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " 
-				+ "WHERE ofe.ofe_estado IN (8) ";
+				+ "WHERE ofe.ofe_estado IN(8) ";
 
 		int count = jdbcTemplate.queryForObject(sql, Integer.class);
-		logger.debug("* Cantidad de oferta =" + count);
+		logger.debug("*** Cantidad de oferta =" + count);
 		int filtrados = count;
 
 		if (search.length() > 0) {
@@ -327,7 +324,7 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "OR  unaccent(tio.tio_nombre) ILIKE ? "
 				+ "OR  unaccent(mun.mun_nombre) ILIKE ? OR est.est_nombre ILIKE ? ))";
 		sql = sql + "as tabla where tabla.RowNumber between ? and ? ";*/
-		
+		sql = "";
 		sql = "SELECT ofe_id, ofe_titulo, ofe_descripcion, cat_nombre, tof_nombre, tio_nombre, mun_nombre, est_nombre "
 				+ "from (select row_number() over(order by " + campos[posicion] + " " + direccion + ") AS RowNumber, "
 				+ "ofe.ofe_id, ofe.ofe_titulo, ofe.ofe_descripcion, cat.cat_nombre, tof.tof_nombre, tio.tio_nombre, mun.mun_nombre, est.est_nombre FROM oferta ofe "
@@ -336,7 +333,7 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
 				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " 
-				+ "WHERE ofe.ofe_estado IN (8) "
+				+ "WHERE ofe.ofe_estado IN(8) "
 				+ "AND  ofe.ofe_titulo ILIKE ? "
 				+ "OR  ofe.ofe_descripcion ILIKE ?  "
 				+ "OR  cat.cat_nombre ILIKE ? "
@@ -358,14 +355,17 @@ public class OfertaDaoImpl implements OfertaDao {
 				      @Override
 				      public void processRow(ResultSet rs) throws SQLException {
 				    	  
-				    	  logger.debug("mapRow  ----- obteniendo ofertas");
+				    	  logger.debug(" *** JB mapRow  ----- obteniendo oferta, id: " + rs.getInt("ofe_id") + " "+ rs.getString("ofe_titulo") );
 							Oferta oferta = obtenerOferta(rs.getInt("ofe_id"));
 							
 							TipoOfrece tipoOfrece = oferta.getTipoOfrece();
 							Boolean ofrecedorActivo = false;
 							
-							//Verificacion ofrecedor activo
+							// Verificacion ofrecedor activo
 							if (tipoOfrece.getId() == Constants.ID_TIPO_OFRECE_INSTITUCION) {
+								
+								 logger.debug("** JB get institucion by oferta  : " + oferta.getIdOfrece());
+								 
 								Institucion institucion = institucionDao.obtenerInstitucion(oferta.getIdOfrece());
 								ofrecedorActivo = institucionDao.institucionActiva(institucion.getEmail());
 								
@@ -692,8 +692,10 @@ public class OfertaDaoImpl implements OfertaDao {
 
 				// Obtener el que oferta
 				if (tipoOfrece.getId() == Constants.ID_TIPO_OFRECE_INSTITUCION) {
-					logger.debug("Ofrece la oferta: INSTITUCION -- Obteniendo oferta");
-					Institucion institucion = institucionDao.obtenerInstitucionPorOferta(rs.getInt("ofe_id"));
+					logger.debug("Ofrece la oferta: INSTITUCION -- Obteniendo oferta: ");
+					
+					Institucion institucion = institucionDao.obtenerInstitucionPorOferta(rs.getInt("ofe_id"));			
+					
 					oferta.setIdOfrece(institucion.getId());
 					oferta.setOfrece(institucion);
 
@@ -708,8 +710,10 @@ public class OfertaDaoImpl implements OfertaDao {
 					oferta.setCalificacion(calificacion);
 
 				} else if (tipoOfrece.getId() == Constants.ID_TIPO_OFRECE_FREELANCER) {
-					logger.debug("Ofrece la oferta: FREELANCER -- Obteniendo oferta");
+					
 					Freelancer freelancer = freelancerDao.obtenerFreelancerPorOferta(rs.getInt("ofe_id"));
+					
+					logger.debug("Ofrece la oferta: FREELANCER -- Obteniendo oferta: " + freelancer.getId());
 					oferta.setIdOfrece(freelancer.getId());
 					oferta.setOfrece(freelancer);
 
@@ -1025,7 +1029,7 @@ public class OfertaDaoImpl implements OfertaDao {
 	public Boolean buscarOferta(Oferta oferta) {
 		logger.debug("------- Buscando oferta ");
 
-		String sql = "SELECT COUNT(*) from oferta o " + "WHERE o.ofe_estado IN (8, 9) AND o.ofe_titulo = ?;";
+		String sql = "SELECT COUNT(*) from oferta o  WHERE o.ofe_estado IN (8, 9) AND o.ofe_titulo = ?;";
 
 		int count = jdbcTemplate.queryForObject(sql, new Object[] { oferta.getTitulo() }, Integer.class);
 
@@ -1638,6 +1642,52 @@ public class OfertaDaoImpl implements OfertaDao {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public JSONRespuesta listarOfertas() {
+		
+		logger.debug(" listarOferta ---- listar ofertas");
+
+		JSONRespuesta respuesta = new JSONRespuesta();
+		
+		String sql = "SELECT COUNT(*) as cant ";
+		sql = sql + "FROM oferta ofe INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
+				+ "INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
+				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
+				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
+				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " + "WHERE ofe.ofe_estado IN (8, 9) ";
+
+		int count = jdbcTemplate.queryForObject(sql, Integer.class);
+		logger.debug("* Cantidad de oferta =" + count);
+		int filtrados = count;
+		
+		sql = "SELECT ofe_id, ofe_titulo, ofe_descripcion, cat_nombre, tof_nombre, tio_nombre, mun_nombre, est_nombre " + 
+				"	from (select row_number() over(order by ofe_id ASC) AS RowNumber, " + 
+				"	ofe.ofe_id, ofe.ofe_titulo, ofe.ofe_descripcion, cat.cat_nombre, tof.tof_nombre, tio.tio_nombre, mun.mun_nombre, est.est_nombre FROM oferta ofe " + 
+				"	INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id " + 
+				"	INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id " + 
+				"	INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id " + 
+				"	INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id " + 
+				"	INNER JOIN estado est ON ofe.ofe_estado = est.est_id WHERE ofe.ofe_estado IN (8, 9)) as tabla;";
+		
+		List<Oferta> listaOferta = jdbcTemplate.query(sql,
+				new RowMapper<Oferta>() {
+
+					public Oferta mapRow(ResultSet rs, int rowNum) throws SQLException {
+						logger.debug("mapRow  ----- obteniendo ofertas");
+						Oferta nodo = obtenerOferta(rs.getInt("ofe_id"));
+						return nodo;
+					}
+				});
+
+		respuesta.setDraw(1);
+		respuesta.setRecordsFiltered(filtrados);
+		respuesta.setRecordsTotal(count);
+		respuesta.setData(listaOferta);
+		return respuesta;
+		
+		
 	}
 
 	
