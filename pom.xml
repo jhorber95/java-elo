@@ -116,13 +116,27 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<!-- Codigo que copia los archivos compilados de angular
-			 <plugin> <artifactId>maven-resources-plugin</artifactId> <executions> 
-				<execution> <id>copy-resources</id> <phase>validate</phase> <goals><goal>copy-resources</goal></goals> 
-				<configuration> <outputDirectory>${basedir}/src/main/resources/static/</outputDirectory 
-				> <resources> <resource> <directory>D:\workspace-sts\estudialo-frontend\dist</directory 
-				> </resource> </resources> </configuration> </execution> </executions> </plugin>  -->
-
+			<!-- Codigo que copia los archivos compilados de angular-->
+			 <plugin> 
+			 	<artifactId>maven-resources-plugin</artifactId> 
+			 	<executions> 
+					<execution> 
+						<id>copy-resources</id> 
+						<phase>validate</phase> 
+						<goals>
+							<goal>copy-resources</goal>
+						</goals> 
+						<configuration> 
+							<outputDirectory>${basedir}/src/main/resources/static/</outputDirectory> 
+							<resources> 
+								<resource> 
+									<directory>/home/jhorkman/AngularProjects/estudialo-frontend/dist</directory> 
+								</resource> 
+							</resources> 
+						</configuration> 
+					</execution> 
+				</executions> 
+			</plugin> 
 		</plugins>
 	</build>
 
