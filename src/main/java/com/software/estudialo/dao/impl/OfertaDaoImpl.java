@@ -311,20 +311,46 @@ public class OfertaDaoImpl implements OfertaDao {
 
 		System.out.println(" 1 ::: Consulta realizada para las ofertas: " + sql);
 
-		/*sql = "SELECT ofe_id, ofe_titulo, ofe_descripcion, cat_nombre, tof_nombre, tio_nombre, mun_nombre, est_nombre "
-				+ "from (select row_number() over(order by " + campos[posicion] + " " + direccion + ") AS RowNumber, "
-				+ "ofe.ofe_id, ofe.ofe_titulo, ofe.ofe_descripcion, cat.cat_nombre, tof.tof_nombre, tio.tio_nombre, mun.mun_nombre, est.est_nombre FROM oferta ofe "
-				+ "INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
-				+ "INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
-				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
-				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
-				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " + "WHERE ofe.ofe_estado IN (8) "
-				+ "AND ( unaccent(ofe.ofe_titulo) ILIKE ? OR unaccent(ofe.ofe_descripcion) ILIKE ?  "
-				+ "OR unaccent(cat.cat_nombre) ILIKE ? OR  unaccent(tof.tof_nombre) ILIKE ? "
-				+ "OR  unaccent(tio.tio_nombre) ILIKE ? "
-				+ "OR  unaccent(mun.mun_nombre) ILIKE ? OR est.est_nombre ILIKE ? ))";
-		sql = sql + "as tabla where tabla.RowNumber between ? and ? ";*/
-		sql = "";
+		sql = "SELECT "
+				+ "	ofe_id, "
+				+ "	ofe_titulo, "
+				+ "	ofe_descripcion, "
+				+ "	cat_nombre, "
+				+ "	tof_nombre, "
+				+ "	tio_nombre, "
+				+ "	mun_nombre, "
+				+ "	est_nombre "
+				+ "FROM "
+				+ "	( "
+				+ "		SELECT "
+				+ "			ROW_NUMBER () OVER (ORDER BY ofe_titulo ASC) AS RowNumber, "
+				+ "			ofe.ofe_id, "
+				+ "			ofe.ofe_titulo, "
+				+ "			ofe.ofe_descripcion, "
+				+ "			cat.cat_nombre, "
+				+ "			tof.tof_nombre, "
+				+ "			tio.tio_nombre, "
+				+ "			mun.mun_nombre, "
+				+ "			est.est_nombre "
+				+ "		FROM "
+				+ "			oferta ofe "
+				+ "		INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
+				+ "		INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
+				+ "		INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
+				+ "		INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
+				+ "		INNER JOIN estado est ON ofe.ofe_estado = est.est_id "
+				+ "		WHERE "
+				+ "			ofe.ofe_estado IN (8) "
+				+ "		AND  "
+				+ "			unaccent (ofe.ofe_titulo) ILIKE ? "
+				+ "			OR unaccent (ofe.ofe_descripcion) ILIKE ? "
+				+ "			OR unaccent (cat.cat_nombre) ILIKE ? "
+				+ "			OR unaccent (tof.tof_nombre) ILIKE ? "
+				+ "			OR unaccent (tio.tio_nombre) ILIKE ? "
+				+ "			OR unaccent (mun.mun_nombre) ILIKE ? "
+				+ "			OR est.est_nombre ILIKE ? "
+				+ "		) as tabla WHERE tabla.RowNumber BETWEEN ? AND ?";
+		/*sql = "";
 		sql = "SELECT ofe_id, ofe_titulo, ofe_descripcion, cat_nombre, tof_nombre, tio_nombre, mun_nombre, est_nombre "
 				+ "from (select row_number() over(order by " + campos[posicion] + " " + direccion + ") AS RowNumber, "
 				+ "ofe.ofe_id, ofe.ofe_titulo, ofe.ofe_descripcion, cat.cat_nombre, tof.tof_nombre, tio.tio_nombre, mun.mun_nombre, est.est_nombre FROM oferta ofe "
@@ -341,7 +367,7 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "OR  tio.tio_nombre ILIKE ? "
 				+ "OR  mun.mun_nombre ILIKE ? "
 				+ "OR est.est_nombre ILIKE ? ) ";
-		sql = sql + "as tabla where tabla.RowNumber between ? and ? ";
+		sql = sql + "as tabla where tabla.RowNumber between ? and ? ";*/
 
 		System.out.println(" 2 ::: Consulta realizada para las ofertas: " + sql);
 		
