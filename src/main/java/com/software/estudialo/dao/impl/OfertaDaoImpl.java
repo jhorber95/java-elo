@@ -928,44 +928,20 @@ public class OfertaDaoImpl implements OfertaDao {
 	public Boolean modificarOferta(int id, Oferta oferta) {
 		logger.debug("--- DENTRO DE MODIFICAR oferta para el admin--------");
 		
-		String SQL1 = "UPDATE oferta SET ofe_estado = ?, ofe_destacada = ? WHERE ofe_id = ?;";
-		
-		String precioLimpio = oferta.getPrecio().replace(".", "");
-		logger.debug("Precio: " + precioLimpio);
-		
-		oferta.setPrecio(precioLimpio);
-
-		int resultado1 = jdbcTemplate.update(SQL1, oferta.getEstado().getId(), oferta.getDestacada(), oferta.getId());
-		
-//		int resultado1 = jdbcTemplate.update(SQL1, oferta.getTitulo(), oferta.getDescripcion(), Integer.parseInt(oferta.getPrecio()),
-//				oferta.getTelefono(), oferta.getTipoOfrece().getId(), oferta.getCategoria().getId(),
-//				oferta.getMunicipio().getId(), oferta.getTipoOferta().getId(), oferta.getEstado().getId(),
-//				oferta.getDestacada(), oferta.getId());
-
-		if (resultado1 > 0) {
-			logger.debug("--- OFERTA MODIFICADa -----");
-			return true;
-		} else {
-			logger.debug("No se pudo MODIFICAR el oferta");
-			return false;
-		}
-		
-		
-
-//		String SQL1 = "UPDATE oferta SET ofe_titulo = ?, ofe_descripcion = ?, ofe_precio = ?, ofe_telefono = ?, "
-//				+ "ofe_tipo_ofrece = ?, ofe_categoria = ?, ofe_municipio = ?, ofe_tipo_oferta = ?, "
-//				+ "ofe_estado = ?, ofe_destacada = ? WHERE ofe_id = ?;";
+//		String SQL1 = "UPDATE oferta SET ofe_estado = ?, ofe_destacada = ? WHERE ofe_id = ?;";
 //		
 //		String precioLimpio = oferta.getPrecio().replace(".", "");
 //		logger.debug("Precio: " + precioLimpio);
 //		
 //		oferta.setPrecio(precioLimpio);
 //
+//		int resultado1 = jdbcTemplate.update(SQL1, oferta.getEstado().getId(), oferta.getDestacada(), oferta.getId());
+		
 //		int resultado1 = jdbcTemplate.update(SQL1, oferta.getTitulo(), oferta.getDescripcion(), Integer.parseInt(oferta.getPrecio()),
 //				oferta.getTelefono(), oferta.getTipoOfrece().getId(), oferta.getCategoria().getId(),
 //				oferta.getMunicipio().getId(), oferta.getTipoOferta().getId(), oferta.getEstado().getId(),
 //				oferta.getDestacada(), oferta.getId());
-//
+
 //		if (resultado1 > 0) {
 //			logger.debug("--- OFERTA MODIFICADa -----");
 //			return true;
@@ -973,6 +949,34 @@ public class OfertaDaoImpl implements OfertaDao {
 //			logger.debug("No se pudo MODIFICAR el oferta");
 //			return false;
 //		}
+		
+		
+
+		String SQL1 = "UPDATE oferta SET ofe_titulo = ?, ofe_descripcion = ?, ofe_precio = ?, ofe_telefono = ?, "
+				+ "ofe_tipo_ofrece = ?, ofe_categoria = ?, ofe_municipio = ?, ofe_tipo_oferta = ?, "
+				+ "ofe_estado = ?, ofe_destacada = ? WHERE ofe_id = ?;";
+		
+		String precioLimpio = oferta.getPrecio().replace(".", "");
+		logger.debug("Precio: " + precioLimpio);
+		
+		oferta.setPrecio(precioLimpio);
+
+		int resultado1 = jdbcTemplate.update(SQL1, oferta.getTitulo(), oferta.getDescripcion(), Integer.parseInt(oferta.getPrecio()),
+				oferta.getTelefono(), oferta.getTipoOfrece().getId(), oferta.getCategoria().getId(),
+				oferta.getMunicipio().getId(), oferta.getTipoOferta().getId(), oferta.getEstado().getId(),
+				oferta.getDestacada(), oferta.getId());
+		
+		String sqlOfertaInstitucion= "UPDATE oferta_institucion SET oins_institucion = ? WHERE oins_oferta = ? ";
+		
+		int result2 = jdbcTemplate.update(sqlOfertaInstitucion, oferta.getIdOfrece(),  oferta.getId());
+
+		if (resultado1 > 0 && result2 >0) {
+			logger.debug("--- OFERTA MODIFICADa -----");
+			return true;
+		} else {
+			logger.debug("No se pudo MODIFICAR el oferta");
+			return false;
+		}
 	}
 
 	@Override

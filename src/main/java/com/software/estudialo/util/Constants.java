@@ -13,13 +13,13 @@ public class Constants {
 	
 	/*** ------------------------------    DEVELOPMENT      *****/
 	/** Ubicacion de las carpetas para las imagenes */
-// 	public static final String ROOT_LOCATION = "G://imagenes-estudialo";
+ 	public static final String ROOT_LOCATION = "D://workspace-sts//imagenes-estudialo";
 // 	public static final String USUARIO_LOCATION = "G://imagenes-estudialo//usuario";
 // 	public static final String INSTITUCION_LOCATION = "G://imagenes-estudialo//institucion";
 // 	public static final String OFERTA_LOCATION = "G://imagenes-estudialo//oferta";
 // 	public static final String EVENTO_LOCATION = "G://imagenes-estudialo//evento";
 // 	public static final String TEST_LOCATION = "G://imagenes-estudialo//test";
-// 	public static final String PUBLICIDAD_LOCATION = "G://imagenes-estudialo/publicidad";
+ 	public static final String PUBLICIDAD_LOCATION = "D://workspace-sts//imagenes-estudialo//publicidad";
 // //	
 // //	/** RUTA IMAGEN POR DEFECTO DESARROLLO -----*/
 // 	public static final String DEFECTO_IMAGE = "default.png";
@@ -35,13 +35,13 @@ public class Constants {
 	// ./imagenes-estudialo/institucion
 	
 	/** Ubicacion de las carpetas para las imagenes */
-	public static final String ROOT_LOCATION = "./imagenes-estudialo";
+	// public static final String ROOT_LOCATION = "./imagenes-estudialo";
 	public static final String USUARIO_LOCATION = "./imagenes-estudialo/usuario";
 	public static final String INSTITUCION_LOCATION = "./imagenes-estudialo/institucion";
 	public static final String OFERTA_LOCATION = "./imagenes-estudialo/oferta";
 	public static final String EVENTO_LOCATION = "./imagenes-estudialo/evento";
 	public static final String TEST_LOCATION = "./imagenes-estudialo/test";
-	public static final String PUBLICIDAD_LOCATION = "./imagenes-estudialo/publicidad";
+	// public static final String PUBLICIDAD_LOCATION = "./imagenes-estudialo/publicidad";
 
 	/** RUTA IMAGEN POR DEFECTO DESARROLLO -----*/
 	public static final String DEFECTO_IMAGE = "default.png";
