@@ -487,7 +487,7 @@ public class OfertaDaoImpl implements OfertaDao {
 		System.out.println(" 1 ::: Consulta realizada para las ofertas: " + sql);
 
 		String sql2 = "SELECT ofe_id, ofe_titulo, ofe_descripcion, cat_nombre, tof_nombre, tio_nombre, mun_nombre, est_nombre "
-				+ "from (select row_number() over(order by " + campos[posicion] + " " + direccion + ") AS RowNumber, "
+				+ "from (select DISTINCT  "
 				+ "ofe.ofe_id, ofe.ofe_titulo, ofe.ofe_descripcion, cat.cat_nombre, tof.tof_nombre, tio.tio_nombre, mun.mun_nombre, est.est_nombre FROM oferta ofe "
 				+ "INNER JOIN categoria cat ON ofe.ofe_categoria = cat.cat_id "
 				+ "INNER JOIN subcategoria sb ON sb.sca_categoria = cat.cat_id "
@@ -533,15 +533,15 @@ public class OfertaDaoImpl implements OfertaDao {
 		sql2 = sql2 + "AND ofe.ofe_precio <= ? ";
 		parametros2.add(precioMaximo);
 
+		parametros2.add(length);
 		parametros2.add(start);
-		parametros2.add(fin);
 		
 		System.out.println(" ========================================================");
 		System.out.println("  Parametros  filtrados busqueda final  filtro");
 		System.out.println(" ========================================================");
 		System.out.println(parametros2);
 
-		sql2 = sql2 + ") as tabla where tabla.RowNumber between ? and ? ";
+		sql2 = sql2 + ") as tabla  limit ? offset ?  ";
 
 		System.out.println(" 2 ::: Consulta realizada para las ofertas: " + sql2);
 
