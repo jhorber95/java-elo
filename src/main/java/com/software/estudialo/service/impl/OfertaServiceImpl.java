@@ -100,10 +100,10 @@ public class OfertaServiceImpl implements OfertaService {
 	 */
 	@Override
 	public JSONRespuesta listarOfertaFiltros(int start, int length, int draw, int posicion, String direccion,
-			int categoria, int municipio, int tipoOfrece, int tipoOferta, int precioMinimo, int precioMaximo, String nombreOferta) {
+			int categoria, int inteligencia, int municipio, int tipoOfrece, int tipoOferta, int precioMinimo, int precioMaximo, String nombreOferta) {
 		
 		logger.debug("listarOfertaFiltros -- listar ofertas por filtros");
-		JSONRespuesta listaOfertas = ofertaDao.listarOfertaFiltros(start, length, draw, posicion, direccion, categoria,
+		JSONRespuesta listaOfertas = ofertaDao.listarOfertaFiltros(start, length, draw, posicion, direccion, categoria, inteligencia,
 				municipio, tipoOfrece, tipoOferta, precioMinimo, precioMaximo, nombreOferta);
 		return listaOfertas;
 	}

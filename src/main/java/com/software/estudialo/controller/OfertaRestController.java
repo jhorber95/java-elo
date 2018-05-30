@@ -183,6 +183,7 @@ public class OfertaRestController {
 			@RequestParam(value = "order[0][column]", defaultValue = "0") int posicion,
 			@RequestParam(value = "order[0][dir]", defaultValue = "asc") String direccion,
 			@RequestParam(value = "categoria", defaultValue = "0") int categoria,
+			@RequestParam(value = "inteligencia", defaultValue = "0") int inteligencia,
 			@RequestParam(value = "municipio", defaultValue = "0") int municipio,
 			@RequestParam(value = "tipoOfrece", defaultValue = "0") int tipoOfrece,
 			@RequestParam(value = "tipoOferta", defaultValue = "0") int tipoOferta,
@@ -193,9 +194,10 @@ public class OfertaRestController {
 		logger.debug("getOfertas --- listando la oferta");
 		System.out.println(" =====================================");
 		System.out.println("Nombre oferta: " + nombreOferta);
+		System.out.println("inteligencia: " + inteligencia);
 		System.out.println(" =====================================");
 		JSONRespuesta listaOferta = new JSONRespuesta();
-		listaOferta = ofertaService.listarOfertaFiltros(start, length, draw, posicion, direccion, categoria, municipio, tipoOfrece, tipoOferta, precioMinimo, precioMaximo, nombreOferta);
+		listaOferta = ofertaService.listarOfertaFiltros(start, length, draw, posicion, direccion, categoria, inteligencia, municipio, tipoOfrece, tipoOferta, precioMinimo, precioMaximo, nombreOferta);
 		return new ResponseEntity<JSONRespuesta>(listaOferta, HttpStatus.OK);
 	}
 	

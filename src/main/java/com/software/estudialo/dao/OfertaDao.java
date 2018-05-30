@@ -178,7 +178,7 @@ public interface OfertaDao {
 	 * @param tipoOferta the tipo oferta
 	 * @return the JSON respuesta
 	 */
-	public JSONRespuesta listarOfertaFiltros(int start, int length, int draw, int posicion, String direccion, int categoria, int municipio, int tipoOfrece, int tipoOferta, int precioMinimo, int precioMaximo, String nombreOferta);
+	public JSONRespuesta listarOfertaFiltros(int start, int length, int draw, int posicion, String direccion, int categoria, int inteligencia, int municipio, int tipoOfrece, int tipoOferta, int precioMinimo, int precioMaximo, String nombreOferta);
 
 	
 	
