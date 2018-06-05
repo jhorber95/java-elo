@@ -117,7 +117,22 @@ public interface OfertaService {
 	 * @param tipoOferta the tipo oferta
 	 * @return the JSON respuesta
 	 */
-	public JSONRespuesta listarOfertaFiltros(int start, int length, int draw, int posicion, String direccion, int categoria,int inteligencia, int municipio, int tipoOfrece, int tipoOferta, int precioMinimo, int precioMaximo, String nombreOferta);
+	public JSONRespuesta listarOfertaFiltros(
+			int start, 
+			int length, 
+			int draw, 
+			int posicion, 
+			String direccion, 
+			int categoria,
+			int inteligencia, 
+			int departamento, 
+			int municipio, 
+			int tipoOfrece,
+			int tipoOferta, 
+			int precioMinimo,
+			int precioMaximo,
+			String nombreOferta
+		);
 	
 	
 	public Boolean calificacionOfertaFreelancerRealizada(int idOferta, int idUsuario);

@@ -177,13 +177,14 @@ public class OfertaRestController {
 	@ApiOperation(value = "Lista las ofertas a traves de los 5 filtros (categoria, municipio, tipoOfrece, tipoOferta, precioMinimo, precioMaximo y nombre carrera)")
 	@GetMapping(url + "/filtros")
 	public ResponseEntity<JSONRespuesta> getOfertasFiltros(
-			@RequestParam(value = "start", defaultValue = "1") int start,
+			@RequestParam(value = "start", defaultValue = "0") int start,
 			@RequestParam(value = "length", defaultValue = "10") int length,
 			@RequestParam(value = "draw", defaultValue = "1") int draw,
 			@RequestParam(value = "order[0][column]", defaultValue = "0") int posicion,
 			@RequestParam(value = "order[0][dir]", defaultValue = "asc") String direccion,
 			@RequestParam(value = "categoria", defaultValue = "0") int categoria,
 			@RequestParam(value = "inteligencia", defaultValue = "0") int inteligencia,
+			@RequestParam(value = "departamento", defaultValue = "0") int departamento,
 			@RequestParam(value = "municipio", defaultValue = "0") int municipio,
 			@RequestParam(value = "tipoOfrece", defaultValue = "0") int tipoOfrece,
 			@RequestParam(value = "tipoOferta", defaultValue = "0") int tipoOferta,
@@ -197,7 +198,7 @@ public class OfertaRestController {
 		System.out.println("inteligencia: " + inteligencia);
 		System.out.println(" =====================================");
 		JSONRespuesta listaOferta = new JSONRespuesta();
-		listaOferta = ofertaService.listarOfertaFiltros(start, length, draw, posicion, direccion, categoria, inteligencia, municipio, tipoOfrece, tipoOferta, precioMinimo, precioMaximo, nombreOferta);
+		listaOferta = ofertaService.listarOfertaFiltros(start, length, draw, posicion, direccion, categoria, inteligencia, departamento, municipio, tipoOfrece, tipoOferta, precioMinimo, precioMaximo, nombreOferta);
 		return new ResponseEntity<JSONRespuesta>(listaOferta, HttpStatus.OK);
 	}
 	

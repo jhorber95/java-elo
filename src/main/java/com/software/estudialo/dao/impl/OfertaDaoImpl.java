@@ -424,7 +424,7 @@ public class OfertaDaoImpl implements OfertaDao {
 	 */
 	@Override
 	public JSONRespuesta listarOfertaFiltros(int start, int length, int draw, int posicion, String direccion,
-			int categoria,int inteligencia, int municipio, int tipoOfrece, int tipoOferta, int precioMinimo, int precioMaximo, String nombreOferta) {
+			int categoria,int inteligencia,int departamento, int municipio, int tipoOfrece, int tipoOferta, int precioMinimo, int precioMaximo, String nombreOferta) {
 
 		logger.debug(" listarOfertaFiltros ---- listar ofertas filtros");
 
@@ -496,6 +496,7 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "INNER JOIN tipo_ofrece tof ON ofe.ofe_tipo_ofrece = tof.tof_id "
 				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
+				+ "INNER JOIN departamento dep ON  mun.mun_departamento = dep.dep_id "
 				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " 
 				+ "WHERE ofe.ofe_estado IN (8) ";
 
@@ -508,6 +509,10 @@ public class OfertaDaoImpl implements OfertaDao {
 		if (inteligencia != 0) {
 			sql2 = sql2 + "AND i.int_id = ? ";
 			parametros2.add(inteligencia);
+		}
+		if (departamento != 0) {
+			sql2 = sql2 + "AND dep.dep_id = ? ";
+			parametros2.add(departamento);
 		}
 		if (municipio != 0) {
 			sql2 = sql2 + "AND ofe.ofe_municipio = ? ";
