@@ -655,6 +655,16 @@ public class OfertaServiceImpl implements OfertaService {
 		return listaOfertas;
 	}
 
+	@Override
+	public JSONRespuesta listofertasByTitulo(String search, int start, int length) {
+		logger.debug(" SERVICE-IMPL :: listarOfertaBuscador by titulo -- listar ofertas por el titulo");
+		JSONRespuesta listaOfertas = new  JSONRespuesta();
+		
+		listaOfertas = ofertaDao.listofertasByTitulo(search, start, length);
+		
+		return listaOfertas;
+	}
+
 	
 
 	

@@ -1689,7 +1689,7 @@ public class OfertaDaoImpl implements OfertaDao {
 	@Override
 	public JSONRespuesta listarOfertas() {
 		
-		logger.debug(" listarOferta ---- listar ofertas");
+		logger.debug(" *** JB listarOfertas ---- listar ofertas by titulo");
 
 		JSONRespuesta respuesta = new JSONRespuesta();
 		
@@ -1729,6 +1729,88 @@ public class OfertaDaoImpl implements OfertaDao {
 		respuesta.setData(listaOferta);
 		return respuesta;
 		
+		
+	}
+
+	@Override
+	public JSONRespuesta listofertasByTitulo(String search, int start, int length) {
+		logger.debug(" DAO-IMPL :: listarOferta ---- listar ofertas");
+
+		JSONRespuesta respuesta = new JSONRespuesta();
+
+		int fin = start + length - 1;
+
+		String sql = "SELECT COUNT(*) as cant FROM oferta ofe WHERE ofe.ofe_estado IN(8) ";
+
+		int count = jdbcTemplate.queryForObject(sql, Integer.class);
+		
+		logger.debug("*** Cantidad de ofertas =" + count);
+		
+		int filtrados = count;
+
+		if (search.length() > 0) {
+			sql = sql
+					+ "AND ( ofe.ofe_titulo ILIKE ? ) ";
+
+			filtrados = jdbcTemplate
+					.queryForObject(sql, new Object[] { "%" + search + "%" }, Integer.class);
+		}
+
+		System.out.println(" 1 ::: Consulta realizada para contar las ofertas: " + sql);
+
+		sql = "SELECT ofe_id, ofe_titulo "
+				+ "FROM ( "
+				+ "SELECT "
+				+ "ROW_NUMBER () OVER (ORDER BY ofe_titulo ASC) AS RowNumber, "
+				+ "ofe.ofe_id, "
+				+ "ofe.ofe_titulo "
+				+ "FROM "
+				+ "oferta ofe "
+				+ "WHERE ofe.ofe_estado IN (8) "
+				+ "AND  unaccent (ofe.ofe_titulo) ILIKE ? "
+				+ ") as tabla WHERE tabla.RowNumber BETWEEN ? AND ?";
+	
+		System.out.println(" 2 ::: Consulta realizada para las ofertas: " + sql);
+		
+		final List<Oferta> listaOferta = new ArrayList<>();
+		
+		jdbcTemplate.query(sql,
+				new Object[] { "%" + search + "%", start, fin },
+				new RowCallbackHandler() {
+			
+				      @Override
+				      public void processRow(ResultSet rs) throws SQLException {
+				    	  
+				    	  logger.debug(" *** JB mapRow  ----- obteniendo oferta, id: " + rs.getInt("ofe_id") + " "+ rs.getString("ofe_titulo") );
+							Oferta oferta = obtenerOferta(rs.getInt("ofe_id"));
+							
+							TipoOfrece tipoOfrece = oferta.getTipoOfrece();
+							Boolean ofrecedorActivo = false;
+							
+							// Verificacion ofrecedor activo
+							if (tipoOfrece.getId() == Constants.ID_TIPO_OFRECE_INSTITUCION) {
+								
+								 logger.debug("** JB get institucion by oferta  : " + oferta.getIdOfrece());
+								 
+								Institucion institucion = institucionDao.obtenerInstitucion(oferta.getIdOfrece());
+								ofrecedorActivo = institucionDao.institucionActiva(institucion.getEmail());
+								
+							} else if (tipoOfrece.getId() == Constants.ID_TIPO_OFRECE_FREELANCER) {							
+								Usuario usuario = usuarioDao.obtenerUsuario(oferta.getIdOfrece());
+								ofrecedorActivo = usuarioDao.usuarioActivo(usuario.getEmail());
+							}
+							
+							if (ofrecedorActivo) {
+								listaOferta.add(oferta);
+							}				    	
+				      }
+				});	
+
+		respuesta.setDraw(1);
+		respuesta.setRecordsFiltered(filtrados);
+		respuesta.setRecordsTotal(count);
+		respuesta.setData(listaOferta);
+		return respuesta;
 		
 	}
 

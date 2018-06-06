@@ -148,6 +148,27 @@ public class OfertaRestController {
 		return new ResponseEntity<JSONRespuesta>(listaOferta, HttpStatus.OK);
 	}
 	
+	
+	
+	
+	
+	@ApiOperation(value = "Lista las ofertas a traves de del titulo")
+	@GetMapping(url + "/buscador-by-titulo")
+	public ResponseEntity<JSONRespuesta> getOfertasByTitulo(
+			@RequestParam(value = "search", defaultValue = "") String search,
+			@RequestParam(value = "start", defaultValue = "1") int start,
+			@RequestParam(value = "length", defaultValue = "10") int length) {
+		
+		logger.debug(" CONTROLLER getOfertas --- listando la oferta por el titulo");
+		JSONRespuesta listaOferta = new JSONRespuesta();
+		listaOferta = ofertaService.listofertasByTitulo(search, start, length);
+		return new ResponseEntity<JSONRespuesta>(listaOferta, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
 	@ApiOperation(value = "Lista las ofertas a traves de la variable search (Campo de Busqueda)")
 	@GetMapping(url + "/all")
 	public ResponseEntity<JSONRespuesta> getAllOfertas() {
