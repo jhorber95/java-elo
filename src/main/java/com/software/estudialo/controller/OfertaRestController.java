@@ -197,6 +197,10 @@ public class OfertaRestController {
 		System.out.println("Nombre oferta: " + nombreOferta);
 		System.out.println("inteligencia: " + inteligencia);
 		System.out.println(" =====================================");
+		System.out.println(" =====================================");
+		System.out.println("ID Departamento: " + departamento);
+//		System.out.println("inteligencia: " + inteligencia);
+		System.out.println(" =====================================");
 		JSONRespuesta listaOferta = new JSONRespuesta();
 		listaOferta = ofertaService.listarOfertaFiltros(start, length, draw, posicion, direccion, categoria, inteligencia, departamento, municipio, tipoOfrece, tipoOferta, precioMinimo, precioMaximo, nombreOferta);
 		return new ResponseEntity<JSONRespuesta>(listaOferta, HttpStatus.OK);

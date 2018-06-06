@@ -155,7 +155,7 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "INNER JOIN subcategoria sub ON sub.sca_categoria = cat.cat_id "
 				+ "INNER JOIN subcategoria_inteligencia sin ON sin.sin_subcategoria = sub.sca_id "
 				+ "INNER JOIN inteligencia i ON i.int_id = sin.sin_inteligencia "
-				+ "WHERE ofe.ofe_estado IN (8) AND i.int_id IN (?, ?, ?);";
+				+ "WHERE ofe.ofe_estado IN (8) AND i.int_id IN (?, ?, ?) LIMIT 21 OFFSET 0 ;";
 		
 		
 		final List<Oferta> listaOfertas = new ArrayList<>();
