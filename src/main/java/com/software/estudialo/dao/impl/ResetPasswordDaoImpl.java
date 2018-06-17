@@ -56,7 +56,7 @@ public class ResetPasswordDaoImpl implements ResetPasswordDao {
 		
 		if(result > 0) {
 			String url = "http://localhost:4200/login/recuperar-cuenta/"+ usuario.getId() + "/" + token;
-			//String url = "http://estudialo.co/login/recuperar-cuenta/"+ usuario.getId() + "/" + token;
+			// String url = "https://estudialo.co/login/recuperar-cuenta/"+ usuario.getId() + "/" + token;
 			
 			Mail mail = new Mail();
 			 
@@ -91,7 +91,7 @@ public class ResetPasswordDaoImpl implements ResetPasswordDao {
 			System.out.println("Token num: " + resultado);
 			return true;
 		}else {
-			throw new ObjectAlreadyExistException("No existe ningún token asignado ese usuario.");
+			throw new ObjectAlreadyExistException("No existe ningún token asignado al usuario.");
 		}
 	}
 }

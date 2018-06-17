@@ -130,7 +130,7 @@
 							<outputDirectory>${basedir}/src/main/resources/static/</outputDirectory> 
 							<resources> 
 								<resource> 
-									<directory>D:/workspace-sts/estudialo-frontend/dist</directory> 
+									<directory>/home/jhorkman/AngularProjects/estudialo-frontend/dist</directory> 
 								</resource> 
 							</resources> 
 						</configuration> 
