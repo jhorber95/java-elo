@@ -5,7 +5,8 @@
   <div class="col-md-6 p-b-20 bg-inner">
     <h3 class="m-t-20 text-info">Fase 8 de 8<span class="pull-right">100% Completado</span></h3>
     <div class="progress">
-      <div class="progress-bar bg-info active progress-bar-striped" style="width: 100%; height:20px;" role="progressbar">
+      <div class="progress-bar bg-info active progress-bar-striped" style="width: 100%; height:20px;"
+           role="progressbar">
       </div>
     </div>
   </div>
@@ -13,9 +14,10 @@
 <form #f="ngForm" novalidate>
   <div class="row m-b-20">
     <div class="col-md-12 text-center">
-      <div class="col-md-6 offset-md-3 m-t-10 alert alert-success wow jello"> <i class="fa fa-check"></i>
+      <div class="col-md-6 offset-md-3 m-t-10 alert alert-success wow jello"><i class="fa fa-check"></i>
         En hora buena has terminado el test de guia vocacional
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
       </div>
     </div>
 
@@ -30,35 +32,60 @@
       </div>
     </div>
     <div class="col-md-6">
-      <div class="col-md-12 p-t-30">
-          <div class="row wow zoomIn">
-            <div class="col-md-2 text-center yellow">
-              <span class="fa fa-trophy fa-4x"></span>
-            </div>
-            <div class="col-md-10">
-              <h3 class="p-t-20">1 Inteligencia: {{resultTest.primero.nombre}}</h3>
-            </div>
+      <div class="col-md-12 p-t-30 ">
+
+        <div class="row wow zoomIn">
+          <div class="col-md-2 text-center yellow">
+            <span class="fa fa-trophy fa-4x"></span>
           </div>
+          <div class="col-md-10 mytooltip">
+            <span class="tooltip-content5">
+              <span class="tooltip-text3">
+                <span class="tooltip-inner2">
+                  <h5 class="text-info font-bold">{{resultTest.primero.nombre}}</h5>
+                  <br/>{{resultTest.primero.descripcion}}
+                </span>
+              </span>
+            </span>
+            <h3 class="p-t-20">1 Inteligencia: {{resultTest.primero.nombre}}</h3>
+          </div>
+        </div>
       </div>
       <div class="col-md-12">
-          <div class="row wow zoomIn">
-            <div class="col-md-2 text-center grey">
-              <span class="fa fa-trophy fa-4x"></span>
-            </div>
-            <div class="col-md-10">
-              <h3 class="p-t-20">2 Inteligencia: {{resultTest.segundo.nombre}}</h3>
-            </div>
+        <div class="row wow zoomIn">
+          <div class="col-md-2 text-center grey">
+            <span class="fa fa-trophy fa-4x"></span>
           </div>
+          <div class="col-md-10 mytooltip">
+            <span class="tooltip-content5">
+              <span class="tooltip-text3">
+                <span class="tooltip-inner2">
+                  <h5 class="text-info font-bold">{{resultTest.segundo.nombre}}</h5>
+                  <br/>{{resultTest.segundo.descripcion}}
+                </span>
+              </span>
+            </span>
+            <h3 class="p-t-20">2 Inteligencia: {{resultTest.segundo.nombre}}</h3>
+          </div>
+        </div>
       </div>
       <div class="col-md-12">
-          <div class="row wow zoomIn">
-            <div class="col-md-2 text-center cobre">
-              <span class="fa fa-trophy fa-4x"></span>
-            </div>
-            <div class="col-md-10">
-              <h3 class="p-t-20">3 Inteligencia: {{resultTest.tercero.nombre}}</h3>
-            </div>
+        <div class="row wow zoomIn">
+          <div class="col-md-2 text-center cobre">
+            <span class="fa fa-trophy fa-4x"></span>
           </div>
+          <div class="col-md-10 mytooltip">
+            <span class="tooltip-content5">
+              <span class="tooltip-text3">
+                <span class="tooltip-inner2">
+                  <h5 class="text-info font-bold">{{resultTest.tercero.nombre}}</h5>
+                  <br/>{{resultTest.tercero.descripcion}}
+                </span>
+              </span>
+            </span>
+            <h3 class="p-t-20">3 Inteligencia: {{resultTest.tercero.nombre}}</h3>
+          </div>
+        </div>
       </div>
       <div class="col-md-12 text-center">
         <button class="btn btn-success btn-rounded" (click)="NextFase()"> Ver Ofertas Relacionadas
