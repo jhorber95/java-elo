@@ -29,6 +29,8 @@ import io.swagger.annotations.ApiOperation;
  * The Class CategoriaRestController.
  *
  * @author LUIS
+ * @since 25-06-2018
+ *
  */
 @RestController
 @CrossOrigin(origins = "*")
@@ -45,6 +47,7 @@ public class CategoriaRestController {
 	
 	/**
 	 * Listar categorias.
+ * @since 25-06-2018
 	 *
 	 * @return the response entity
 	 */

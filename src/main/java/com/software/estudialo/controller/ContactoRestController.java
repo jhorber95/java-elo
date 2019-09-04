@@ -97,7 +97,6 @@ public class ContactoRestController {
 
 		emailSender.send(message);
 		logger.debug("Se envio el correo correo.....");
-
 	}
 
 }

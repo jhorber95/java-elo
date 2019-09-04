@@ -10,6 +10,8 @@ target/
 .springBeans
 
 /src/main/resources/static
+/src/main/node_modules
+/src/main/dist
 target/
 
 ### IntelliJ IDEA ###

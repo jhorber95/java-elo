@@ -339,6 +339,8 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "		INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "		INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
 				+ "		INNER JOIN estado est ON ofe.ofe_estado = est.est_id "
+				+ "		INNER JOIN oferta_institucion AS ofi ON ofi.oins_oferta = ofe.ofe_id "
+				+ "		INNER JOIN institucion AS ins ON ofi.oins_institucion = ins.inst_id "
 				+ "		WHERE "
 				+ "			ofe.ofe_estado IN (8) "
 				+ "		AND  "
@@ -349,6 +351,7 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "			OR unaccent (tio.tio_nombre) ILIKE ? "
 				+ "			OR unaccent (mun.mun_nombre) ILIKE ? "
 				+ "			OR est.est_nombre ILIKE ? "
+				+ " 		OR unaccent(ins.inst_nombre)  ILIKE ?	"
 				+ "		) as tabla WHERE tabla.RowNumber BETWEEN ? AND ?";
 		/*sql = "";
 		sql = "SELECT ofe_id, ofe_titulo, ofe_descripcion, cat_nombre, tof_nombre, tio_nombre, mun_nombre, est_nombre "
@@ -374,7 +377,7 @@ public class OfertaDaoImpl implements OfertaDao {
 		final List<Oferta> listaOferta = new ArrayList<>();
 		
 		jdbcTemplate.query(sql,
-				new Object[] { "%" + search + "%", "%" + search + "%", "%" + search + "%", "%" + search + "%",
+				new Object[] { "%" + search + "%", "%" + search + "%", "%" + search + "%", "%" + search + "%", "%" + search + "%",
 						"%" + search + "%", "%" + search + "%", "%" + search + "%", start, fin },
 				new RowCallbackHandler() {
 			
@@ -457,6 +460,10 @@ public class OfertaDaoImpl implements OfertaDao {
 			sql = sql + "AND ofe.ofe_municipio = ? ";
 			parametros.add(municipio);
 		}
+		/*if (departamento != 0) {
+			sql = sql + "AND dep.dep_id = ? ";
+			parametros.add(departamento);
+		}*/
 		if (tipoOfrece != 0) {
 			sql = sql + "AND ofe.ofe_tipo_ofrece = ? ";
 			parametros.add(tipoOfrece);
@@ -497,7 +504,7 @@ public class OfertaDaoImpl implements OfertaDao {
 				+ "INNER JOIN tipo_oferta tio ON ofe.ofe_tipo_oferta = tio.tio_id "
 				+ "INNER JOIN municipio mun ON ofe.ofe_municipio = mun.mun_id "
 				+ "INNER JOIN departamento dep ON  mun.mun_departamento = dep.dep_id "
-				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id " 
+				+ "INNER JOIN estado est ON ofe.ofe_estado = est.est_id "
 				+ "WHERE ofe.ofe_estado IN (8) ";
 
 		ArrayList<Object> parametros2 = new ArrayList<Object>();
