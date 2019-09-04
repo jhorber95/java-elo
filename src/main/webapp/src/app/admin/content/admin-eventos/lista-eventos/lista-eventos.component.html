@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-12">
+    <div class="row">
+        <div class="col-md-9">
+            <p class="text-primary">Click en evento: <strong>{{ message }}</strong></p>
+          </div>
+          <div class="col-md-3 text-right">
+              <button class="btn btn-info" (click)="editarEvento()">Editar</button>
+              <button class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+          </div>
+    </div>
+      
+
+      <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titulo</th>
+                <th>Institución</th>
+                <th>Tipo Evento</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th></th>
+              </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let evento of eventos; let row = index" [class.selected]="clickSelected === 'selected'+row" (click)="ClickRow(row, 'selected'+row)" >
+            <td>{{evento.id}} </td>
+            <td>{{evento.titulo}} </td>
+            <td>{{evento.institucion.nombre}} </td>
+            <td>{{evento.tipoEvento.nombre}} </td>
+            <td>{{evento.fecha}} </td>
+            <td>{{evento.estado.nombre}} </td>
+          </tr>
+        </tbody>
+      </table>
+   
+
+<div *ngIf="eventos?.length == 0">
+  <div class="alert alert-warning">
+    No tiene ningún evento registrado. Te invitamos a crear tu <a routerLink="/institucion/crear-evento">primer evento.</a> 
+  </div>
+</div>
+
+
+</div>

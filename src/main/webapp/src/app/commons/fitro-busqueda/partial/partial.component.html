@@ -1,0 +1,103 @@
+
+<form class="form-material">
+    <div class="row">
+      
+        <div class="form-group col-md-12">
+            <div class="m-l-10 m-r-10">
+              <label class="font-medium">Departamento:</label>
+              <select class="form-control" 
+                      name="idDepartamento" 
+                      #idDepartamento="ngModel"	
+                      [(ngModel)]="idFiltros.idDepartamento"
+                      (change)="onSelectDepartamento($event.target.value)">
+                <option value="all">Todos</option>
+                <option *ngFor="let departamento of departamentos"
+                        value="{{departamento.id}}">{{departamento.nombre}}</option>
+              </select>
+            </div>
+          </div>
+
+      <div class="form-group col-md-12">
+        <div class="m-l-10 m-r-10">
+          <label class="font-medium">Municipio:</label>
+
+          <div *ngIf="!selectDepartamento">
+            <p>Seleciona un departamento</p>
+          </div>
+
+          <div *ngIf="selectDepartamento">
+              <select class="form-control" #idMunicipio="ngModel" name="idMunicipio" [(ngModel)]="idFiltros.idMunicipio">
+                  <option value="all">Todos</option>
+                  <option *ngFor="let municipio of municipios" value="{{municipio.id}}">{{municipio.nombre}}</option>
+                </select>
+          </div>
+          
+        </div>
+      </div>
+      <div class="form-group col-md-12">
+        <div class="m-l-10 m-r-10">
+          <label class="font-medium">Categoría:</label>
+          <select class="form-control" #idCategoria="ngModel" name="idCategoria" [(ngModel)]="idFiltros.idCateroria">
+            <option value="all">Todas</option>
+            <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.nombre}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group col-md-12">
+          <div class="m-l-10 m-r-10">
+            <label class="font-medium">Inteligencia:</label>
+            <select class="form-control" #idInteligencia="ngModel" name="idInteligencia" [(ngModel)]="idFiltros.idInteligencia">
+              <option value="all">Todas</option>
+              <option value="1">Linguística Verbal</option>
+              <option value="2">Lógica Matemática</option>
+              <option value="3">Visual Espacial</option>
+              <option value="4">Cinestésica Corporal</option>
+              <option value="5">Musical</option>
+              <option value="6">Interpersonal</option>
+              <option value="7">Intrapersonal</option>
+              <option value="8">Ambiental</option>
+
+              
+            </select>
+          </div>
+        </div>
+      <div class="form-group col-md-12">
+        <div class="m-l-10 m-r-10">
+          <label class="font-medium">Nivel:</label>
+          <select class="form-control" #idOferta="ngModel" name="idOferta" [(ngModel)]="idFiltros.idOferta">
+            <option value="all">Todas</option>
+            <option *ngFor="let tipooferta of tipoOfertas" value="{{tipooferta.id}}">{{tipooferta.nombre}}</option>
+          </select>
+        </div>
+      </div>
+      <!--<div class="form-group col-md-12">
+        <div class="m-l-10 m-r-10">
+          <label class="font-medium">Tipo Ofrece:</label>
+          <select class="form-control" #idOfrece="ngModel" name="idOfrece" [(ngModel)]="idFiltros.idOfrece">
+            <option value="all">Todos</option>
+            <option *ngFor="let tipoofrece of tipoOfrece" value="{{tipoofrece.id}}">{{tipoofrece.nombre}}</option>
+          </select>
+        </div>
+      </div>-->
+      <div class="form-group col-md-12">
+        <div class="m-l-10 m-r-10">
+          <label class="font-medium">Precio Mínimo $:</label>
+          <input type="number" class="form-control" id="idPrecioMin" #idPrecioMin="ngModel" name="idPrecioMin" [(ngModel)]="idFiltros.idPrecioMin">
+        </div>
+      </div>
+      <div class="form-group col-md-12">
+        <div class="m-l-10 m-r-10">
+          <label class="font-medium">Precio Máximo $:</label>
+          <input type="number" class="form-control" id="idPrecioMax" #idPrecioMax="ngModel" name="idPrecioMax" [(ngModel)]="idFiltros.idPrecioMax">
+        </div>
+      </div>
+
+      <div class="form-group col-md-12">
+          <div class="m-l-10 m-r-10">
+            <button type="button" class="btn btn-info" (click)="clickFiltrarPartial()">Filtrar</button>
+          </div>
+        </div>
+
+    </div>
+  </form>

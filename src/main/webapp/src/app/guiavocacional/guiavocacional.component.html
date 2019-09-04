@@ -1,0 +1,109 @@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+
+  <div class="preloader">
+    <div class="loader">
+      <div class="loader__figure"></div>
+      <p class="loader__label">estúdialo</p>
+    </div>
+  </div>
+	<!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <app-header-home></app-header-home>
+
+    <div class="page-wrapper2">
+
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
+        <!--<div class="row page-titles">
+            <div class="col-md-12 align-self-center">
+                <h3 class="text-themecolor">Guia Vocacional</h3>
+            </div>
+        </div>-->
+
+        <!-- contenido -->
+        <div class="container card m-t-80">
+          <div class="AllctSchool">
+
+            <section class="col-md-12 m-t-20">
+              <div class="row wow zoomIn">
+                <section id="banner1">
+                  <a href="{{Ad1.url}}" target="_blanck">
+                    <img src="{{Ad1.imagen}}" alt="" class="img-responsive wow zoomIn" data-wow-delay="0.3s">
+                  </a>
+                </section>
+              </div>
+            </section>
+
+            <div class="row">
+
+              <section class="col-md-8 ColClear">
+
+                <div class="ColBoxMarg m-b-20">
+
+                  <div class="TestImgBx wow jackInTheBox" data-wow-delay="0.5s">
+                    <img src="/assets/images/banner/BackImageTest.jpg" alt="BackOrienta">
+                  </div>
+
+                  <div class="TestIntroX white wow jackInTheBox" data-wow-delay="0.5s">
+                    <p>El Test de Orientación vocacional, es una herramienta de ayuda para quienes tienen muchas dudas acerca de qué carrera elegir. Este Test evalúa cuáles son las carreras que presentan más afinidad con aspectos:</p>
+                    <div class="row  wow jackInTheBox">
+                      <div class="col-md-4 text-center">
+                        <span class="fa fa-thumbs-o-up fa-4x"></span>
+                        <p>actitudinales</p>
+                      </div>
+                      <div class="col-md-4 text-center">
+                        <span class="fa fa-codepen fa-4x"></span>
+                        <p>de personalidad</p>
+                      </div>
+                      <div class="col-md-4 text-center">
+                        <span class="fa fa-heartbeat fa-4x"></span>
+                        <p>Tus gustos</p>
+                      </div>
+                    </div>
+                    <div class="TestContBtnX  wow jackInTheBox">
+                      <a routerLink="/test/fase1" class="btn btn-info">Presentar test guía vocacional</a>
+                    </div>
+                  </div>
+                </div>
+
+              </section>
+
+              <aside class="col-md-4 ColClear">
+                <div class="PubliBox text-center wow zoomIn" data-wow-delay="1s">
+                  <a routerLink="/test/fase1">
+                    <img src="/assets/images/banner/Suerte.gif" class="img-responsive">
+                  </a>
+                </div>
+                <br>
+                <div class="PubliBox text-center wow zoomIn" data-wow-delay="1.5s">
+                  <a href="{{Ad2.url}}" target="_blank">
+                    <img src="{{Ad2.imagen}}">
+                  </a>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+
+        </div>
+        <!-- fin contenido -->
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+      </div>
+
+    <app-partners></app-partners>
+		<app-footer></app-footer>
+
+    </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->

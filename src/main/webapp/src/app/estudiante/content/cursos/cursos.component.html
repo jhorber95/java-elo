@@ -1,0 +1,120 @@
+  <div class="row el-element-overlay">
+    <div class="col-md-12">
+      <h4 class="card-title">Listado de cursos inscritos</h4>
+      
+    </div>
+    <br>
+
+    <div class="col-md-12 col-lg-12" *ngIf="cursos?.length == 0">
+      <div class="alert alert-warning">
+        No tienes ninguna subscripción a ofertas. Te invitamos a tomar el <a href="javascript:void()" (click)="navigateToTest()" >test vocacional.</a>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 col-lg-4 col-xlg-4" *ngFor="let curso of cursos">
+      <div class="card card-shadow ribbon-wrapper-reverse">
+        <div *ngIf="!curso.confirmacion">
+          <div class="ribbon ribbon-corner ribbon-right ribbon-warning"
+                data-toggle="tooltip"
+                title="No se a confirmado la subscripción">
+            <a ref="javascript:void()"> <i class="fa fa-warning"></i>  </a>
+          </div>
+        </div>
+
+        <div class="ribbon ribbon-corner ribbon-left ribbon-danger"
+                data-toggle="tooltip"
+                title="Eliminar Subscripción">
+            <a (click)="eliminarOferta(curso.id, curso.oferta.tipoOfrece.id)"> <i class="fa fa-window-close"></i>  </a>
+          </div>
+
+
+        <div class="el-card-item">
+          <div class="el-card-avatar">
+            <img class="image-responsive-cursos" src="/api/imagen/oferta/{{curso.oferta.imagenUrl}}" alt="Imagen curso"  />
+          </div>
+          <div class="el-card-content">
+              <h3 class="box-title m-b-0">{{curso.oferta.titulo | slice:0:50}} ...</h3>
+              <small>{{curso.oferta.categoria.nombre}}</small>
+              <p class="card-text text-justify">{{curso.oferta.descripcion}}</p>
+              <address>
+                <br/>
+                <span><i class="fa fa-phone"></i> {{curso.oferta.telefono}}
+                </span>
+              </address>
+              <button class="btn btn-success"
+                      [disabled]="!curso.confirmacion"
+                      (click)="openModal(modalCaficar, curso.oferta.id, curso.oferta.tipoOfrece.id)">
+                    Calificar
+                  </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <ng-template #modalCaficar let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Calificar curso</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal form-material"
+        (ngSubmit)="calificarForm.form.valid && onSubmitCalificacion()"
+        #calificarForm="ngForm"
+        name="calificarForm"
+        id="calificarForm"
+        novalidate>
+
+        <div class="form-group "
+          [ngClass]="{ 'has-danger': calificarForm.submitted && !calificacion.valid  }">
+
+          <label class="label-control">Calificación: </label>
+          <input class="form-control" type="number"
+              id="calificacion"
+              name="calificacion"
+              placeholder="Mín 0 - Máx 5"
+              [(ngModel)]="calificarCurso.calificacion"
+              #calificacion="ngModel"
+                 [customMin]="0" [customMax]="5"
+              required="">
+
+          <div class="form-control-feedback"
+            *ngIf="calificarForm.submitted && !calificacion.valid">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">¡La calificación es obligatoria!</font>
+            </font>
+          </div>
+
+          <div class="form-control-feedback"
+               *ngIf="calificacion.errors?.customMin || calificacion.errors?.customMax">
+
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">
+                ¡La calificación debe estar entre 0 y 5!
+              </font>
+            </font>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="label-control">Comentario: </label>
+          <input type="textarea" class="form-control"
+          name="comentario"
+          id="comentario"
+          [(ngModel)]="calificarCurso.comentario"
+          #comentario="ngModel">
+        </div>
+
+        <div class="modal-footer-calificacion">
+          <button type="submit" class="btn btn-success" >Enviar</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>

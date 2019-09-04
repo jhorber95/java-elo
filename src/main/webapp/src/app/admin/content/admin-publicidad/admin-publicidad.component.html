@@ -1,0 +1,133 @@
+ <div class="card">
+	<div class="card-body">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h4 class="card-title">Publicidad 1 al comienzo del test</h4>
+        <form class="form-material">
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>banner 1000x100</label>
+                <br>
+                <input type="file" (change)="selectFile($event)">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Url de destino</label>
+                <input type="text"
+                       class="form-control"
+                       name="url"
+                       [(ngModel)]="Adform1.url"
+                       #url="ngModel"
+                       required >
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-info" [disabled]="!selectedFiles || Adform1.url == ''"
+                  (click)="upload1()">Subir Anuncio 1
+          </button>
+        </form>
+        <br>
+        <a [href]="Ad1.url" target="_blanck">
+          <img [src]="Ad1.imagen">
+        </a>
+      </div>
+    </div>
+	</div>
+</div>
+
+ <div class="row">
+   <div class="col-md-6">
+     <div class="card">
+       <div class="card-body text-center">
+
+             <h4 class="card-title">Publicidad 2 al comienzo del test</h4>
+             <form class="form-material">
+
+               <div class="row">
+                 <div class="col-md-12">
+                   <div class="form-group">
+                     <label>banner 300x250</label>
+                     <br>
+                     <input type="file" (change)="selectFile($event)">
+                   </div>
+                 </div>
+                 <div class="col-md-12">
+                   <div class="form-group">
+                     <label>Url de destino</label>
+                     <input type="text"
+                            class="form-control"
+                            name="url"
+                            [(ngModel)]="Adform2.url"
+                            #url="ngModel"
+                            required >
+                   </div>
+                 </div>
+               </div>
+
+               <button class="btn btn-info" [disabled]="!selectedFiles || Adform2.url == ''"
+                       (click)="upload2()">Subir Anuncio 2
+               </button>
+             </form>
+             <br>
+             <a [href]="Ad2.url" target="_blanck">
+               <img [src]="Ad2.imagen">
+             </a>
+
+
+       </div>
+     </div>
+   </div>
+
+   <div class="col-md-6">
+     <div class="card">
+       <div class="card-body text-center">
+
+             <h4 class="card-title">Publicidad 3 al Finalizar el test</h4>
+             <form class="form-material">
+
+               <div class="row">
+                 <div class="col-md-12">
+                   <div class="form-group">
+                     <label>banner 300x250</label>
+                     <br>
+                     <input type="file" (change)="selectFile($event)">
+                   </div>
+                 </div>
+                 <div class="col-md-12">
+                   <div class="form-group">
+                     <label>Url de destino</label>
+                     <input type="text"
+                            class="form-control"
+                            name="url"
+                            [(ngModel)]="Adform3.url"
+                            #url="ngModel"
+                            required >
+                   </div>
+                 </div>
+               </div>
+
+               <button class="btn btn-info" [disabled]="!selectedFiles || Adform3.url == ''"
+                       (click)="upload3()">Subir Anuncio 3
+               </button>
+             </form>
+             <br>
+             <a [href]="Ad3.url" target="_blanck">
+               <img [src]="Ad3.imagen">
+             </a>
+
+
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+
+
+
+
+

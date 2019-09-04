@@ -1,0 +1,15 @@
+.bg-inner {
+  background: #fafafa url(http://subtlepatterns.com/patterns/geometry2.png);
+  background-size: 30%;
+}
+
+.list_number {
+  background: #EEE;
+}
+
+[type="checkbox"] + label {
+  padding-left: 26px;
+  height: 100%;
+  line-height: 21px;
+  font-weight: normal;
+}

@@ -1,0 +1,102 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+        <li class="user-profile" [class.active]="showMenu === 'user'">
+          <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" (click)="addExpandClass('user')" aria-expanded="false">
+            <img src="/api/imagen/usuario/{{dataUser.urlImagen}}" alt="user" />
+            <span class="hide-menu">{{ dataUser.nombres }} </span></a>
+          <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'user'">
+            <li><a routerLink="/estudiante/profile">Mi perfil </a></li>
+            <li>
+                <a href="javascript:void()" (click)="openModal(modalPQR)" >Hacer una PQR  </a>
+            </li>
+            <li><a href="javascript:void()" (click)="salir()">Cerrar Sesión</a></li>
+          </ul>
+        </li>
+        <li class="nav-devider"></li>
+        <li [class.active]="showMenu === 'icons'">
+            <a class="has-arrow" href="javascript:void(0)" 
+                aria-expanded="false" 
+                (click)="addExpandClass('icons')" >
+                <span class="hide-menu">Rol</span>
+            </a>
+            <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'icons'">
+                <li *ngFor="let rol of nameRoles">
+                    <a routerLink="{{rol.url}}" [routerLinkActive]="['router-link-active']">{{rol.nombre}}</a>
+                </li>
+              
+            </ul>
+        </li>
+
+        <li>
+            <a routerLink="/estudiante/dashboard" [routerLinkActive]="['router-link-active']"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
+        </li>
+        <li>
+          <a routerLink="/estudiante/cursos" [routerLinkActive]="['router-link-active']">
+              <i class="fa fa-tasks"></i><span class="hide-menu">Mis cursos</span>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+
+<ng-template #modalPQR let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Hacer una petición, queja o reclamo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    
+  <form  #pqrForm="ngForm"
+        (ngSubmit)="pqrForm.form.valid && onFormSubmit()"
+        class="form-horizontal form-material"
+        id="pqrForm"
+        name="pqrForm"
+        novalidate>
+
+    <div class="modal-body">
+
+      <div class="form-group "
+            [ngClass]="{ 'has-danger': pqrForm.submitted && !mensaje.valid  }">
+        <label><strong> Mensaje</strong></label>
+        <input type="text" 
+              class="form-control form-control-line" 
+              name="mensaje"
+              id="mensaje" 
+              [(ngModel)]="pqr.mensaje"
+              #mensaje="ngModel" 
+              required="" >
+        <div class="form-control-feedback"
+                    *ngIf="pqrForm.submitted  && !mensaje.valid">
+                <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">
+                        Mensaje obligatorio!
+                    </font>
+                </font>
+            </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button  type="submit" class="btn btn-info" >Enviar</button>
+      <button
+        type="button"
+        class="btn btn-secondary pull-left"
+        (click)="c('Close click')">Cerrar</button>
+    </div>
+  </form>
+</ng-template> 

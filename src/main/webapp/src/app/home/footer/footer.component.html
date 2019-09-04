@@ -1,0 +1,155 @@
+<footer class="footer">
+                    <div class="fix-width">
+                        <div class="row col-md-12">
+                            <div class="col-lg-4 col-md-6"><img src="assets/images/logo/estudialo-header.png" alt="logo" />
+                                <p class="m-t-30">
+                                  <span class="text-white">Estúdialo</span> Estúdialo es la forma rápida y organizada de búsqueda educativa. </p>
+                              <a href="https://www.facebook.com/estudialo" target="_blank">
+                                <button class="btn btn-facebook waves-effect btn-circle waves-light" type="button"> <i class="fa fa-facebook"></i> </button>
+                              </a>
+                              <a href="https://www.twitter.com/estudialo_" target="_blank">
+                                <button class="btn btn-twitter waves-effect btn-circle waves-light" type="button"> <i class="fa fa-twitter"></i> </button>
+                              </a>
+                              <a href="https://www.instagram.com/estudialo" target="_blank">
+                                <button class="btn btn-instagram waves-effect btn-circle waves-light" type="button"> <i class="fa fa-instagram"></i> </button>
+                              </a>
+
+                              <a href="https://www.linkedin.com/company/estúdialo/" target="_blank">
+                                <button class="btn btn-linkedin waves-effect btn-circle waves-light" type="button"> <i class="fa fa-linkedin"></i> </button>
+                              </a>
+                              <a href="https://m.youtube.com/channel/UCWeHeE0_sceZTOYYDNJT6KA" target="_blank">
+                                <button class="btn btn-youtube waves-effect btn-circle waves-light" type="button"> <i class="fa fa-youtube"></i> </button>
+                              </a>
+                              <a href="https://mail.zoho.com/portal/estudialo" target="_blank">
+                                <button class="btn btn-default waves-effect btn-circle waves-light" type="button">
+                                  <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                </button>
+                              </a>
+
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                            	<h4 class="white">Descubre</h4>
+                                <ul class="footer-link list-icons">
+                                  <li><a href="https://estudialoblog.blogspot.com.co/?m=1" target="_blank"><i class="ti-angle-right"></i> Blog</a></li>
+                                  <li><a [routerLink]="['/eventos/todos']"><i class="ti-angle-right"></i> Eventos</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                            	<h4 class="white">Empresa</h4>
+                                <ul class="footer-link list-icons">
+                                    <li><a href="javascript:void(0)" (click)="open(construccion)"><i class="ti-angle-right"></i> ¿Quiénes somos?</a></li>
+                                    <li><a href="/assets/docs/Terminos y Condiciones, Politicas de Tratamiento de Datos y Cookies.pdf" target="_blank"><i class="ti-angle-right"></i> Términos y condiciones</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                            	<h4 class="white">Contacto</h4>
+                                <ul class="footer-link list-icons">
+                                    <li><a href="javascript:void(0)" (click)="open(construccion)"><i class="ti-angle-right"></i> Preguntas frecuentes</a></li>
+                                    <li><a (click)="open(contacto)" href="javascript:void(0)"><i class="ti-angle-right"></i> Contáctenos</a></li>
+                                </ul>
+                              <!-- modal -->
+                              <ng-template #contacto let-c="close" let-d="dismiss">
+                                <div class="modal-header">
+                                  <h4 class="modal-title"><b>Formulario de contacto</b></h4>
+                                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <form id="contacto" name="contacto" (ngSubmit)="contacto.form.valid && contactenos()" #contacto="ngForm" novalidate>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <div class="form-group" [ngClass]="{ 'has-danger': contacto.submitted && !nombres.valid }">
+                                        <input type="text" class="form-control form-control-danger" id="nombres" required="" placeholder="Nombres*" name="nombres" [(ngModel)]="model.nombres" #nombres="ngModel">
+                                        <div class="form-control-feedback" *ngIf="contacto.submitted && !nombres.valid">
+                                          <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">Sus nombres</font>
+                                          </font>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <div class="form-group" [ngClass]="{ 'has-danger': contacto.submitted && !email.valid }">
+                                        <input type="email" class="form-control form-control-danger" id="email" name="email" [(ngModel)]="model.email" #email="ngModel" placeholder="Email*"  required="" email>
+                                        <div class="form-control-feedback" *ngIf="contacto.submitted && !email.valid">
+                                          <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">Su Email</font>
+                                          </font>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                        <input type="number" class="form-control" placeholder="Celular" id="celular" name="celular" [(ngModel)]="model.celular" #celular="ngModel">
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <div class="form-group" [ngClass]="{ 'has-danger': contacto.submitted && !asunto.valid }">
+                                        <input type="text" class="form-control form-control-danger" placeholder="Asunto*" id="asunto" name="asunto" [(ngModel)]="model.asunto" #asunto="ngModel" required="">
+                                        <div class="form-control-feedback" *ngIf="contacto.submitted && !asunto.valid">
+                                          <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">Asunto del mensaje</font>
+                                          </font>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <div class="form-group" [ngClass]="{ 'has-danger': contacto.submitted && !mensaje.valid }">
+                                        <textarea class="form-control form-control-danger" id="mensaje" name="mensaje" rows="4" placeholder="Mensaje*" [(ngModel)]="model.mensaje" #mensaje="ngModel" required=""></textarea>
+                                        <div class="form-control-feedback" *ngIf="contacto.submitted && !mensaje.valid">
+                                          <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">Mensaje o inquietud</font>
+                                          </font>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <div class="col-6 text-left">
+                                    <button type="submit" class="btn btn-info">Enviar</button>
+                                  </div>
+
+                                  <div class="text-right col-6">
+                                    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+                                  </div>
+                                </div>
+                                </form>
+                              </ng-template>
+                              <!-- fin modal -->
+
+                              <!-- modal -->
+                              <ng-template #construccion let-c="close" let-d="dismiss">
+                                <div class="modal-header">
+                                  <h4 class="modal-title"><b>En construcción</b></h4>
+                                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <img class="img-responsive" src="/assets/images/background/en-construccion.gif">
+                                    </div>
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <div class="text-right col-6">
+                                      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+                                    </div>
+                                  </div>
+                              </ng-template>
+                              <!-- fin modal -->
+
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-12 sub-footer">
+                                <span>Copyright 2018. Todos los derechos reservados <a class="text-white" routerLink="https://www.estudialo.co">Estúdialo</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </footer>

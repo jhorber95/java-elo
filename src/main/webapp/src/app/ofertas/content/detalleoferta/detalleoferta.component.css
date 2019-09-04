@@ -1,0 +1,11 @@
+@import url("/assets/css/pages/contact-app-page.css");
+
+.nav {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: initial;
+    flex-wrap: initial !important; 
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}

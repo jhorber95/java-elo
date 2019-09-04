@@ -1,0 +1,219 @@
+<div class="login-register" style="background-image:url(assets/images/background/Fondo-Login-estudiantes.jpg);">
+    <div class="login-box card">
+        <div class="card-body">
+            <form  #singupform="ngForm"
+                    (ngSubmit)="singupform.form.valid && onFormSubmit()"
+                    class="form-horizontal form-material"
+                    id="singupform"
+                    name="singupform"
+                   novalidate>
+
+                <h3 class="box-title m-b-30">Regístrate como estudiante</h3>
+
+            <!-- ******************* Field nombres ******************************** -->
+                <div class="form-group"
+                       [ngClass]="{ 'has-danger': singupform.submitted  && !nombres.valid }" >
+                    <div class="col-xs-12">
+                        <input class="form-control"
+                                type="text"
+                                placeholder="Nombres"
+                                required=""
+                                name="nombres"
+                                [(ngModel)]="user.nombres"
+                                #nombres="ngModel" >
+
+                        <div class="form-control-feedback"
+                                *ngIf="singupform.submitted  && !nombres.valid">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">¡El nombre es obligatorio!</font>
+                            </font>
+                        </div>
+
+                    </div>
+                </div>
+
+            <!-- ****************************** Field apellidos ******************************** -->
+
+                <div class="form-group "
+                            [ngClass]="{ 'has-danger': singupform.submitted  && !apellidos.valid }" >
+                    <div class="col-xs-12">
+                        <input class="form-control"
+                                type="text"
+                                placeholder="Apellidos"
+                                required=""
+                                name="apellidos"
+                                [(ngModel)]="user.apellidos"
+                                #apellidos="ngModel" >
+                    </div>
+
+                     <div class="form-control-feedback"
+                            *ngIf="singupform.submitted && !apellidos.valid">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">¡El apellido es obligatorio!</font>
+                        </font>
+                    </div>
+
+                </div>
+
+                <!-- *************************** field email ************************************* -->
+
+                <div class="form-group ">
+                    <div class="col-xs-12"
+                            [ngClass]="{ 'has-danger': singupform.submitted && !email.valid}">
+
+                        <input class="form-control"
+                               type="email"
+                               name="email"
+                               placeholder="Email"
+                               required=""
+                                [(ngModel)]="user.email"
+                                #email="ngModel"
+                                email >
+
+                        <div *ngIf="email.errors">
+
+                            <div class="form-control-feedback"
+                                    *ngIf="singupform.submitted && email.errors.required ">
+                                <font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;">¡El email es obligatorio!</font>
+                                </font>
+                            </div>
+
+                            <div class="form-control-feedback"
+                                    *ngIf="!email.valid && (email.touched || email.dirty)" >
+                                <font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;">¡El email no parece ser correcto!</font>
+                                </font>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ************************** Field password ************************** -->
+                <div class="form-group "
+                            [ngClass]="{ 'has-danger': singupform.submitted && !password.valid  }">
+
+                    <div class="col-xs-12">
+                        <input class ="form-control"
+                                type ="password"
+                                placeholder ="Password"
+                                required =""
+                                id ="password"
+                                name ="password"
+                                minlength="5"
+                                [(ngModel)]="user.password"
+                                #password="ngModel"
+                                validateEqual="confirm_password"
+                                reverse="true">
+                    </div>
+
+                    <div *ngIf="password.errors">
+                        <div class="form-control-feedback"
+                                *ngIf="singupform.submitted && password.errors.required && !password.valid">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">
+                                    ¡La contraseña es obligatoria!
+                                </font>
+                            </font>
+                        </div>
+                        <div class="form-control-feedback"
+                            *ngIf="singupform.submitted && password.errors.minlength && !password.valid">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">
+                                    ¡Constraseña demasiado corta!
+                                </font>
+                            </font>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- ******************************* Confirm password *********************************  -->
+
+                <div class="form-group"
+                         [ngClass]="{ 'has-danger': singupform.submitted && !confirm_password.valid }">
+                    <div class="col-xs-12">
+                        <input class="form-control"
+                                type="password"
+                                placeholder="Confirmar Password"
+                                required=""
+                                id="confirm_password"
+                                name="confirm_password"
+                                [(ngModel)]="terminos.confirm_password"
+                                #confirm_password="ngModel"
+                                validateEqual="password">
+                    </div>
+
+                    <div class="form-control-feedback"
+                            *ngIf="singupform.submitted && !confirm_password.valid ">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                                ¡Las contraseñas no coinciden!
+                            </font>
+                        </font>
+                    </div>
+                </div>
+
+                <!-- ************************* Terminos y condiciones *******************************-->
+                <div class="form-group row"
+                     [ngClass]="{ 'has-danger': singupform.submitted && !term.valid }">
+                    <div class="col-md-12">
+                        <div class="checkbox checkbox-success p-t-0">
+                            <input id="checkbox-signup"
+                                    type="checkbox"
+                                    required=""
+                                    class="filled-in chk-col-light-blue"
+                                    name="term"
+                                    [(ngModel)]="terminos.term"
+                                    #term="ngModel" >
+
+                            <label for="checkbox-signup"> Estoy de acuerdo con los <a href="/assets/docs/Terminos y Condiciones, Politicas de Tratamiento de Datos y Cookies.pdf" target="_blank">Términos y Condiciones</a></label>
+                        </div>
+                    </div>
+
+                    <div class="form-control-feedback" *ngIf="singupform.submitted && !term.valid">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                                ¡Debes aceptar los terminos y condiciones!
+                            </font>
+                        </font>
+                    </div>
+
+
+                </div>
+                <div class="form-group text-center p-b-20">
+                    <div class="col-xs-12">
+                        <button class="btn btn-info btn-lg btn-block btn-rounded text-uppercase waves-effect waves-light" [disabled]="loading">Registrarme</button>
+                    </div>
+                </div>
+
+                <div *ngIf="message_error" class="alert alert-danger">
+                    <i class="fa fa-ban"></i> {{message_error}} {{user.email}}
+                    <button (click)="restartNotification()"
+                            type="button"
+                            class="close"
+                            data-dismiss="alert"
+                            aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                    </button>
+
+                </div>
+
+                <div *ngIf="message_success" class="alert alert-success">
+                    <i class="fa fa-check-circle"></i> {{message_success}}
+                    <button (click)="restartNotification()"
+                            type="button"
+                            class="close"
+                            data-dismiss="alert"
+                            aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+
+                <div class="form-group m-b-0">
+                    <div class="col-sm-12 text-center">
+                        ¿Ya tienes una cuenta? <a class="text-info m-l-5" [routerLink]="['/login']"><b>Iniciar Sesión</b></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

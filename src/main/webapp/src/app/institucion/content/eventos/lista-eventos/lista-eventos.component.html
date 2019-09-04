@@ -1,0 +1,38 @@
+
+
+<div *ngIf="eventos?.length == 0">
+  <div class="alert alert-warning">
+    No tiene ningún evento registrado. Te invitamos a crear tu <a routerLink="/institucion/crear-evento">primer evento.</a> 
+  </div>
+</div>
+
+<div class="col-md-12 col-lg-12 col-xlg-12" *ngFor="let evento of eventos">
+<div class="el-card-item">
+  <div class="el-card-content">
+
+      <div class="card card-body">
+        <div class="row">
+          <div class="col-md-5 col-lg-4 text-center">
+            <a [routerLink]="['/institucion/editar-evento', evento.id]"><img src="/api/imagen/evento/{{evento.imagenUrl}}" alt="user" class="img-responsive img-evento"></a>
+          </div>
+          <div class="col-md-7 col-lg-8">
+            <a class="box-title m-b-0 font-bold" [routerLink]="['/institucion/editar-evento', evento.id]">{{evento.titulo}}</a>
+            <div class="row">
+              <div class="col-md">
+                <small class="font-bold">{{evento.institucion.nombre}}</small>
+              </div>
+              <div class="col-md text-right">
+                 <small> {{evento.fecha | date:'dd/MM/yyyy'}} </small>
+              </div>
+            </div>
+            <address>
+              <small>{{evento.descripcion}}</small>
+            </address>
+          </div>
+        </div>
+        <div class="text-right">
+          <button class="btn btn-danger btn-xs" (click)="eliminar(evento.id)" >Eliminar</button>
+        </div>
+    </div>
+  </div>
+</div>

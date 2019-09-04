@@ -1,0 +1,227 @@
+
+
+<div class="p-t-60">
+  <div class="show-button-filters">
+      <app-fitro-busqueda></app-fitro-busqueda>
+  </div>
+
+	<div class="row text-center">
+    <div class="col-md-6 offset-md-3 align-self-center">
+
+      <br>
+      <div class="col-md-12">
+      <h1 class="text-info">Busqueda</h1>
+      <br>
+        <form #formSearch="ngForm"
+              (ngSubmit)="clickBuscador()"
+              id="formSearch"
+              name="formSearch">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar por nombre, ciudad, categoría o cualquier palabra" name="search" [(ngModel)]="inputbuscador.search">
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="submit">Buscar</button>
+              </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div *ngIf="Ad1.id != 0" class="col-md-12 text-center m-t-10 wow bounceIn">
+      <a href="{{Ad1.url}}" target="_blanck">
+        <img src="{{Ad1.imagen}}" alt="" class="wow bounceIn">
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="page-wrapper2">
+<!--contenedor ofertas  -->
+	<div class="container">
+	<!-- ============================================================== -->
+  <!-- Start Page Content -->
+  <!-- ============================================================== -->
+    
+  <!-- .row -->
+    <div class="row p-t-20">
+      <div class="col-md-12 align-self-center wow bounceIn">
+          <h2 class="text-themecolor">Ofertas relacionadas segun su guia vocacional</h2>
+      </div>
+      
+      <!-- ============================================================== -->
+      <!--    Start loop ofertas            -->
+      <!-- ============================================================== -->
+
+      <div class="col-md-8">
+        <!-- .col -->
+        <div *ngIf="search_data">
+          <div *ngIf="search_data == ''" class="col-md-12 col-lg-12 col-xlg-12">
+            <div class="card card-body">
+              <h2>Primero debe presentar el test vocacional</h2>
+              <a class="btn btn-rounded btn-info"  [routerLink]="['/test/fase1']">Presentar Guia Vocacional</a>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-xlg-12 wow bounceIn" *ngFor="let search of search_data; let i = index">
+            <div class="card card-body wow bounceIn">
+              <div class="row">
+                <div class="col-md-4 col-lg-3 text-center">
+                  <a [routerLink]="['/ofertas/detalle', search.id]"><img src="https://estudialo.co/api/imagen/oferta/{{search.imagenUrl}}" alt="user" class="img-responsive"></a>
+                </div>
+                <div class="col-md-8 col-lg-9">
+                  <a class="box-title m-b-0 font-bold" [routerLink]="['/ofertas/detalle', search.id]">{{search.titulo}}</a>
+                    <br>
+                    <!--<div class="col-md-4" *ngFor="let inteligencias of search.inteligencias; let i = index">-->
+                      <span *ngFor="let inteligencias of search.inteligencias; let i = index" class="label label-warning m-l-5">{{ inteligencias.nombre }}</span>
+                    <!--</div>-->
+
+
+                  <div class="row">
+                    <div class="col-md">
+                      <small class="font-bold">{{search.categoria.nombre}}</small>
+                    </div>
+                    <div class="col-md text-right">
+                      <div class="stars-outer">
+                        <div class="stars-inner"  [ngStyle]="{'width':search.calificacion.porcentaje+'%'}"></div>
+                      </div>
+                      <small> ({{search.calificacion.puntaje}})</small>
+                    </div>
+                  </div>
+                  <address>
+
+                      <small class="font-medium2">{{search.descripcion | slice:0:60 }}...</small>
+                    <small><a  [routerLink]="['/ofertas/detalle', search.id]"> Ver más</a></small>
+                      <br/>
+                      <small class="font-medium2">Ofrece: {{search.tipoOfrece.nombre}} | {{search.municipio.nombre}} - {{search.municipio.departamento.nombre}} | </small><small class="font-bold">Precio: {{search.precio}}</small>
+
+                  </address>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-12 col-lg-12 col-xlg-12 m-t-40" *ngIf="!search_data">
+          <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">estúdialo</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============================================================== -->
+      <!--    End loop ofertas            -->
+      <!-- ============================================================== -->
+
+      <!-- ============================================================== -->
+      <!--    Start Sidebar  ofertas            -->
+      <!-- ============================================================== -->
+      <div class="col-lg-4 col-xlg-3 col-md-4">
+      
+        <!--    Start Top inteligencias  ofertas            -->
+          <div class="card">
+            <div class="card-body">
+              <div class="list-group" id="top-menu">
+                <div>
+                  <h2 class="view-filters__title text-info">
+                    Mi Test Vocacional
+                  </h2>
+                  <h2>
+                    <span class="label label-warning mytooltip">1 {{ resultTest.primero.nombre }}
+                      <span class="tooltip-content5">
+                        <span class="tooltip-text3">
+                          <span class="tooltip-inner2">
+                            <p>{{resultTest.primero.descripcion}}</p>
+                          </span>
+                        </span>
+                      </span>
+                    </span><br>
+                    <span class="label label-primary mytooltip mytooltip">2 {{ resultTest.segundo.nombre }}
+                      <span class="tooltip-content5">
+                        <span class="tooltip-text3">
+                          <span class="tooltip-inner2">
+                            <p>{{resultTest.segundo.descripcion}}</p>
+                          </span>
+                        </span>
+                      </span>
+                    </span><br>
+                    <span class="label label-info mytooltip">3 {{ resultTest.tercero.nombre }}
+                      <span class="tooltip-content5">
+                        <span class="tooltip-text3">
+                          <span class="tooltip-inner2">
+                            <p>{{resultTest.tercero.descripcion}}</p>
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </h2>
+                  <div class="hidden-filtros " ></div>
+                    <h2 class="view-filters__title text-info">
+                      Filtros
+                    </h2>
+                    <app-partial-formulario-filtros (OfertasFiltradas)="datosFiltroPartial($event)"></app-partial-formulario-filtros>
+                  </div>  
+                  
+                </div>
+              </div>
+          </div>
+        <!--    End Top inteligencias  ofertas            -->
+
+        <!-- Start card Instituciones-->
+
+        <h1 class="view-filters__title text-info">
+          Instituciones
+        </h1>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <div class="row col-12" >
+                  <div class="col-lg-6 col-md-12" 
+                      *ngFor="let institucion of instituciones">
+                      
+                    <a *ngIf="institucion.tipoInstitucion.id === 1"  
+                        [routerLink]="['/universidad/detalle', institucion.id]"
+                        title="{{institucion.nombre}}">
+
+                      <img class="img-fluid" src="https://estudialo.co/api/imagen/institucion/{{institucion.urlImagen}}" alt="{{institucion.nombre}}">
+                    </a>
+                  </div>
+                </div>
+            </div>
+        </div> 
+        <!-- ./ end cars Instituciones-->
+
+        <br>
+
+        <!--  Start card financieras-->
+        <h1 class="view-filters__title text-info">
+            Financieras
+          </h1>
+          <br>
+        <div class="card">
+            <div class="card-body">
+                <div class="row col-12" >
+                    <div  class="col-lg-6 col-md-12" *ngFor="let financiera of (financieras ? financieras.slice(0,10): [])">
+                        <a *ngIf="financiera.tipoInstitucion.id === 4"  
+                          [routerLink]="['/financieras/detalle', financiera.id]"
+                          title="{{financiera.nombre}}">
+                          <img class="img-responsive" src="https://estudialo.co/api/imagen/institucion/{{financiera.urlImagen}}" alt="{{financiera.nombre}}"> <br>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!-- ./ end card financieras-->
+      </div>
+      
+      <!-- ============================================================== -->
+      <!--    End Sidebar  ofertas            -->
+      <!-- ============================================================== -->
+    </div><!-- /.row -->
+
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+  </div>
+</div>

@@ -1,0 +1,22 @@
+@import url("/assets/css/pages/tab-page.css");
+
+.item-background {
+	padding-top: 2em;
+	padding-bottom: 2em;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100% auto;
+    background-origin: border-box;
+	height: 450px;
+}
+
+@media(max-width:767px) {
+  .item-background {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100% 100%;
+    background-origin: border-box;
+	}
+}
+
+

@@ -1,0 +1,207 @@
+
+<div class="main-wrapper">
+
+ 
+    <div class="p-t-60">
+      <br><br>
+        <div class="show-button-filters">
+            <app-fitro-busqueda></app-fitro-busqueda>
+        </div>
+
+        <div class="row col-md-12 text-center">
+        <div class="col-md-6 offset-md-3 align-self-center">
+        
+            
+
+          <br>
+          <div class="col-md-12">
+            <h1 class="text-info">Busqueda</h1>
+            
+            <br>
+            <form #formSearch="ngForm"
+                  (ngSubmit)="clickBuscador()"
+                  id="formSearch"
+                  name="formSearch">
+            <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Buscar por nombre, ciudad, categoría o cualquier palabra" name="search" [(ngModel)]="inputbuscador.search">
+                  <span class="input-group-btn">
+                    <button class="btn btn-info" type="submit">Buscar</button>
+                  </span>
+            </div>
+            </form>
+          </div>
+        </div>
+    
+      </div>
+    </div> 
+
+<div class="page-wrapper2">
+
+	<div class="container">
+
+          
+	              <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- .row -->
+                <div class="row p-t-12">
+                  <div class="col-md-12 align-self-center text-rigth">
+                    <h2 class="text-themecolor">Resultado de busqueda: {{u_search}}</h2>
+                  </div>
+
+                  <div class="col-md-8">
+                      <!-- .col -->
+                      <div *ngIf="search_data">
+                        <div *ngIf="search_data == ''" class="col-md-12 col-lg-12 col-xlg-12">
+                          <div class="card card-body">
+                            <h2>No se encontraron ofertas con la busqueda {{u_search}}</h2>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12 col-lg-12 col-xlg-12" 
+                          *ngFor="let search of search_data">
+                          <div class="card card-body">
+                              <div class="row">
+                                  <div class="col-md-4 col-lg-3 text-center">
+                                      <a [routerLink]="['/ofertas/detalle', search.id]"><img src="http://estudialo.co/api/imagen/oferta/{{search.imagenUrl}}" alt="user" class="img-responsive"></a>
+                                  </div>
+                                  <div class="col-md-8 col-lg-9">
+                                      <a class="box-title m-b-0 font-bold" [routerLink]="['/ofertas/detalle', search.id]">{{search.titulo}}</a>
+                                      <div class="row">
+                                        <div class="col-md">
+                                          <small class="font-bold">{{search.categoria.nombre}}</small>
+                                        </div>
+                                        <div class="col-md text-right">
+                                            <div class="stars-outer">
+                                              <div class="stars-inner"  [ngStyle]="{'width':search.calificacion.porcentaje+'%'}"></div>
+                                            </div>
+                                            <small> ({{search.calificacion.puntaje}})</small>
+                                        </div>
+                                      </div>
+                                      <address>
+                                        <small class="font-medium2">{{search.descripcion | slice:0:60 }}...
+                                          <a  [routerLink]="['/ofertas/detalle', search.id]"> Ver más</a></small>
+                                          <br/>
+                                        <small class="font-medium2">
+                                          Ofrece: {{search.tipoOfrece.nombre}} | {{search.municipio.nombre}} - {{search.municipio.departamento.nombre}} | </small>
+
+                                          <div *ngIf="search.precio=='N/A' || search.precio==0  || search.precio==null; then gratis else precio">
+                                          </div>
+
+                                          <ng-template #precio> 
+                                              <div *ngIf="isLoged">
+                                                <small class="font-bold">Precio Aprox. $ {{search.precio}}</small>                                                  
+                                              </div>
+                                              <div *ngIf="!isLoged">
+                                                  <small class="text-info">Inicia Sesión para ver los precios</small>
+                                              </div>
+                                          </ng-template>
+                                          
+                                          <ng-template  #gratis>
+                                              <div *ngIf="isLoged">
+                                                  <small class="font-bold">¡¡Gratis!!</small>                                                                                                   
+                                              </div>
+                                              <div *ngIf="!isLoged">
+                                                    <small class="text-info">Inicia Sesión para ver los precios</small>
+                                              </div>
+                                          </ng-template>
+                                      </address>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="row col-md-12 text-center">
+                          <div class="col-md-6 offset-md-3 align-self-center">
+                              <button  class='btn btn-info btn-circle' (click)="loadOfertas()" >
+                                  <i class="fa fa-angle-down"></i>
+                              </button>
+                          </div>
+                          
+                          <div *ngIf="!loadingOfertas">
+                              <div class="loader">
+                                  <div class="loader__figure"></div>
+                                  <p class="loader__label">estúdialo</p>
+                              </div>
+                          </div>
+                      </div>
+                      
+
+                      
+
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-md-12 col-lg-12 col-xlg-12 m-t-40" *ngIf="!search_data">
+                        <div class="loader">
+                            <div class="loader__figure"></div>
+                            <p class="loader__label">estúdialo</p>
+                        </div>
+                      </div>
+  
+                    </div>
+
+                  <div class="col-lg-4 col-xlg-3 col-md-4">
+                     
+                    <div class="card hidden-filtros">
+                      <div class="card-body">
+                        <div class="list-group" id="top-menu">
+                            <app-partial-formulario-filtros (OfertasFiltradas)="datosFiltroPartial($event)"></app-partial-formulario-filtros>
+                        </div>
+                      </div>
+                    </div>
+
+                    <br>
+                      <h1 class="view-filters__title text-info">
+                          Instituciones
+                      </h1>
+                      <br>
+                      <div class="card">
+                          <div class="card-body">
+                              
+                                <div class="row col-12" >
+                                    <div class="col-lg-6 col-md-12" 
+                                        *ngFor="let institucion of instituciones">
+                                        
+                                        <a *ngIf="institucion.tipoInstitucion.id === 1"  
+                                          [routerLink]="['/universidad/detalle', institucion.id]"
+                                          title="{{institucion.nombre}}">
+      
+                                          <img class="img-fluid" src="/api/imagen/institucion/{{institucion.urlImagen}}" alt="{{institucion.nombre}}">
+                                      </a>
+                                    </div>
+                                  </div>
+                                 <!-- <a routerLink="">Ver todas</a>-->
+                          </div>
+                      </div> <!-- ./ end cars Instituciones-->
+
+                      <br>
+                      <h1 class="view-filters__title text-info">
+                          Financieras
+                        </h1>
+                        <br>
+                      <div class="card">
+                          <div class="card-body">
+                              <div class="row col-12" >
+                                  <div  class="col-lg-6 col-md-12" *ngFor="let financiera of (financieras ? financieras.slice(0,10): [])">
+                                      <a *ngIf="financiera.tipoInstitucion.id === 4"  
+                                        [routerLink]="['/financieras/detalle', financiera.id]"
+                                        title="{{financiera.nombre}}">
+                                        <img class="img-responsive" src="/api/imagen/institucion/{{financiera.urlImagen}}" alt="{{financiera.nombre}}"> <br>
+                                      </a>
+                                  </div>
+                                </div>
+                            <a routerLink="/financieras/todas" > Ver más >></a>                                  
+                          </div>
+                      </div> <!-- ./ end cars financieras-->
+                   
+                  </div>
+
+                	
+                </div>
+                <!-- /.row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+    </div>
+</div>
+</div>

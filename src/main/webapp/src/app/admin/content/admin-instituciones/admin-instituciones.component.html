@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-9">
+            <p class="text-primary">Click en Institución: <strong>{{ message }}</strong></p>
+          </div>
+          <div class="col-md-3 text-right">
+              <button class="btn btn-info" (click)="estudiantesInstitucion()">Ver Estudiantes</button>            
+              <button class="btn btn-success" (click)="editarInstitucion()">Editar</button>
+              <button class="btn btn-danger" (click)="eliminarInstitucion()">Eliminar</button>
+          </div>
+        </div>
+
+        <table datatable [dtOptions]="dtOptions" class="row-border hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Nit</th>
+              <th>Telefono</th>
+              <th>Tipo Inst.</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let institucion of InstitucionesDatatable; let row = index" [class.selected]="clickSelected === 'selected'+row" (click)="ClickRow(row, 'selected'+row)">
+              <td><img class="img-responsive" src="/api/imagen/institucion/{{institucion.urlImagen}}"></td>
+              <td>{{ institucion.id }}</td>
+              <td>{{ institucion.nombre }}</td>
+              <td>{{ institucion.email }}</td>
+              <td>{{ institucion.nit }}</td>
+              <td>{{ institucion.telefono }}</td>
+              <td>{{ institucion.tipoInstitucion.nombre}}</td>
+              <td>
+                <select class="form-control form-control-line"
+                        name="idDepartamento"
+                        [(ngModel)]="institucion.estado.id"
+                        #idDepartamento="ngModel"
+                        (ngModelChange)="disponible(institucion.id, institucion.estado.id)">
+                  <option value="1">Activo</option>
+                  <option value="2">Inactivo</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+          <tr *ngIf="InstitucionesDatatable?.length == 0">
+            <td colspan="3" class="no-data-available">No hay datos...</td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

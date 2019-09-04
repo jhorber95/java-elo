@@ -1,0 +1,312 @@
+ <div class="row">
+ 	<!-- Column -->
+ 	<div class="col-lg-5 col-xlg-3 col-md-5">
+ 		<div class="card">
+ 			<div class="card-body">
+ 				<div class="m-t-30 text-center"> <img src="/api/imagen/usuario/{{allDataUser.urlImagen}}" class="img-circle" width="150" />
+          <div *ngIf="currentFileUpload" class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped"
+                  role="progressbar"
+                  attr.aria-valuenow="{{progress.percentage}}"
+                  aria-valuemin="0" aria-valuemax="100"
+                  [ngStyle]="{width:progress.percentage+'%'}">
+                  {{progress.percentage}}%
+            </div>
+          </div>
+
+        <label class="btn btn-default">
+          <input type="file" (change)="selectFile($event)">
+        </label>
+
+        <button class="btn btn-success" [disabled]="!selectedFiles"
+          (click)="upload()">Cambiar</button>
+
+ 					<h4 class="card-title m-t-10">{{ allDataUser.nombres }}</h4>
+ 					<div *ngFor="let rol of nameRoles">
+ 						<h6 class="card-subtitle">{{rol}} </h6>
+ 					</div>
+ 				</div>
+ 			</div>
+ 			<div>
+ 				<hr> </div>
+ 				<div class="card-body"> <small class="text-muted">Email</small>
+ 					<h6>{{allDataUser.email}} </h6>
+ 					<small class="text-muted p-t-30 db">Tel.</small>
+          <div *ngIf="allDataUser.telefono != null">
+            <h6>{{allDataUser.telefono}}</h6>
+          </div>
+ 					<small class="text-muted p-t-30 db">No. Documento</small>
+          <div *ngIf="allDataUser.tipoIdentificacion != null">
+ 					  <h6>{{allDataUser.tipoIdentificacion.acronimo}} {{allDataUser.identificacion}} </h6>
+          </div>
+ 				</div>
+ 			</div>
+ 		</div>
+ 		<!-- Column -->
+ 		<!-- Column -->
+ 		<div class="col-lg-7 col-xlg-9 col-md-7">
+ 			<div class="card">
+ 				<!-- Nav tabs -->
+ 				<ul class="nav nav-tabs profile-tab" role="tablist">
+ 					<li>
+ 						<a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Perfil</a>
+ 					</li>
+ 					<li>
+ 						<a class="nav-link" data-toggle="tab" href="#settings" role="tab">Configuraciones</a>
+ 					</li>
+ 				</ul>
+ 				<!-- Tab panes -->
+ 				<div class="tab-content">
+ 						<!--second tab-->
+ 						<div class="tab-pane active" id="profile" role="tabpanel">
+ 							<div class="card-body">
+ 								<div class="row">
+ 									<div class="col-md-6 col-12 b-r"> <strong>Nombre Completo</strong>
+ 										<br>
+ 										<p class="text-muted">{{allDataUser.nombres}} {{allDataUser.apellidos}}</p>
+ 									</div>
+ 									<div class="col-md-6 col-12 b-r"> <strong>Teléfono</strong>
+ 										<br>
+ 										<p class="text-muted" *ngIf="allDataUser.telefono != null">
+                      {{allDataUser.telefono}}
+                    </p>
+ 									</div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-6 col-12 b-r"> <strong>Email</strong>
+                    <br>
+                    <p class="text-muted">{{allDataUser.email}} </p>
+                  </div>
+                  <div  class="col-md-6 col-12"> <strong>Ciudad</strong>
+                    <br>
+
+                    <p class="text-muted" *ngIf="allDataUser.municipio != null" >
+                        {{allDataUser.municipio.nombre}} - {{ allDataUser.municipio.departamento.nombre}}
+                    </p>
+                  </div>
+                </div>
+ 							</div>
+ 						</div>
+
+ 						<!--************************ Setting profile ************************* -->
+
+ 						<div class="tab-pane" id="settings" role="tabpanel">
+ 							<div class="card-body">
+ 								<form class="form-horizontal form-material"
+ 												name="dataUserForm"
+ 												id="dataUserForm"
+ 											 (ngSubmit)="dataUserForm.form.valid && onSubmitDataUser()"
+        								#dataUserForm="ngForm"
+                      [ngFormOptions]="{updateOn: 'submit'}"
+        								novalidate>
+
+        					<input type="hidden"
+        								name="idUsuario"
+        								[(ngModel)]="dataUser.id"
+        								#idUsuario="ngModel"
+        								value="{{allDataUser.id}}">
+
+ 									<h3>Datos Personales</h3>
+ 									<hr>
+
+ 									<div class="form-group">
+ 										<label class="col-md-12"><strong>Nombres</strong></label>
+ 										<div class="col-md-12">
+ 											<input type="text"
+ 															class="form-control form-control-line"
+ 															name="nombres"
+ 															[(ngModel)]="dataUser.nombres"
+ 															#nombres="ngModel"
+ 															required>
+ 										</div>
+ 									</div>
+
+ 									<div class="form-group">
+ 										<label class="col-md-12"><strong>Apellidos</strong></label>
+ 										<div class="col-md-12">
+ 											<input type="text"
+ 															class="form-control form-control-line"
+ 															name="apellidos"
+ 															[(ngModel)]="dataUser.apellidos"
+ 															#apellidos="ngModel"
+ 															required>
+ 										</div>
+ 									</div>
+
+                  <div class="form-group">
+                    <label class="col-md-12"><strong>Nivel educativo</strong></label>
+                    <div class="col-md-12">
+                      <select class="form-control form-control-line"
+                              name="nivelEducativo"
+                              [(ngModel)]="dataUser.nivelEducativo.id"
+                              #nivelEducativo="ngModel"
+                              required>
+                        <option value="1">Básica primaria</option>
+                        <option value="2">Básica secundaria</option>
+                        <option value="3">Técnico</option>
+                        <option value="4">Técnologo</option>
+                        <option value="5">Profesional</option>
+                        <option value="6">Especialización</option>
+                        <option value="7">Maestría</option>
+                        <option value="8">Doctorado</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-md-12"><strong>Intereses</strong></label>
+                    <div class="col-md-12">
+                      <select class="form-control form-control-line"
+                              name="idIntereses"
+                              (change)="checkEventInteres($event)"
+                              >
+                        <option *ngFor="let interes of intereses"
+                            value="{{interes.id}}">{{interes.nombre}}</option>
+                      </select>
+                    </div>
+									</div>
+									
+									<div *ngIf="userInteres != null">
+											<div class="form-group">
+													<label class="label label-inverse m-l-5" *ngFor="let userInte of dataUser.intereses ; let i = index " >
+														{{userInte.nombre}}
+														<a class="text-danger" (click)="deleteInteres(i)">
+															<i class="fa fa-times-circle" ></i>
+														</a>
+													</label>
+												</div>
+									</div>
+                <!--  <div *ngIf="userInteres != null; then interesesTrue else interesesFalse"></div>
+
+                  <ng-template #interesesTrue >
+                    <div class="form-group">
+                    <label class="label label-inverse m-l-5" *ngFor="let userInte of userInteres; let i = index " >
+                      {{userInte.nombre}}
+                      <a class="text-danger" (click)="deleteInteres(i)">
+                        <i class="fa fa-times-circle" ></i>
+                      </a>
+                    </label>
+                  </div>
+                  </ng-template>
+
+                  <ng-template #interesesFalse >
+                    <label class="label label-warning" > Por el momento no tienes ningún interes</label>
+                  </ng-template>-->
+
+ 									<div class="form-group">
+ 										<label class="col-md-12"><strong>Tipo Documento</strong></label>
+ 										<div class="col-md-12">
+ 											<select class="form-control form-control-line"
+ 															name="tipoIdentificacion"
+ 															[(ngModel)]="dataUser.tipoIdentificacion.id"
+ 															#tipoIdentificacion="ngModel"
+ 															required >
+ 												<option value="1">Cedula de Ciudadania</option>
+ 												<option value="2">Pasaporte</option>
+ 												<option value="3">Tarjeta de Identidad</option>
+ 											</select>
+ 										</div>
+ 									</div>
+
+ 									<div class="form-group">
+ 										<label for="identificacion" class="col-md-12"><strong>No. Documento</strong></label>
+ 										<div class="col-md-12">
+ 											<input type="number"
+                             id="identificacion"
+ 															class="form-control form-control-line"
+ 															name="identificacion"
+ 															[(ngModel)]="dataUser.identificacion"
+ 															#identificacion="ngModel"
+                              value="{{allDataUser.identificacion}}"
+ 															required >
+ 										</div>
+ 									</div>
+
+ 									<div class="form-group">
+ 										<label for="telefono" class="col-md-12"><strong>Teléfono</strong></label>
+ 										<div class="col-md-12">
+ 											<input type="text"
+                             id="telefono"
+ 															class="form-control form-control-line"
+ 															name="telefono"
+ 															[(ngModel)]="dataUser.telefono"
+ 															#telefono="ngModel"
+                              value="{{allDataUser.telefono}}"
+                              >
+ 										</div>
+ 									</div>
+
+									<div class="form-group">
+ 										<label class="col-md-12"><strong>Genero</strong></label>
+ 										<div class="col-md-12">
+ 											<select class="form-control form-control-line"
+ 															name="genero"
+ 															[(ngModel)]="dataUser.genero.id"
+ 															#genero="ngModel"
+ 															required>
+ 												<option value="1">Masculino</option>
+ 												<option value="2">Femenino</option>
+ 											</select>
+ 										</div>
+ 									</div>
+
+
+ 									<h3>Datos Generales</h3>
+ 									<hr>
+
+ 									<div class="form-group">
+ 										<label class="col-sm-12"><strong>País</strong></label>
+ 										<div class="col-sm-12">
+ 											<select class="form-control form-control-line"
+ 															name="pais"
+ 															[(ngModel)]="dataUser.municipio.departamento.pais.id"
+ 															#pais="ngModel"
+ 															required="" >
+ 												<option value="1">Colombia</option>
+ 											</select>
+ 										</div>
+ 									</div>
+
+ 									<div class="form-group">
+ 										<label class="col-md-12"><strong>Departamento</strong></label>
+ 										<div class="col-md-12">
+ 											<select class="form-control form-control-line"
+ 															name="idDepartamento"
+															[(ngModel)]="dataUser.municipio.departamento.id"
+ 															#idDepartamento="ngModel"
+ 															(change)="onSelectDepartamento($event.target.value)"
+ 															>
+ 												<option *ngFor="let departamento of departamentos"
+ 														value="{{departamento.id}}">{{departamento.nombre}}</option>
+ 											</select>
+ 										</div>
+ 									</div>
+ 									<div class="form-group">
+ 										<label class="col-md-12"><strong>Ciudad</strong></label>
+ 										<div class="col-md-12">
+ 											<select class="form-control form-control-line"
+ 															name="municipio"
+															[(ngModel)]="dataUser.municipio.id"
+ 															#municipio="ngModel">
+ 												<option  *ngFor="let municipio of municipios"
+ 														value="{{municipio.id}}">{{municipio.nombre}}</option>
+ 											</select>
+ 										</div>
+ 									</div>
+
+
+ 									<div class="form-group">
+ 										<div class="col-sm-12">
+ 											<button type="submit" class="btn btn-success">Actualizar Perfil</button>
+ 										</div>
+ 									</div>
+ 								</form>
+ 							</div>
+ 						</div>
+ 					</div>
+ 				</div>
+ 			</div>
+ 			<!-- Column -->
+ 		</div>

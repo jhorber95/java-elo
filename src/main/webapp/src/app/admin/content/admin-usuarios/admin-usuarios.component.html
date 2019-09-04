@@ -1,0 +1,153 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+      <!-- *********************** Modal edit and create user *************************  -->
+
+        <ng-template #modalUser let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Editar usuario {{info.email}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form class="form-material" id="editUser" name="editUser" #editUser="ngForm" (ngSubmit)="editUser.form.valid && editarUsuario()" [ngFormOptions]="{ updateOn: 'submit'}" novalidate>
+            <div class="modal-body">
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label>*Nombres:</label>
+                  <input type="text" class="form-control form-control-line" name="nombres" [(ngModel)]="info.nombres" #nombres="ngModel">
+                </div>
+                <div class="form-group col-md-6">
+                  <label>*Apellidos:</label>
+                  <input type="text" class="form-control form-control-line" name="apellidos" [(ngModel)]="info.apellidos" #apellidos="ngModel">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label>*Email:</label>
+                  <input type="email" class="form-control form-control-line" value="{{info.email}}" disabled="disabled">
+                </div>
+                <div class="form-group col-md-6">
+                  <label>*Telefono:</label>
+                  <input type="number" class="form-control form-control-line" name="telefono" [(ngModel)]="info.telefono" #telefono="ngModel">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label>*Tipo Identificación:</label>
+                  <select class="form-control form-control-line"
+                          name="tipoIdentificacion"
+                          [(ngModel)]="info.tipoIdentificacion.id"
+                          #tipoIdentificacion="ngModel"
+                          required >
+                    <option value="1">Cedula de Ciudadania</option>
+                    <option value="2">Pasaporte</option>
+                    <option value="3">Tarjeta de Identidad</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>*Identificacion:</label>
+                  <input type="text" class="form-control form-control-line" name="identificacion" [(ngModel)]="info.identificacion" #identificacion="ngModel">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label>*Departamento:</label>
+                  <select class="form-control form-control-line"
+                          name="idDepartamento"
+                          [(ngModel)]="info.municipio.departamento.id"
+                          #idDepartamento="ngModel">
+                    <option *ngFor="let departamento of departamentos"
+                            value="{{departamento.id}}">{{departamento.nombre}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>*Municipio:</label>
+                  <select class="form-control form-control-line"
+                          name="municipio"
+                          [(ngModel)]="info.municipio.id"
+                          #municipio="ngModel">
+                    <option  *ngFor="let municipio of municipios"
+                             value="{{municipio.id}}">{{municipio.nombre}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label>*Genero:</label>
+                  <select class="form-control form-control-line"
+                          name="genero"
+                          [(ngModel)]="info.genero.id"
+                          #genero="ngModel"
+                          required>
+                    <option value="1">Masculino</option>
+                    <option value="2">Femenino</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>*Estado:</label>
+                  <select class="form-control form-control-line"
+                          name="estado"
+                          [(ngModel)]="info.estado.id"
+                          #estado="ngModel"
+                          (ngModelChange)="selectEstado(info.estado.id)">
+                    <option value="1">ACTIVO</option>
+                    <option value="2">INACTIVO</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button  type="submit" class="btn btn-info" >Editar Usuario</button>
+              <button
+                type="button"
+                class="btn btn-secondary pull-left"
+                (click)="c('Close click')">Cerrar</button>
+            </div>
+          </form>
+        </ng-template>
+
+        <!-- ./ng.template (modal user)  -->
+
+
+        <div class="row">
+          <div class="col-md-9">
+            <p class="text-primary">Click en usuario: <strong>{{ message }}</strong></p>
+          </div>
+          <div class="col-md-3 text-right">
+            <button class="btn btn-info" (click)="openModal(modalUser)" >Editar</button>
+            <button class="btn btn-danger" (click)="eliminarUsuario()">Eliminar</button>
+          </div>
+        </div>
+
+        <table datatable [dtOptions]="dtOptions" class="row-border hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>E-mail</th>
+              <th>Identificación</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let person of usuariosDatatable; let row = index" [class.selected]="clickSelected === 'selected'+row" (click)="ClickRow(row, 'selected'+row)" >
+              <td>{{ person.id }}</td>
+              <td>{{ person.nombres }}</td>
+              <td>{{ person.apellidos }}</td>
+              <td>{{ person.email }} </td>
+              <td>{{ person.identificacion }}</td>
+              <td>{{ person.estado.nombre }}</td>
+            </tr>
+          </tbody>
+          <tr *ngIf="usuariosDatatable?.length == 0">
+            <td colspan="3" class="no-data-available">No hay datos...</td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

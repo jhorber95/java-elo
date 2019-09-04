@@ -1,0 +1,249 @@
+<header id="header" class="topbar bg-topbar-header" xmlns="http://www.w3.org/1999/html">
+    <nav class="navbar navbar-expand-lg navbar-light">
+    	<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"> <span class="fa fa-bars text-white"></span> </button>
+        <!-- ============================================================== -->
+        <!-- Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-header m-l-20">
+            <a class="navbar-brand" routerLink="/">
+                <!-- Logo icon --><b>
+                            <img src="assets/images/logo/estudialo-header.png" alt="homepage" class="dark-logo p-b-5" />
+                        </b>
+                <!--End Logo icon -->
+                <!-- Logo text -->
+                 </a>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Logo -->
+        <!-- ============================================================== -->
+
+        <!-- This is the navigation menu -->
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav ml-auto stylish-nav">
+                            <li class="nav-item">
+                              <a class="nav-link text-white font-medium border-left border-right bg-blue-header" 
+                                  href="javascript:void(0)" (click)="open(content)" 
+                                  style="width:155px;">
+                                  <span class="fa fa-magic"></span> Orientación
+                                </a>
+                              <!-- modal -->
+                              <ng-template #content let-c="close" let-d="dismiss">
+                                <div class="modal-header">
+                                  <h4 class="modal-title"><i class="fa fa-lg fa-question-circle text-info" aria-hidden="true"></i><b>¿Aún no sabes que estudiar?</b></h4>
+                                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                    <img class="img-fluid" src="assets/images/test/test.jpeg">
+                                    </div>
+                                    <div class="col-md-6 text-justify">
+                                      <p>
+                                        Utiliza nuestra guía para encontrar tu vocación, aprovéchalo! es <b><strong>gratis.</strong></b>
+                                      </p>
+                                      <p>
+                                        <i>basada en los múltiples tipos de inteligencias de Howard Gardner escoge al final las ofertas
+                                          educativas que mejor se asocien a tus  inteligencias en potencia.</i>
+                                      </p>
+                                      <br>
+                                      <p>
+                                        <strong>Solo te tomara máximo 8 minutos.</strong>
+                                      </p>
+                                    </div>
+
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <div class="col-6 text-left">
+                                    <button type="button" class="btn btn-info animated infinite pulse" (click)="testVocacional()" >Usar guía vocacional</button>
+                                  </div>
+                                  <div class="text-right col-6">
+                                    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+                                  </div>
+                                </div>
+                              </ng-template>
+                              <!-- fin modal -->
+                            </li>
+                            <li class="nav-item"> <a class="nav-link text-white font-medium border-right bg-blue-header"  [routerLink]="['/financieras/todas']" style="width:140px;"><span class="fa fa-dollar"></span> Finánciate</a> </li>
+
+                            <!-- ============================================================== -->
+                            <!-- Search -->
+                            <!-- ============================================================== -->
+                          <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark text-white font-medium border-right bg-blue-header" style="width:190px;"><span class="fa fa-graduation-cap"></span> ¿Qué estudiar?</a>
+                            <form class="app-search form-material">
+                              <div class="row estudialo-background-2">
+                                <div class="form-group col-md col-6 m-t-30">
+                                  <div class="m-l-10 m-r-10">
+                                      <label class="font-medium">Departamento:</label>
+                                      <select class="form-control" name="idDeparatmento" 	
+                                              (change)="onSelectDepartamento($event.target.value)">
+                                        <option *ngFor="let departamento of departamentos"
+                                                value="{{departamento.id}}">{{departamento.nombre}}</option>
+                                      </select>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="selectDepartamento" >
+                                  <div class="form-group col-md col-3 m-t-30">
+                                    <div class="m-l-10 m-r-10">
+                                      <label>Municipio:</label>
+                                      <select class="form-control" #idMunicipio="ngModel" name="idMunicipio" [(ngModel)]="idFiltros.idMunicipio">
+                                        <option value="all">Todos</option>
+                                        <option *ngFor="let municipio of municipios" value="{{municipio.id}}">{{municipio.nombre}}</option>
+                                      </select>
+                                    </div>
+                                  </div> 
+                                </div>
+
+                                <div class="form-group col-md col-6 m-t-30">
+                                  <div class="m-l-10 m-r-10">
+                                    <label>Categoría:</label>
+                                    <select class="form-control" #idCategoria="ngModel" name="idCategoria" [(ngModel)]="idFiltros.idCateroria">
+                                      <option value="all">Todas</option>
+                                      <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.nombre}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group col-md col-6 m-t-30">
+                                  <div class="m-l-10 m-r-10">
+                                    <label>Nivel:</label>
+                                    <select class="form-control" #idOferta="ngModel" name="idOferta" [(ngModel)]="idFiltros.idOferta">
+                                      <option value="all">Todas</option>
+                                      <option *ngFor="let tipooferta of tipoOfertas" value="{{tipooferta.id}}">{{tipooferta.nombre}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+
+                                <div class="form-group col-md col-6 m-t-30">
+                                  <div class="m-l-10 m-r-10">
+                                    <label>Nombre de Carrera:</label>
+                                   <input class="form-control" type="text" #nombreCarrera="ngModel"  name="nombreCarrera" [(ngModel)]="idFiltros.nombreCarrera" >
+                                  </div>
+                                </div>
+                                <!--
+                                <div class="form-group col-md col-6 m-t-30">
+                                  <div class="m-l-10 m-r-10">
+                                    <label>Quien Ofrece:</label>
+                                    <select class="form-control" #idOfrece="ngModel" name="idOfrece" [(ngModel)]="idFiltros.idOfrece">
+                                      <option value="all">Todos</option>
+                                      <option *ngFor="let tipoofrece of tipoOfrece" value="{{tipoofrece.id}}">{{tipoofrece.nombre}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                
+                                <div class="form-group col-md col-6 m-t-30">
+                                  <div class="m-l-10 m-r-10">
+                                    <label>Precio Mínimo $:</label>
+                                    <input type="number" class="form-control" id="idPrecioMin" #idPrecioMin="ngModel" name="idPrecioMin" [(ngModel)]="idFiltros.idPrecioMin">
+                                  </div>
+                                </div>
+                                <div class="form-group col-md col-6 m-t-30">
+                                  <div class="m-l-10 m-r-10">
+                                    <label>Precio Máximo $:</label>
+                                    <input type="number" class="form-control" id="idPrecioMax" #idPrecioMax="ngModel" name="idPrecioMax" [(ngModel)]="idFiltros.idPrecioMax">
+                                  </div>
+                                </div> -->
+                                <div class="col-md col-6 mx-sm-2 m-t-30 m-r-20 m-b-30 p-t-10">
+                                  <div class="m-l-10 m-r-10">
+                                    <button type="button" class="btn btn-outline-info" placeholder="Buscar" (click)="clickFiltrar()">Filtrar</button>
+                                  </div>
+                                </div>
+                              </div>
+                              <a class="srh-btn"><i class="ti-close"></i></a>
+
+                            </form>
+                          </li>
+
+
+                          <!-- fin search -->
+
+                          <!-- ============================================================== -->
+                          <!-- soy instructor -->
+                          <!-- ============================================================== 
+                          <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link waves-effect waves-dark text-white font-medium border-right bg-blue-header" style="width:175px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-clipboard"></span> Soy Instructor</a>
+                            <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                              <ul class="dropdown-user">
+                                <li><a [routerLink]="['/registrar-freelancer']">
+                                  <i class="ti-user"></i> Regístrate</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a [routerLink]="['/login']"><i class="ti-key"></i> Ingresar</a></li>
+                              </ul>
+                            </div>
+                          </li>
+                           ============================================================== -->
+                          <!-- Fin soy instructor -->
+                          <!-- ============================================================== -->
+
+                        <!-- ============================================================== -->
+                        <!-- Profile -->
+                        <!-- ============================================================== -->
+                         <div *ngIf="isLogged; then isLoggedTRUE else isLoggedFALSE ">
+                        </div>
+
+                        <ng-template #isLoggedFALSE>
+                        <li class="nav-item dropdown m-t-10 m-l-20">
+
+                          <a class="dropdown-toggle waves-effect m-t-5 m-r-5 btn btn-info m-b-10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <small class="white font-16">Mi Perfil</small>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                                <ul class="dropdown-user">
+                                    <li><a [routerLink]="['/registrate']">
+                                        <i class="ti-user"></i> Regístrate</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a [routerLink]="['/login']"><i class="ti-key"></i> Iniciar Sesión</a></li>
+                                </ul>
+                            </div>
+                          </li>
+                        </ng-template>
+
+                        <ng-template #isLoggedTRUE>
+                        <li class="nav-item dropdown m-l-20">
+
+                          <a class="nav-link dropdown-toggle waves-effect waves-dark"
+                              href=""
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false">
+
+                              <img src="/api/imagen/{{profileUrlImage}}/{{dataUser.urlImagen}}" alt="user" class="profile-pic" />
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                              <ul class="dropdown-user">
+                                  <li>
+                                      <div class="dw-user-box">
+                                          <div class="u-img">
+                                            <img src="/api/imagen/{{profileUrlImage}}/{{dataUser.urlImagen}}" alt="user">
+                                          </div>
+
+                                          <div class="u-text">
+                                            <h4 *ngIf="dataUser.nombres == null">{{ dataUser.nombre }}</h4>
+                                            <h4 *ngIf="dataUser.nombres != null">{{ dataUser.nombres }}</h4>
+                                            <p class="text-muted">{{ dataUser.email }}</p>
+                                        </div>
+                                      </div>
+                                  </li>
+                                  <li role="separator" class="divider"></li>
+                                  <li>
+                                      <a routerLink="/login">
+                                      <i class="ti-user"></i> Mi perfil</a>
+                                  </li>
+
+                                  <li>
+                                      <a href="javascript:void(0)" (click)="salir()" ><i class="fa fa-power-off"></i> Cerrar Sesión</a>
+                                  </li>
+                              </ul>
+                          </div>
+                        </li>
+                        </ng-template>
+     		</ul>
+        </div>
+
+    </nav>
+</header>
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->

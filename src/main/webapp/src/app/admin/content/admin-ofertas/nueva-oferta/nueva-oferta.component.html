@@ -1,0 +1,213 @@
+<div class="card">
+    <div class="card-body">
+      <small>(*)Campos obligatorios</small>
+      <form class="form-material m-t-40"
+          name="ofertaForm"
+          id="ofertaForm"
+          (ngSubmit)="ofertaForm.form.valid && onSubmitForm()"
+          #ofertaForm="ngForm"
+          novalidate>
+      
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label><strong> Título*</strong></label>
+                      <input type="text" class="form-control"
+                              name="titulo"
+                              [(ngModel)]="oferta.titulo"
+                              #titulo="ngModel"
+                              required >
+                    </div>
+              </div> 
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label><strong> Institución*</strong></label>
+                      <select class="form-control"
+                          name="institucion"
+                          [(ngModel)]="oferta.idOfrece"
+                          #institucion="ngModel"
+                          required>
+                        <option *ngFor="let inst of instituciones" value="{{inst.id}}">{{inst.nombre}}</option>
+                      </select>
+                    </div>
+              </div>             
+          </div>
+       
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label><strong> Categoria*</strong></label>
+              <select class="form-control"
+                  name="categoria"
+                  [(ngModel)]="oferta.categoria.id"
+                  #categoria="ngModel"
+                  required>
+                <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.nombre}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+              <div class="form-group">
+                  <label><strong> Precio Aproximado*</strong></label>
+                  <input type="number" 
+                      class="form-control"
+                      name="precio"
+                      [(ngModel)]="oferta.precio"
+                      #precio="ngModel"
+                      required> 
+                </div>
+          </div>
+        </div>
+        
+        <!--        JORNADA Y MODALIDAD         -->
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label><strong> Jornada</strong></label>
+              <select class="form-control"
+                  name="jornada"
+                  [(ngModel)]="oferta.jornada.id"
+                  #jornada="ngModel"
+                  required>
+                <option value="1" >Diurna</option>
+                <option value="2" >Nocturna</option>
+                <option value="3" >Fin de semana</option>
+                <option value="4" selected>No Disponible</option>
+                
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label><strong> Modalidad</strong></label>
+              <select class="form-control"
+                  name="modalidad"
+                  [(ngModel)]="oferta.modalidad.id"
+                  #modalidad="ngModel"
+                  required>
+                <option value="1" >Presencial</option>
+                <option value="2" >Distancia</option>
+                <option value="3" >Virtual</option>
+                <option value="4" selected>No Disponible</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!--    FIN    JORNADA Y MODALIDAD         -->
+        
+        
+        <!--                TIPO OFERTA TELEFONO                      -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label><strong> Tipo oferta*</strong></label>
+              <select class="form-control"
+                  name="tipoOferta"
+                  [(ngModel)]="oferta.tipoOferta.id"
+                  #tipoOferta="ngModel"
+                  required>
+                <option *ngFor="let tipoOferta of tipoOfertas" value="{{tipoOferta.id}}">{{tipoOferta.nombre}}</option>
+                
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+              <div class="form-group">
+                <label><strong> Teléfono*</strong></label>
+                <input type="text" 
+                    class="form-control"
+                    name="telefono"
+                    [(ngModel)]="oferta.telefono"
+                    #telefono="ngModel"
+                    required> 
+              </div>
+            </div>
+        </div>
+         <!--        FIN        TIPO OFERTA TELEFONO                      -->
+
+
+        <!--                       DEPARTAMENTO Y MUNICIPIO                         -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+                <label><strong>Departamento</strong></label>
+                  <select class="form-control form-control-line"
+                          name="idDepartamento"
+                         [(ngModel)]="oferta.municipio.departamento.id"
+                          #idDepartamento="ngModel"
+                          (change)="onSelectDepartamento($event.target.value)"
+                          >
+                    <option *ngFor="let departamento of departamentos"
+                        value="{{departamento.id}}">{{departamento.nombre}}</option>
+                  </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label ><strong>Ciudad</strong></label>
+                      <select class="form-control form-control-line"
+                              name="municipio"
+                             [(ngModel)]="oferta.municipio.id"
+                              #municipio="ngModel">
+                        <option  *ngFor="let municipio of municipios"
+                            value="{{municipio.id}}">{{municipio.nombre}}</option>
+                      </select>
+                  </div>
+            </div>
+        </div>
+
+        <!--              FIN  DEPARTAMENTO Y MUNICIPIO                         -->
+        
+  
+        <div class="form-group">
+          <label><strong> Descripción</strong></label>
+          <textarea class="form-control" 
+                rows="5"
+                name="descripción"
+                [(ngModel)]="oferta.descripcion"
+                #descripcion="ngModel"
+                required></textarea>
+        </div>
+        <!--<pre>{{oferta | json }} </pre>-->
+        <div *ngIf="!submitForm">
+          <button type="submit" class="btn btn-success" >Enviar</button>
+        </div>
+      </form>
+      
+      <br>
+      <br>
+  
+      <div *ngIf="submitForm">
+        <div class="form-group">
+          <div *ngIf="currentFileUpload" class="progress">
+                  <div class="progress-bar progress-bar-info progress-bar-striped"
+                        role="progressbar" 
+                        attr.aria-valuenow="{{progress.percentage}}"
+                        aria-valuemin="0" aria-valuemax="100"
+                        [ngStyle]="{width:progress.percentage+'%'}">
+                        {{progress.percentage}}%
+                  </div>
+              </div>
+           
+          <label class="btn btn-default">
+            <input type="file" (change)="selectFile($event)">
+          </label>
+          <small>
+        <strong> Las dimensiones optimas de la images es 600x300 pixeles. El tamaño de la imagen no debe sobrepasar 1MB de peso.</strong>
+      </small>
+           
+          <button class="btn btn-success" [disabled]="!selectedFiles"
+            (click)="upload()">Subir imagen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

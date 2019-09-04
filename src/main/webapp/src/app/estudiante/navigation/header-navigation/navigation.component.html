@@ -1,0 +1,172 @@
+<!-- ============================================================== -->
+<!-- Topbar header - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <!-- ============================================================== -->
+        <!-- Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-header">
+            <a class="navbar-brand" routerLink="/">
+                <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="assets/images/logo/ico-estudialo.png" alt="homepage" class="dark-logo logo-responsive-admin" />
+
+                        </b>
+                <!--End Logo icon -->
+                </a>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-collapse">
+            <!-- ============================================================== -->
+            <!-- toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav mr-auto">
+                <!-- This is  -->
+                <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down waves-effect waves-dark" href="javascript:void(0)" (click)="changeShowStatus()"><i class="ti-menu"></i></a> </li>
+            </ul>
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav my-lg-0">
+                <!-- ============================================================== -->
+                <!-- Profile -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark"
+                        href=""
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+
+                        <img src="/api/imagen/usuario/{{dataUser.urlImagen}}" alt="user" class="profile-pic" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                        <ul class="dropdown-user">
+                            <li>
+                                <div class="dw-user-box">
+                                    <div class="u-img">
+                                      <img src="/api/imagen/usuario/{{dataUser.urlImagen}}" alt="user">
+                                    </div>
+
+                                    <div class="u-text">
+                                        <h4>{{ dataUser.nombres }}</h4>
+                                        <p class="text-muted">{{ dataUser.email }}</p>
+                                        <a href="javascript:void(0);" (click)="openModal(updatePass)" class="btn btn-rounded btn-danger btn-sm">Cambiar contraseña</a>
+                                        <br>
+
+
+                                    </div>
+                                </div>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a routerLink="/estudiante/profile">
+                                <i class="ti-user"></i> Mi perfil</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <div *ngIf="showButton">
+                                    <a href="javascript:void(0);" (click)="wannaBeFreelancer()" >Quiero ser Freelancer</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" (click)="salir()" ><i class="fa fa-power-off"></i> Cerrar Sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<ng-template #updatePass let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Actualizar Contraseña</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form  #updatePassForm="ngForm"
+        (ngSubmit)="updatePassForm.form.valid && onFormSubmit()"
+        class="form-horizontal form-material"
+        id="updatePassForm"
+        name="updatePassForm"
+        novalidate>
+
+    <div class="modal-body">
+
+      <div class="form-group "
+            [ngClass]="{ 'has-danger': updatePassForm.submitted && !oldPassword.valid  }">
+        <label><strong> Contraseña anterior</strong></label>
+        <input type="password"
+              class="form-control form-control-line"
+              name="oldPassword"
+              id="oldPassword"
+              [(ngModel)]="userPass.oldPassword"
+              #oldPassword="ngModel"
+              required="" >
+        <div class="form-control-feedback"
+                    *ngIf="updatePassForm.submitted  && !oldPassword.valid">
+                <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">
+                        ¡La contraseña anterior es obligatoria!
+                    </font>
+                </font>
+            </div>
+      </div>
+
+
+      <div class="form-group "
+            [ngClass]="{ 'has-danger': updatePassForm.submitted && !newPassword.valid  }">
+        <label><strong> Nueva Contraseña </strong></label>
+        <input type="password"
+              class="form-control form-control-line"
+              name="newPassword"
+              id="newPassword"
+              minlength="5"
+              [(ngModel)]="userPass.newPassword"
+              #newPassword="ngModel"
+              required="">
+
+        <div *ngIf="newPassword.errors">
+            <div class="form-control-feedback"
+                  *ngIf="updatePassForm.submitted && newPassword.errors.required && !newPassword.valid">
+                <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">
+                        ¡La contraseña es obligatoria!
+                    </font>
+                </font>
+            </div>
+            <div class="form-control-feedback"
+                *ngIf="updatePassForm.submitted && newPassword.errors.minlength && !newPassword.valid">
+                <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">
+                        ¡Constraseña demasiado corta!
+                    </font>
+                </font>
+            </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="modal-footer">
+      <button  type="submit" class="btn btn-info" >Enviar</button>
+      <button
+        type="button"
+        class="btn btn-secondary pull-left"
+        (click)="c('Close click')">Cerrar</button>
+    </div>
+  </form>
+</ng-template>
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->

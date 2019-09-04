@@ -1,0 +1,28 @@
+
+<button class="btn btn-outline-info waves-effect waves-light" (click)="openModalFiltros(contentFiltros)" >
+    <i class="fa fa-filter"></i> Filtros
+</button> 
+
+<ng-template #contentFiltros let-c="close" let-d="dismiss"> 
+    <div class="modal-header">
+        <h2 class="view-filters__title text-info">Filtros</h2>  
+    </div>
+    <div class="modal-body">
+      
+      <app-partial-formulario-filtros></app-partial-formulario-filtros>
+  
+    </div>  <!-- ./ end modal body-->
+
+    <div class="modal-footer">
+        <div class="col-6 text-left">
+            <button type="button" class="btn btn-info" (click)="clickFiltrar()">Filtrar</button>
+        </div>
+        <div class="text-right col-6">
+          <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+        </div>
+    </div>
+
+</ng-template>
+
+
+  

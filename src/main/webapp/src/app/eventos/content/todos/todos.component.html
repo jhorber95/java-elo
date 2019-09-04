@@ -1,0 +1,60 @@
+<div class="page-wrapper2">
+<!--contenedor ofertas  -->
+	<div class="container p-t-80">
+	<!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- .row -->
+    <div class="row p-t-20">
+      <div class="col-12 m-t-30">
+        <div class="align-self-center">
+          <h2 class="text-themecolor">Todos los eventos</h2>
+        </div>
+
+        <div class="row" *ngIf="Eventos">
+          <div *ngIf="Eventos == ''" class="col-md-12 col-lg-12 col-xlg-12">
+            <div class="card card-body">
+              <h2>Lo sentimos. No se encontraron eventos</h2>
+            </div>
+          </div>
+          <!-- column -->
+          <div class="col-lg-4 col-md-6" *ngFor="let eventos of Eventos">
+            <!-- Card -->
+            <div class="card wow zoomInDown card-shadow">
+              <img class="card-img-top img-responsive-ofertas-todas" src="/api/imagen/evento/{{eventos.imagenUrl}}" alt="Card image cap">
+              <div class="card-body">
+                <ul class="list-inline m-b-0 text-center">
+                  <li class="p-0 font-14">{{eventos.fecha}}</li>
+                </ul>
+                <div class="titulo-3-line">
+                  <small class="font-bold">{{eventos.titulo}}</small><br>
+                </div>
+                <div class="info-corta text-left">
+                  <small class="m-b-0 m-t-10 font-12">{{eventos.descripcion}}</small>
+                </div>
+                <button [routerLink]="['/eventos/detalle', eventos.id]" class="btn btn-info btn-rounded waves-effect waves-light m-t-5">Leer Más</button>
+              </div>
+            </div>
+            <!-- Card -->
+          </div>
+          <!-- column -->
+
+
+        </div>
+
+        <div class="row col-md-12 col-lg-12 col-xlg-12 m-t-20 m-b-80" *ngIf="!Eventos">
+          <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">estúdialo</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+                <!-- /.row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+    </div>
+</div>

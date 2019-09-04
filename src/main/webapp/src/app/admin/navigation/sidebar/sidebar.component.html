@@ -1,0 +1,81 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+        <li class="user-profile" [class.active]="showMenu === 'user'">
+          <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" (click)="addExpandClass('user')" aria-expanded="false"><img src="/api/imagen/usuario/{{dataUser.urlImagen}}" alt="user" /><span class="hide-menu">{{dataUser.nombres}}</span></a>
+          <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'user'">
+            <li><a routerLink="/admin/perfil">Mi perfil </a></li>
+            <li><a (click)="salir()">Cerrar Sesión</a></li>
+          </ul>
+        </li>
+        <li class="nav-devider"></li>
+        <li *ngFor="let roles of dataUser.roles">
+          <a *ngIf="roles.nombre === 'ROLE_ESTUDIANTE'" routerLink="/estudiante">Role Estudiante</a>
+          <a *ngIf="roles.nombre === 'ROLE_ADMINISTRADOR'" routerLink="/admin/perfil">Role Administrador</a>
+        </li>
+        <li>
+          <a routerLink="/admin/perfil" [routerLinkActive]="['router-link-active']"><i class="fa fa-user"></i><span class="hide-menu">Perfil</span></a>
+        </li>
+        <li>
+          <a routerLink="/admin/admin-usuarios" [routerLinkActive]="['router-link-active']"><i class="fa fa-users"></i><span class="hide-menu">Usuarios</span></a>
+        </li>
+        <li>
+          <a routerLink="/admin/admin-ofertas" [routerLinkActive]="['router-link-active']"><i class="mdi mdi-file"></i><span class="hide-menu">Ofertas</span></a>
+        </li>
+        <li [class.active]="showMenu === 'component'">
+            <a class="has-arrow" href="javascript:void(0)" (click)="addExpandClass('component')" aria-expanded="false"><i class="fa fa-building"></i><span class="hide-menu">Instituciones</span></a>
+            <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'component'">
+              <li><a routerLink="/admin/admin-instituciones" [routerLinkActive]="['router-link-active']">Gestionar Instituciones</a></li>
+              <li><a routerLink="/admin/admin-agregar-institucion" [routerLinkActive]="['router-link-active']">Agregar Instituciones</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a routerLink="/admin/admin-financiaciones" [routerLinkActive]="['router-link-active']"><i class="fa fa-money"></i><span class="hide-menu">Financiaciones</span></a>
+        </li>
+        <li>
+          <a routerLink="/admin/admin-publicidad" [routerLinkActive]="['router-link-active']"><i class="fa fa-puzzle-piece"></i><span class="hide-menu">Publicidad</span></a>
+        </li>
+
+        <!-- 
+          =======================================================================================================
+                              Eventos
+          =======================================================================================================          
+        -->
+        <li [class.active]="showMenu === 'component_eventos'">
+          <a class="has-arrow" href="javascript:void(0)" (click)="addExpandClass('component_eventos')" aria-expanded="false">
+            <i class="fa fa-building"></i><span class="hide-menu">Eventos</span>
+          </a>
+          <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'component_eventos'">
+            <li>
+              <a routerLink="/admin/admin-eventos" [routerLinkActive]="['router-link-active']">Ver Eventos</a>
+            </li>
+            <li>
+              <a routerLink="/admin/crear-evento" [routerLinkActive]="['router-link-active']">Crear Eventos</a>
+            </li>
+          </ul>
+        </li> 
+         <!-- 
+          =======================================================================================================
+                              FIN Eventos
+          =======================================================================================================          
+        -->
+        <li>
+          <a routerLink="/admin/admin-pqrs" [routerLinkActive]="['router-link-active']"><i class="fa fa-paper-plane"></i><span class="hide-menu">PQRs</span></a>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->

@@ -1,0 +1,49 @@
+<div class="row m-b-20">
+  <div class="col-md-6 bg-info p-b-20 estudialo-works-color">
+    <h1 class="white m-t-30">Test Guia Vocacional</h1>
+  </div>
+  <div class="col-md-6 p-b-20 bg-inner">
+    <h3 class="m-t-20 text-info">Fase 5 de 8<span class="pull-right">50% Completado</span></h3>
+    <div class="progress">
+      <div class="progress-bar bg-info active progress-bar-striped" style="width: 50%; height:20px;" role="progressbar">
+      </div>
+    </div>
+  </div>
+</div>
+<form #f="ngForm" novalidate>
+
+  <div class="row" *ngFor="let fase of (formDataTest.fases ? formDataTest.fases.slice(4,5): []); let i = index">
+    <!-- image -->
+
+    <div class="col-md-3 col-6" *ngFor="let item of fase.items; let i = index">
+      <div class="card wow zoomIn">
+        <input type="checkbox" id="{{item.id}}" class="filled-in" [checked]="item.seleccionado" name="item{{item.id}}" value="{{item.seleccionado}}" [(ngModel)]="item.seleccionado">
+        <label for="{{item.id}}"><img class="card-img-top img-responsive img-thumbnail" src="/assets/images/test/fases/{{item.imagen}}"></label>
+      </div>
+    </div>
+  </div>
+  <div class="row m-b-20">
+    <div class="col-md-6">
+      <p>Seleccione mínimo 2 y máximo 4 imagens por fase</p>
+    </div>
+    <div class="col-md-6 text-right">
+      <button class="btn btn-secondary btn-rounded" [routerLink]="['/test/fase4']">
+        <span style="margin-right:10px;" class="fa fa-arrow-left"></span> Atras
+      </button>
+      <button class="btn btn-info btn-rounded" (click)="NextFase()"> Siguiente
+        <span style="margin-left:10px;" class="fa fa-arrow-right"></span>
+      </button>
+    </div>
+    <div class="col-md-12 text-center">
+      <div *ngIf="error" class="col-md-6 offset-md-3 m-t-10 alert alert-danger"> <i class="fa fa-ban"></i> {{error}}
+        <button (click)="restartNotification()" type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+
+
+
+

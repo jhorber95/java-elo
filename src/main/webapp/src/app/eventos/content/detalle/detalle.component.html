@@ -1,0 +1,110 @@
+<div class="page-wrapper2">
+			<!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="row page-titles  m-t-80">
+                <div class="col-md-12 align-self-center">
+                    <h3 class="text-themecolor">Detalle del evento</h3>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                <div class="row" *ngIf="Eventos">
+
+                    <!-- Column -->
+                    <div class="col-lg-4 col-xlg-3 col-md-5" *ngFor="let detalle of Eventos">
+                        <div class="card"> 
+                            <img class="card-img" src="/api/imagen/evento/{{detalle.imagenUrl}}">
+                            <!--<div class="card-img-overlay card-inverse social-profile d-flex ">
+                                <div class="col-md-12 align-self-center">
+                                    <h4 class="card-title">{{detalle.titulo}}</h4>
+                                </div>
+                            </div>-->
+                        </div>
+                      <div class="card">
+                        <div class="card-body" *ngFor="let detalle of Eventos">
+
+                            <small class="text-muted">Nombre </small>
+                            <h6>{{detalle.institucion.nombre}}</h6>
+                            <small class="text-muted">Nit </small>
+                            <h6>{{detalle.institucion.nit}}</h6>
+                            <small class="text-muted">Telefono</small>
+                            <h6>{{detalle.institucion.telefono}}</h6>
+                        </div>
+                      </div>
+
+                      <!--<div *ngIf="id == 17" >
+                            <div style="text-align: center">
+                                <div style="width:195px; text-align:center;" >
+                                    <iframe  src="https://www.eventbrite.com/calendar-widget?eid=46127988054" frameborder="0" height="506" width="195" marginheight="0" marginwidth="0" scrolling="no" allowtransparency="true"></iframe>
+                                    <div style="font-family:Helvetica, Arial; font-size:12px; padding:10px 0 5px; margin:2px; width:195px; text-align:center;" >
+                                        <a class="powered-by-eb" style="color: #ADB0B6; text-decoration: none;" target="_blank" href="http://www.eventbrite.com/">Powered by Eventbrite</a>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>-->
+                        
+                    </div>
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
+                        <h1>{{Eventos[0].titulo}} </h1><br>
+                        <div class="card">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs profile-tab" role="tablist">
+                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#detalles" role="tab">Información</a> </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                            	<!--first tab-->
+                                <div class="tab-pane active" id="detalles" role="tabpanel">
+
+                                    <div class="card-body" *ngFor="let detalle of Eventos">
+                                        <div class="row">
+                                            <div class="col-md-4 col-xs-3 b-r"> <strong>Fecha</strong>
+                                                <br>
+                                                <p class="text-muted">{{detalle.fecha}}</p>
+                                            </div>
+                                            <div class="col-md-8 col-xs-9"> <strong>Link</strong>
+                                                <br>
+
+                                                <p class="text-muted">{{detalle.institucion.email}}</p>
+                                                <div *ngIf="id == 17" >
+                                                    <a href="https://www.ticketcode.co/eventos/estudialoplay" target="_blank">Inscríbete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <p class="m-t-30">Información:</p>
+
+                                        <div [innerHtml]="detalle.descripcion"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                </div>
+                <!-- Row -->
+              <div class="row col-md-12 col-lg-12 col-xlg-12 m-t-20 m-b-80" *ngIf="!Eventos">
+                <div class="loader">
+                  <div class="loader__figure"></div>
+                  <p class="loader__label">estúdialo</p>
+                </div>
+
+              </div>
+
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+</div>

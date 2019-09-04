@@ -1,0 +1,122 @@
+<div class="card-body">
+
+	<form class="form-line"
+	name="formEvento"
+	(ngSubmit)="formEvento.form.valid && onSubmitForm()"
+	#formEvento="ngForm"
+	novalidate>
+
+	<input type="hidden" 
+	name="idEvento" 
+	[(ngModel)]="evento.id"
+	#idEvento="ngModel"
+	value="{{evento.id}}"
+	>
+
+	<div class="form-group">
+		<label class="col-md-12"><strong>Título</strong></label>
+		<div class="col-md-12">
+			<input class="form-control form-control-line"
+			type="text"
+			name="titulo"
+			[(ngModel)]="evento.titulo"
+			#titulo="ngModel"
+			value="{{evento.titulo}}" 
+			required 	>
+		</div>
+	</div>							
+
+	<div class="form-group">
+		<label class="col-md-12"><strong>Estado</strong></label>
+		<div class="col-md-12">
+			<select class="form-control form-control-line"
+			name="estado"
+			[(ngModel)]="evento.estado.id"
+			#estado="ngModel"
+			required >
+			<option value="8">Disponible</option>
+			<option value="9">No Disponible</option>
+			<option value="12">Archivado</option>
+		</select>
+	</div>
+</div>
+
+<div class="form-group">
+		<label class="col-md-12"><strong>Tipo Evento</strong></label>
+		<div class="col-md-12">
+			<select class="form-control form-control-line"
+			name="tipoEvento"
+			[(ngModel)]="evento.tipoEvento.id"
+			#tipoEvento="ngModel"
+			required >
+			<option value="1">Académico</option>
+			<option value="2">Cultural</option>
+			<option value="3">Deportivo</option>
+			<option value="4">Político</option>
+		</select>
+	</div>
+</div>
+
+<div class="form-group">
+	<label><strong>Fecha</strong></label>
+	<div class="input-group">
+		<input class="form-control form-control-line" 
+		placeholder="yyyy-mm-dd"
+		value="{{evento.fecha}}" 
+		name="dp" [(ngModel)]="modelDate" 
+		ngbDatepicker #d="ngbDatepicker">
+		<button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+			<span><i class="fa fa-calendar" ></i> </span>
+		</button>
+	</div>
+</div>
+
+
+<div class="form-group">
+	<label class="col-md-12"><strong>Descripción</strong></label>
+	<div class="col-md-12">
+		<textarea rows="5" 
+		class="form-control form-control-line"
+		name="descripcion" 
+		[(ngModel)]="evento.descripcion"
+		#descripcion="ngModel"
+		>{{evento.descripcion}}</textarea>
+	</div>
+</div>
+	
+	<div *ngIf="!submitForm">
+		<div class="form-group">
+		<div class="col-sm-12">
+			<button class="btn btn-success">Enviar</button>
+		</div>
+	</div>
+	</div>
+	
+	
+
+</form>
+
+<div *ngIf="submitForm">
+			<div class="form-group">
+				<div *ngIf="currentFileUpload" class="progress">
+		            <div class="progress-bar progress-bar-info progress-bar-striped"
+		                  role="progressbar" 
+		                  attr.aria-valuenow="{{progress.percentage}}"
+		                  aria-valuemin="0" aria-valuemax="100"
+		                  [ngStyle]="{width:progress.percentage+'%'}">
+		                  {{progress.percentage}}%
+		            </div>
+		        </div>
+         
+        <label class="btn btn-default">
+          <input type="file" (change)="selectFile($event)">
+        </label>
+        <small>La resolición optima es de 600x400 pixeles. Max 2MB.</small>
+         
+        <button class="btn btn-success" [disabled]="!selectedFiles"
+          (click)="upload()">Subir imagen</button>
+			</div>
+		</div>
+
+
+</div>

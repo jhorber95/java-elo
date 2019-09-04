@@ -1,0 +1,58 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+        <li class="user-profile" [class.active]="showMenu === 'user'">
+          <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" (click)="addExpandClass('user')" aria-expanded="false"><img src="/api/imagen/usuario/{{dataUser.urlImagen}}" alt="user" /><span class="hide-menu">{{dataUser.nombres}} </span></a>
+          <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'user'">
+            <li>
+              <a routerLink="/freelancer/perfil-freelancer">Mi perfil </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" (click)="salir()" >Cerrar Sesión</a>
+            </li>
+            <li class="nav-devider"></li>
+
+          </ul>
+        </li>
+        <li class="nav-devider"></li>
+        <li class="nav-small-cap">PERSONAL</li>
+        <li [class.active]="showMenu === 'icons'">
+            <a class="has-arrow" href="javascript:void(0)"
+                aria-expanded="false"
+                (click)="addExpandClass('icons')" >
+                <span class="hide-menu">Rol</span>
+            </a>
+            <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'icons'">
+                <li *ngFor="let rol of nameRoles">
+                    <a routerLink="{{rol.url}}" [routerLinkActive]="['router-link-active']">{{rol.nombre}}</a>
+                </li>
+
+            </ul>
+        </li>
+        <li>
+            <a routerLink="/freelancer/gestion-ofertas" [routerLinkActive]="['router-link-active']"><i class="fa fa-list"></i><span class="hide-menu">Ofertas</span></a>
+        </li>
+        <li>
+            <a routerLink="/freelancer/gestion-inscripciones" [routerLinkActive]="['router-link-active']"><i class="fa fa-plus-square"></i><span class="hide-menu">Inscripciones</span></a>
+        </li>
+
+         <li>
+            <a routerLink="/freelancer/crear-oferta" [routerLinkActive]="['router-link-active']"><i class="fa fa-pencil"></i><span class="hide-menu">Nueva Oferta</span></a>
+        </li>
+
+
+      </ul>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->

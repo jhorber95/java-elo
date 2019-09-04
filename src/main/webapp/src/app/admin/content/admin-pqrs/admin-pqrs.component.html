@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <p class="text-primary">Select PQR: <strong>{{ message }}</strong></p>
+          </div>
+        </div>
+
+        <!-- *********************** Modal edit and create user *************************  -->
+
+        <ng-template #modalPQRs let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">PQRs de: {{PQRsInfo.usuario.nombres}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <p>{{PQRsInfo.mensaje}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary pull-left"
+              (click)="c('Close click')">Cerrar</button>
+          </div>
+        </ng-template>
+
+        <!-- ./ng.template (modal user)  -->
+
+        <table datatable [dtOptions]="dtOptions" class="row-border hover">
+          <thead>
+            <tr>
+              <th># mensaje</th>
+              <th>ID usuario</th>
+              <th>Nombre</th>
+              <th>Identificación</th>
+              <th>Fecha</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pqrs of PqrsDatatable; let row = index" [class.selected]="clickSelected === 'selected'+row" (click)="ClickRow(row, 'selected'+row)">
+              <td>{{ pqrs.id }}</td>
+              <td>{{ pqrs.usuario.id }}</td>
+              <td>{{ pqrs.usuario.nombres }}</td>
+              <td>{{ pqrs.usuario.identificacion }}</td>
+              <td>{{ pqrs.fecha }}</td>
+              <td>
+                <button class="btn btn-xs btn-primary" (click)="openModal(modalPQRs)">Leer</button>
+                <button class="btn btn-xs btn-danger" (click)="marcarLeido()">Leído</button>
+              </td>
+            </tr>
+          </tbody>
+          <tr *ngIf="PqrsDatatable?.length == 0">
+            <td colspan="3" class="no-data-available">No hay datos...</td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

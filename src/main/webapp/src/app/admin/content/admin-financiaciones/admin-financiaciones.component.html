@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <!-- *********************** Modal edit and create user *************************  -->
+
+      <ng-template #modalAgregarFinanciacion let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">Crear financiamiento</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="form-material" id="agregarFinanciera" name="agregarFinanciera" #agregarFinanciera="ngForm" (ngSubmit)="agregarFinanciera.form.valid && agregarFinan()" [ngFormOptions]="{ updateOn: 'submit'}" novalidate>
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label>*Institución financiera:</label>
+                <select class="form-control form-control-line"
+                        name="instFinanciera"
+                        [(ngModel)]="agregarFinanciacion.institucion.id"
+                        #instFinanciera="ngModel">
+                  <option *ngFor="let financiera of Financieras"
+                          value="{{financiera.id}}">{{financiera.nombre}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label>*Información de financiación:</label>
+                <textarea class="form-control"
+                          rows="5"
+                          name="descripción"
+                          [(ngModel)]="agregarFinanciacion.informacion"
+                          #descripcion="ngModel"
+                          required></textarea>
+
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button  type="submit" class="btn btn-info" >Agregar Financiación</button>
+            <button
+              type="button"
+              class="btn btn-secondary pull-left"
+              (click)="c('Close click')">Cerrar</button>
+          </div>
+        </form>
+      </ng-template>
+
+      <!-- ./ng.template (modal user)  -->
+      <!-- *********************** Modal edit and create user *************************  -->
+
+      <ng-template #modalEditarFinanciacion let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar financiamiento {{financiacionInfo.institucion.nombre}}</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="form-material" id="editarFinanciera" name="editarFinanciera" #editarFinanciera="ngForm" (ngSubmit)="editarFinanciera.form.valid && editarFinan()" [ngFormOptions]="{ updateOn: 'submit'}" novalidate>
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label>*Información de financiación: {{financiacionInfo.institucion.nombre}}</label>
+                <textarea class="form-control"
+                          rows="5"
+                          name="informacion"
+                          [(ngModel)]="financiacionInfo.informacion"
+                          #informacion="ngModel"
+                          required></textarea>
+
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button  type="submit" class="btn btn-info" >Editar Financiación</button>
+            <button
+              type="button"
+              class="btn btn-secondary pull-left"
+              (click)="c('Close click')">Cerrar</button>
+          </div>
+        </form>
+      </ng-template>
+
+      <!-- ./ng.template (modal user)  -->
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-7">
+            <p class="text-primary">financiación: <strong>{{ message }}</strong></p>
+          </div>
+          <div class="col-md-5 text-right">
+            <button class="btn btn-info" (click)="openModal(modalAgregarFinanciacion)">Agregar</button>
+            <button class="btn btn-success" (click)="openModal(modalEditarFinanciacion)" >Editar</button>
+            <button class="btn btn-danger" (click)="eliminarFinanciacion()">Eliminar</button>
+          </div>
+        </div>
+
+        <table datatable [dtOptions]="dtOptions" class="row-border hover">
+          <thead>
+            <tr>
+              <th>ID fina</th>
+              <th>Institución</th>
+              <th>Nit</th>
+              <th>Información</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let financiacion of FinanciacionesDatatable; let row = index" [class.selected]="clickSelected === 'selected'+row" (click)="ClickRow(row, 'selected'+row)">
+              <td>{{ financiacion.id }}</td>
+              <td>{{ financiacion.institucion.nombre }}</td>
+              <td>{{ financiacion.institucion.nit }}</td>
+              <td>{{ financiacion.informacion }}</td>
+              <td>
+                <select class="form-control form-control-line"
+                        name="idDepartamento"
+                        [(ngModel)]="financiacion.estado.id"
+                        #idDepartamento="ngModel"
+                        (ngModelChange)="disponible(financiacion.id, financiacion.estado.id)">
+                  <option value="8">Disponible</option>
+                  <option value="9">NO Disponible</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+          <tr *ngIf="FinanciacionesDatatable?.length == 0">
+            <td colspan="3" class="no-data-available">No hay datos...</td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="row white-space p-t-80">
+                    <div class="col-md-12">
+                        <div class="col-md-12 fix-width icon-section p-t-30">
+                            <h2 class="text-themecolor">Todas las financiaciones disponibles</h2>
+                            <!-- Row -->
+                            <div class="row m-t-40" *ngIf="FinancierasAll">
+                                <!-- .col -->
+
+                                <div class="col-lg-3 col-md-6" *ngFor="let financiera of FinancierasAll">
+                                	<a [routerLink]="['/financieras/detalle', financiera.id]">
+                                	<img class="logo-responsive-financiera" src="http://estudialo.co/api/imagen/institucion/{{financiera.urlImagen}}">
+                                    <h4 class="font-500">{{financiera.nombre}}</h4>
+                                    <p class="info-corta">{{financiera.descripcion}}</p>
+                                    </a>
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- final row -->
+                            <!-- preloader apis -->
+                            <div class="row m-t-70" *ngIf="!FinancierasAll">
+
+                                	<div class="loader m-t-30">
+										<div class="loader__figure"></div>
+										<p class="loader__label">estúdialo</p>
+									</div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>

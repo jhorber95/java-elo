@@ -1,0 +1,40 @@
+
+<div *ngIf="ofertas?.length == 0">
+  <div class="alert alert-warning">
+    Aún no tienes ofertas. Te invitamos a que crees tu  <a routerLink="/freelancer/crear-oferta">primera oferta</a>
+  </div>
+</div>
+
+<div class="col-md-12 col-lg-12 col-xlg-12" *ngFor="let oferta of ofertas">
+<div class="el-card-item">
+  <div class="el-card-content">
+
+      <div class="card card-body">
+        <div class="row">
+          <div class="col-md-4 col-lg-3 text-center">
+            <a [routerLink]="['/freelancer/view-oferta', oferta.id]"><img src="http://estudialo.co/api/imagen/oferta/{{oferta.imagenUrl}}" alt="user" class="img-responsive"></a>
+          </div>
+          <div class="col-md-8 col-lg-9">
+            <a class="box-title m-b-0 font-bold" [routerLink]="['/freelancer/view-oferta', oferta.id]">{{oferta.titulo}}</a>
+            <div class="row">
+              <div class="col-md">
+                <small class="font-bold">{{oferta.categoria.nombre}}</small>
+              </div>
+              <div class="col-md text-right">
+                <div class="stars-outer">
+                  <div class="stars-inner"  [ngStyle]="{'width':oferta.calificacion.porcentaje+'%'}"></div>
+                </div>
+                <small> ({{oferta.calificacion.puntaje}})</small>
+              </div>
+            </div>
+            <address>
+              <small>{{oferta.descripcion}}</small>
+            </address>
+          </div>
+        </div>
+        <div class="text-right">
+          <button class="btn btn-danger btn-xs" (click)="eliminar(oferta.id)" >Eliminar</button>
+        </div>
+    </div>
+  </div>
+</div>

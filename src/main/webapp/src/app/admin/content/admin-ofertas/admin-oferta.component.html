@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-7">
+            <p class="text-primary">Click en usuario: <strong>{{ message }}</strong></p>
+          </div>
+          <div class="col-md-4 text-right">
+            <a routerLink="/admin/admin-nueva-oferta" class="btn btn-success">Nueva Oferta</a>
+            <button  (click)="editarOferta()" class="btn btn-info">Editar Oferta</button>            
+            <button class="btn btn-danger" (click)="eliminarOferta()">Eliminar</button>
+          </div>
+        </div>
+
+        <table datatable [dtOptions]="dtOptions" class="row-border hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Titulo</th>
+              <th>Precio</th>
+              <th>Telefono</th>
+              <th>Ofrece</th>
+              <th>Destacada</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let oferta of OfertasDatatable; let row = index" [class.selected]="clickSelected === 'selected'+row" (click)="ClickRow(row, 'selected'+row)">
+              <td>{{ oferta.id }}</td>
+              <td>{{ oferta.titulo }}</td>
+              <td>{{ oferta.precio }}</td>
+              <td>{{ oferta.telefono }}</td>
+              <td *ngIf="oferta.ofrece.nombres!=null">{{ oferta.ofrece.nombres }}</td>
+              <td *ngIf="oferta.ofrece.nombre!=null">{{ oferta.ofrece.nombre }}</td>
+              <td>
+                <div class="switch">
+                  <label>Off
+                  <input type="checkbox" id="{{oferta.id}}" [checked]="oferta.destacada" name="item{{oferta.id}}" value="{{oferta.destacada}}" [(ngModel)]="oferta.destacada" (ngModelChange)="destacada(oferta.id)"><span class="lever"></span>On</label>
+                </div>
+              </td>
+              <td>
+                <select class="form-control form-control-line"
+                        name="estado"
+                        [(ngModel)]="oferta.estado.id"
+                        #estado="ngModel"
+                        (ngModelChange)="disponible(oferta.id, oferta.estado.id)">
+                  <option value="8">Disponible</option>
+                  <option value="9">NO Disponible</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+          <tr *ngIf="OfertasDatatable?.length == 0">
+            <td colspan="3" class="no-data-available">No hay datos...</td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

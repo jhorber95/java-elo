@@ -1,0 +1,26 @@
+@import url("/assets/css/pages/user-card.css");
+@import url("/assets/css/pages/stylish-tooltip.css");
+
+.image-responsive-cursos{
+	height: 200px !important;
+    width: 310px !important;
+}
+.text-justify{
+	text-align: justify;
+    text-justify: inter-word;
+}
+
+.modal-footer-calificacion{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 15px;
+    border-top: 1px solid #e9ecef;
+}
+
+.max-description{
+    max-height: 10px;
+}

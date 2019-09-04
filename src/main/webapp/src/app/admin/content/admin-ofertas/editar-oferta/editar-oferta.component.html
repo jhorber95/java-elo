@@ -1,0 +1,275 @@
+
+<!-- Row  -->
+<div *ngFor="let detail of detailOferta">
+    <div class="row" >
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+            <div class="card"> <img class="card-img" src="/api/imagen/oferta/{{detail.imagenUrl}}" alt="Imagen oferta">
+    
+            </div>
+            <div class="form-group">
+                    <div *ngIf="currentFileUpload" class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped"
+                              role="progressbar"
+                              attr.aria-valuenow="{{progress.percentage}}"
+                              aria-valuemin="0" aria-valuemax="100"
+                              [ngStyle]="{width:progress.percentage+'%'}">
+                              {{progress.percentage}}%
+                        </div>
+                    </div>
+    
+                <label class="btn btn-default">
+                  <input type="file" (change)="selectFile($event)">
+                </label>
+    
+                <button class="btn btn-info bnt-xs" [disabled]="!selectedFiles"
+                  (click)="upload()">Subir imagen</button>
+            </div>
+    
+    
+            <div class="card">
+                <div class="card-body"> <small class="text-muted">Categoría </small>
+                    <h6>{{detail.categoria.nombre}} </h6>
+    
+                    <small class="text-muted p-t-30 db">Nivel de formación</small>
+                    <h6>{{detail.tipoOferta.nombre}} </h6>
+                    <br>
+    
+                    <h6>{{detail.municipio.nombre +' - '+ detail.municipio.departamento.nombre}} </h6>
+    
+                </div>
+            </div>
+        </div>
+
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-8 col-xlg-9 col-md-7">
+            <div class="card">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs profile-tab" role="tablist">
+    
+                    <li >
+                        <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Detalles</a>
+                    </li>
+                    <li >
+                        <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Configuraciones</a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+    
+                    <!--second tab-->
+                    <div class="tab-pane active" id="profile" role="tabpanel">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 b-r"> <strong>Nombre</strong>
+                                    <br>
+                                    <p class="text-muted">{{detail.titulo}} </p>
+                                </div>
+                                <div class="col-md-3 col-xs-6 b-r"> <strong>Teléfono</strong>
+                                    <br>
+                                    <p class="text-muted">{{detail.telefono}} </p>
+                                </div>
+                                <div class="col-md-3 col-xs-6 b-r"> <strong>Estado</strong>
+                                    <br>
+                                    <p class="text-muted">{{detail.estado.nombre}} </p>
+                                </div>
+                                <div class="col-md-3 col-xs-6"> <strong>Municipio</strong>
+                                    <br>
+                                    <p class="text-muted">{{detail.municipio.nombre}} </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <p class="m-t-30">{{detail.descripcion}} </p>
+    
+                        </div>
+       
+                        
+                    </div><!--./ end tab profile -->
+                    <div class="tab-pane" id="settings" role="tabpanel">
+                        <div class="card-body">
+                            <form class="form-horizontal form-material"
+                                        name="formOferta"
+                                        (ngSubmit)="formOferta.form.valid && onSubmitFormOfertas()"
+                                      #formOferta="ngForm"
+                                      novalidate>
+    
+                                <input type="hidden"
+                                            name="idOferta"
+                                            [(ngModel)]="ofertaFreelancer.id"
+                                            #idOferta="ngModel"
+                                            value="{{detail.id}}"
+                                            >
+    
+                                <div class="form-group">
+                                    <label class="col-md-12"><strong>Título</strong></label>
+                                    <div class="col-md-12">
+                                        <input class="form-control form-control-line"
+                                                type="text"
+                                                name="titulo"
+                                                [(ngModel)]="ofertaFreelancer.titulo"
+                                        #titulo="ngModel"
+                                                value="{{detail.titulo}}"
+                                                required 	>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12"><strong> Institución</strong></label>
+                                    <div class="col-md-12">
+                                        <select class="form-control"
+                                            name="idOferta"
+                                            [(ngModel)]="ofertaFreelancer.idOfrece"
+                                            #idOferta="ngModel"
+                                            required>
+                                            <option value="{{ofertaFreelancer.ofrece.id}}" selected>{{ofertaFreelancer.ofrece.nombre}} </option>
+                                            <option *ngFor="let institucion of instituciones" 
+                                                    value="{{institucion.id}}" >{{institucion.nombre}}
+                                            </option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12"><strong> Jornada</strong></label>
+                                    <div class="col-md-12">
+                                        <select class="form-control"
+                                            name="jornada"
+                                            [(ngModel)]="ofertaFreelancer.jornada.id"
+                                            #jornada="ngModel"
+                                            required>
+                                            <option value="1" >Diurna</option>
+                                            <option value="2" >Nocturna</option>
+                                            <option value="3" >Fin de semana</option>
+                                            <option value="4" >No Disponible</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12"><strong> Modalidad</strong></label>
+                                    <div class="col-md-12">
+                                        <select class="form-control"
+                                            name="modalidad"
+                                            [(ngModel)]="ofertaFreelancer.modalidad.id"
+                                            #modalidad="ngModel"
+                                            required>
+                                            <option value="1" >Presencial</option>
+                                            <option value="2" >Distancia</option>
+                                            <option value="3" >Virtual</option>
+                                            <option value="4" >No Disponible</option>
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12"><strong>Categoría</strong></label>
+                                             <div class="col-md-12">
+                                                 <select class="form-control form-control-line"
+                                                                 name="categoria"
+                                                                 [(ngModel)]="ofertaFreelancer.categoria.id"
+                                                        #categoria="ngModel"
+                                                                 required >
+                                                     <option value="{{ofertaFreelancer.categoria.id}}" selected>{{ofertaFreelancer.categoria.nombre}}</option>
+                                                     <option *ngFor="let categoria of categorias"
+                                                                     value="{{categoria.id}} ">{{categoria.nombre}} </option>
+                                                 </select>
+                                             </div>
+                                </div>
+    
+                                <div class="form-group">
+                                    <label class="col-md-12"><strong>Tipo Oferta</strong></label>
+                                             <div class="col-md-12">
+                                                 <select class="form-control form-control-line"
+                                                                 name="oferta"
+                                                                 [(ngModel)]="ofertaFreelancer.tipoOferta.id"
+                                                        #oferta="ngModel"
+                                                                 required >
+                                                     <option value="{{ofertaFreelancer.tipoOferta.id}}" selected>{{ofertaFreelancer.tipoOferta.nombre}} </option>
+                                                     <option *ngFor="let oferta of tipoOfertas"
+                                                                     value="{{oferta.id}} ">{{oferta.nombre}} </option>
+                                                 </select>
+                                             </div>
+                                </div>
+    
+                                <div class="form-group">
+                                    <label class="col-md-12"><strong>Teléfono</strong></label>
+                                    <div class="col-md-12">
+                                        <input type="text"
+                                                class="form-control form-control-line"
+                                                name="telefono"
+                                                [(ngModel)]="ofertaFreelancer.telefono"
+                                                #telefono="ngModel"
+                                                value="{{ofertaFreelancer.telefono}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12"><strong>Descripción</strong></label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5"
+                                                class="form-control form-control-line"
+                                                name="descripcion"
+                                                [(ngModel)]="ofertaFreelancer.descripcion"
+                                                #descripcion="ngModel"
+                                        >{{detail.descripcion}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12"><strong>País</strong></label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control form-control-line">
+                                            <option value="1" >Colombia</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-12"><strong>Departamento</strong></label>
+                                    <div class="col-md-12">
+                                        <select class="form-control form-control-line"
+                                                        name="idDepartamento"
+                                                       [(ngModel)]="ofertaFreelancer.municipio.departamento.id"
+                                                        #idDepartamento="ngModel"
+                                                        (change)="onSelectDepartamento($event.target.value)"
+                                                        >
+                                            <option *ngFor="let departamento of departamentos"
+                                                    value="{{departamento.id}}">{{departamento.nombre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12"><strong>Ciudad</strong></label>
+                                    <div class="col-md-12">
+                                        <select class="form-control form-control-line"
+                                                        name="municipio"
+                                                       [(ngModel)]="ofertaFreelancer.municipio.id"
+                                                        #municipio="ngModel">
+                                            <option  *ngFor="let municipio of municipios"
+                                                    value="{{municipio.id}}">{{municipio.nombre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success">Actualizar</button>
+                                    </div>
+                                </div>
+                              <!-- <pre>{{ ofertaFreelancer | json }} </pre>-->
+                            </form>
+    
+    
+                        </div>
+    
+                    </div><!--./end tab setting -->
+                </div><!--./ end tab contents -->
+            </div><!--./end card -->
+        </div><!--./end col-lg-8 col-xlg-9 col-md-7 -->
+        <!-- Column -->
+    </div>
+              <!-- Row </div> -->
+    </div>
+    
+    
