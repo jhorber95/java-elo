@@ -13,6 +13,7 @@ target/
 /src/main/node_modules
 /src/main/dist
 target/
+/node_modules
 
 ### IntelliJ IDEA ###
 .idea
