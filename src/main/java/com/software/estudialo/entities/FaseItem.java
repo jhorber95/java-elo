@@ -11,8 +11,6 @@ import javax.persistence.Table;
  * @author LUIS
  *
  */
-@Entity
-@Table(name = "fase_item")
 public class FaseItem {
 
 	@Id

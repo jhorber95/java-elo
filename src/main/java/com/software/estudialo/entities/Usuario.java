@@ -14,8 +14,6 @@ import java.util.List;
  *
  * @author LUIS
  */
-@Entity
-@Table(name = "usuario")
 public class Usuario extends Persona {
 
 	/** The id. */

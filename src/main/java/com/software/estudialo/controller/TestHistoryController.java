@@ -3,12 +3,14 @@ package com.software.estudialo.controller;
 import com.software.estudialo.controller.error.BadRequestAlertException;
 import com.software.estudialo.entities.TestHistory;
 import com.software.estudialo.service.TestHistoryService;
+import com.software.estudialo.util.AuthoritiesConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,6 +42,7 @@ public class TestHistoryController {
     }
 
     @PutMapping("/test-history")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<TestHistory> updateTestHistory(@Valid @RequestBody TestHistory testHistory) throws URISyntaxException {
         log.debug("REST request to update TestHistory : {}", testHistory);
         if (testHistory.getId() != null) {
@@ -50,6 +53,7 @@ public class TestHistoryController {
     }
 
     @GetMapping("/test-history")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Page<TestHistory>> getAllDepartments(Pageable pageable) {
         log.debug("REST request to get a page of TestHistory");
         Page<TestHistory> page = service.findAll(pageable);
@@ -57,6 +61,7 @@ public class TestHistoryController {
     }
 
     @GetMapping("/test-history/{id}")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<TestHistory> getTestHistory(@PathVariable Long id) {
         log.debug("REST request to get TestHistory : {}", id);
         TestHistory entity = service.findOne(id);
@@ -67,6 +72,7 @@ public class TestHistoryController {
     }
 
     @DeleteMapping("/departments/{id}")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteTestHistory(@PathVariable Long id) {
         log.debug("REST request to delete TestHistory : {}", id);
         service.delete(id);
