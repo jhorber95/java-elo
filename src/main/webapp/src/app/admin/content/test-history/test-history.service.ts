@@ -38,8 +38,4 @@ export class TestHistoryService {
     headers = headers.set('Authorization','Bearer ' + this.authServices.getToken());
     return this.http.delete(`${this.url}/${id}`, { headers });
   }
-
-
-
-
 }
