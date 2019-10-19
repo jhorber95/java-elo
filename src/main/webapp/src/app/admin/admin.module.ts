@@ -10,6 +10,7 @@ import { BreadcrumbComponent } from './navigation/breadcrumb/breadcrumb.componen
 //import admin-usuarios services
 import { AdminService } from './services/admin.service';
 import { FormsModule } from '@angular/forms';
+import { TestHistoryComponent } from './content/test-history/test-history.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
         NavigationComponent,
         BreadcrumbComponent,
         SidebarComponent,
-        SIDEBAR_TOGGLE_DIRECTIVES
+        SIDEBAR_TOGGLE_DIRECTIVES,
+        TestHistoryComponent
     ],
     providers: [AdminService]
 })

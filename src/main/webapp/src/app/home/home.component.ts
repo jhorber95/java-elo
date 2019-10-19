@@ -231,7 +231,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   testVocacional() {
-    this.router.navigate(['/guiavocacional']);
+    this.router.navigate(['/test/fase1']);
   }
 
 }

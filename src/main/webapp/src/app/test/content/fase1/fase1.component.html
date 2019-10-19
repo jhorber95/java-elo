@@ -17,7 +17,10 @@
     <div class="col-md-3 col-6" *ngFor="let item of fase.items; let i = index">
       <div class="card wow zoomIn">
         <input type="checkbox" id="{{item.id}}" class="filled-in" [checked]="item.seleccionado" name="item{{item.id}}" value="{{item.seleccionado}}" [(ngModel)]="item.seleccionado">
-        <label for="{{item.id}}"><img class="card-img-top img-responsive img-thumbnail" src="/assets/images/test/fases/{{item.imagen}}"></label>
+        <label for="{{item.id}}">
+          {{item.imagen}}
+          <img class="card-img-top img-responsive img-thumbnail" src="/assets/images/test/fases/{{item.imagen}}">
+        </label>
       </div>
     </div>
   </div>
