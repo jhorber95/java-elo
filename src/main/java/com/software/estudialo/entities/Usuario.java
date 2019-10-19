@@ -3,6 +3,9 @@
  */
 package com.software.estudialo.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.List;
 
 // TODO: Auto-generated Javadoc
@@ -11,9 +14,12 @@ import java.util.List;
  *
  * @author LUIS
  */
+@Entity
+@Table(name = "usuario")
 public class Usuario extends Persona {
 
 	/** The id. */
+	@Id
 	private int id;
 
 	/** The email. */

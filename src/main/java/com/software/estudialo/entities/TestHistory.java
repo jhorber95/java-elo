@@ -18,13 +18,11 @@ public class TestHistory {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_fase_item")
-    private FaseItem idFaseItem;
+    @Column(name = "id_fase_item")
+    private Integer idFaseItem;
 
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    private Usuario idUser;
+    @Column(name = "id_user")
+    private Integer idUser;
 
     @Column(name = "created_at")
     private Timestamp created_at;

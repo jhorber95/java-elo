@@ -3,12 +3,19 @@
  */
 package com.software.estudialo.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author LUIS
  *
  */
+@Entity
+@Table(name = "fase_item")
 public class FaseItem {
 
+	@Id
 	private int id;
 	private String imagen;
 	private Inteligencia inteligencia;
