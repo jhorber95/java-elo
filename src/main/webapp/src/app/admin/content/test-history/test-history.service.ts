@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ITestHistory} from '../../../models/test-history';
@@ -37,5 +37,11 @@ export class TestHistoryService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization','Bearer ' + this.authServices.getToken());
     return this.http.delete(`${this.url}/${id}`, { headers });
+  }
+
+  sendUserTest(entity: any): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization','Bearer ' + this.authServices.getToken());
+    return this.http.post('/api/test/vocacional/save-user-test', entity,{ headers });
   }
 }

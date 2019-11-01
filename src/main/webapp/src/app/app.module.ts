@@ -24,6 +24,7 @@ import { WorkflowtestService } from './shared/workflowtest/workflowtest.service'
 
 import { MunicipioService } from './services/municipio.service';
 import { DepartamentoService } from './services/departamento.service';
+import {TestHistoryService} from './admin/content/test-history/test-history.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { DepartamentoService } from './services/departamento.service';
     WorkflowtestService,
     UserService,
     DepartamentoService,
-    MunicipioService
+    MunicipioService,
+    TestHistoryService
   ],
   bootstrap: [AppComponent]
 })

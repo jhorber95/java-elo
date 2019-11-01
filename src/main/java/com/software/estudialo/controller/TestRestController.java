@@ -6,25 +6,20 @@ package com.software.estudialo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import com.software.estudialo.entities.*;
+import com.software.estudialo.service.TestHistoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.software.estudialo.entities.Evento;
-import com.software.estudialo.entities.Institucion;
-import com.software.estudialo.entities.Oferta;
-import com.software.estudialo.entities.Respuesta;
-import com.software.estudialo.entities.RespuestaGeneral;
-import com.software.estudialo.entities.ResultadoVocacional;
-import com.software.estudialo.entities.Test;
 import com.software.estudialo.service.TestService;
 
 import io.swagger.annotations.Api;
@@ -44,13 +39,19 @@ public class TestRestController {
 	private static final String url = "/test";
 	
 	/** The logger. */
-	private Logger logger = Logger.getLogger(TestRestController.class);
+	private Logger logger = LoggerFactory.getLogger(TestRestController.class);
 	
 	
 	@Autowired
 	TestService testService;
-	
-	
+
+	private final TestHistoryService testHistoryService;
+
+	public TestRestController(TestHistoryService testHistoryService) {
+		this.testHistoryService = testHistoryService;
+	}
+
+
 	@GetMapping(url + "/vocacional")
 	@ApiOperation(value = "obtiene el test vocacional " )
     public ResponseEntity<RespuestaGeneral> obtenerTestVocacional() {
@@ -93,6 +94,22 @@ public class TestRestController {
 		rg.setData(ofertas);
         return new ResponseEntity<RespuestaGeneral>(rg, HttpStatus.OK);
         
+	}
+
+	@PostMapping(url + "/vocacional/save-user-test")
+	public ResponseEntity<RespuestaGeneral> saveUserTest(@RequestBody UserTest userTest) {
+		logger.debug("save user test, {}", userTest);
+
+		List<TestHistory> reponse = testHistoryService.setupUserData(userTest);
+		if (reponse.size()  == 0) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+			RespuestaGeneral rg = new RespuestaGeneral();
+			rg.setExito(true);
+			rg.setCodigo(200);
+			rg.setData(reponse);
+			return new ResponseEntity<>(rg, HttpStatus.OK);
+		}
 	}
 	
 	

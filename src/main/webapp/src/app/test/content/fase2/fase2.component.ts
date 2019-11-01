@@ -49,11 +49,8 @@ export class Fase2Component implements OnInit, AfterViewInit {
   }
 
   ValidateItems(): boolean {
-    if($('input[type=checkbox]:checked').length >=2 && $('input[type=checkbox]:checked').length <=4) {
-      return true;
-    }else{
-      return false;
-    }
+    const selector = $('input[type=checkbox]:checked');
+    return selector.length >= 2 && selector.length <= 4;
   }
 
   restartNotification() {

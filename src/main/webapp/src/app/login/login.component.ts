@@ -3,6 +3,8 @@ import { Router} from '@angular/router';
 import { AuthService } from '../shared/guard/auth.service';
 import * as decode from 'jwt-decode';
 import swal from 'sweetalert';
+import {TestHistoryService} from '../admin/content/test-history/test-history.service';
+import {UserService} from '../services/user/user.service';
 
 
 @Component({
@@ -22,7 +24,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
 
     constructor(private router: Router,
-                private authService: AuthService) {}
+                private authService: AuthService,
+                private testService: TestHistoryService,
+                private userService: UserService
+                ){}
 
     ngOnInit() {
       if (localStorage.getItem('token') && this.authService.isAuthenticated()) {
@@ -57,6 +62,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           if (response) {
             localStorage.setItem('token', response.access_token);
             this.exito = 'Bienvenido, por favor espere...';
+            debugger;
+            this.saveResultTest();
             if (sessionStorage.getItem('redirect-test') == 'true') {
               sessionStorage.removeItem('redirect-test');
               this.router.navigate(['/ofertas/guiavocacional']);
@@ -86,6 +93,22 @@ export class LoginComponent implements OnInit, AfterViewInit {
           }
           this.loading = false;
         }
+      );
+    }
+
+    async saveResultTest() {
+      const _test = JSON.parse(sessionStorage.getItem('stepTest'));
+      const _user = await this.saveUserInLocalstorage();
+
+      const entity: any = {
+        user: _user,
+        test: _test
+      };
+      debugger;
+      this.testService.sendUserTest(entity).subscribe(
+        res => {
+          console.log(res)
+        }, error1 => console.log(error1)
       );
     }
 
@@ -156,5 +179,27 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     }
 
+    saveUserInLocalstorage() {
+      const token = localStorage.getItem('token');
+      const tokenPayload: any = decode(token);
+      const email = tokenPayload.user_name;
+      return new Promise((resolve, reject) => {
+        this.userService.getUserData(email).subscribe(
+          response => {
+            if (response) {
+              localStorage.setItem('user', JSON.stringify(response));
+              resolve(response);
+            } else {
+              this.router.navigate(['/login']);
+            }
+          },
+          error => {
+            resolve(error);
+            console.log(<any>error);
+          }
+        );
+      });
+
+    }
 
 }

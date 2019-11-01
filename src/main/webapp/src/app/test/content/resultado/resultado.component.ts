@@ -58,6 +58,7 @@ export class ResultadoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.listarAds();
     this.resultTest = this.formDataTestService.getTestResult();
     sessionStorage.setItem('resultTest', JSON.stringify(this.resultTest));
+    sessionStorage.setItem('stepTest', JSON.stringify(this.formDataTestService.getFormDataTestSubmit()));
   }
 
   ngOnDestroy() {
