@@ -154,8 +154,8 @@ public interface OfertaService {
 	public List<Oferta> getOfertasOfrecidasInstitucion(int idInstitucion);
 	
 	public List<Oferta> getOfertasOfrecidasFreelancer(int idFreelancer);
-	
-	
-	
-	
+
+	List<Oferta> getOfertasByInteligencia(int idIntelignencia, int limit, int offset);
+
+
 }

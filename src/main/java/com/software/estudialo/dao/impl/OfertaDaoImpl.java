@@ -59,6 +59,8 @@ import com.software.estudialo.util.Constants;
 
 import io.swagger.models.auth.In;
 
+import static com.software.estudialo.util.Constants.ID_ESTADO_ACTIVO_ENTIDADES_SECUNDARIAS;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class OfertaDaoImpl.
@@ -815,7 +817,7 @@ public class OfertaDaoImpl implements OfertaDao {
 					pstm.setInt(7, oferta.getMunicipio().getId());
 					pstm.setInt(8, oferta.getTipoOferta().getId());
 					pstm.setTimestamp(9, timestamp);
-					pstm.setInt(10, Constants.ID_ESTADO_ACTIVO_ENTIDADES_SECUNDARIAS);
+					pstm.setInt(10, ID_ESTADO_ACTIVO_ENTIDADES_SECUNDARIAS);
 					pstm.setBoolean(11, false);
 					pstm.setString(12, "default.png");
 					pstm.setInt(13, oferta.getJornada().getId());
@@ -1819,6 +1821,23 @@ public class OfertaDaoImpl implements OfertaDao {
 		respuesta.setData(listaOferta);
 		return respuesta;
 		
+	}
+
+	@Override
+	public List<Oferta> getOfertasByInteligencia(int idInteligencia, int limit, int offset) {
+		logger.debug(" DAO -- getOfertasByInteligencia ");
+
+		String sql = "SELECT * FROM oferta AS o " +
+				"INNER JOIN categoria AS c ON o.ofe_categoria = c.cat_id " +
+				"INNER JOIN subcategoria AS sc ON sc.sca_categoria = c.cat_id " +
+				"INNER JOIN subcategoria_inteligencia AS si ON si.sin_subcategoria = sc.sca_id " +
+				"INNER JOIN inteligencia AS i ON si.sin_inteligencia = i.int_id " +
+				"WHERE i.int_id = ? AND o.ofe_estado= ? ORDER BY c.cat_id LIMIT ? OFFSET ?";
+
+		List<Oferta> listaOfertasOfrecidas = jdbcTemplate.query(sql, new Object[] { idInteligencia, ID_ESTADO_ACTIVO_ENTIDADES_SECUNDARIAS, limit, offset }, new OfertaRowMapper());
+		logger.debug(" DAO -- getOfertasByInteligencia :: Success ");
+
+		return listaOfertasOfrecidas;
 	}
 
 	

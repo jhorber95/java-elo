@@ -30,6 +30,8 @@ import com.software.estudialo.service.OfertaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import static com.software.estudialo.util.SimilarResponses.getRespuestaGeneralResponseEntity;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class OfertaRestController.
@@ -102,7 +104,7 @@ public class OfertaRestController {
 	/**
 	 * Eliminar oferta de institucion
 	 *
-	 * @param id the id
+	 * @param idOferta the id
 	 * @return the response entity
 	 */
 	@ApiOperation(value = "Una institucion Elimina su oferta (Cambio de estado a eliminado) - proporciona el id")
@@ -484,9 +486,15 @@ public class OfertaRestController {
 		rg.setData(ofrecidas);
 		return new ResponseEntity<RespuestaGeneral>(rg, HttpStatus.OK);
 	}
-	
 
-	
-	
-	
+	@ApiOperation(value = "Get offers by intelligence")
+	@GetMapping(url + "/get-by-intelligence")
+	public ResponseEntity<RespuestaGeneral> getOfertasByInteligencia(
+			@RequestParam(value = "idInteligencia") int idInteligencia,
+			@RequestParam(value = "limit", defaultValue = "4") int limit,
+			@RequestParam(value = "offset", defaultValue = "0") int offset){
+		List<Oferta> list = ofertaService.getOfertasByInteligencia(idInteligencia, limit, offset);
+		return getRespuestaGeneralResponseEntity(list);
+	}
+
 }

@@ -71,7 +71,7 @@ public class TestHistoryController {
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }
 
-    @DeleteMapping("/departments/{id}")
+    @DeleteMapping("/test-history/{id}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteTestHistory(@PathVariable Long id) {
         log.debug("REST request to delete TestHistory : {}", id);

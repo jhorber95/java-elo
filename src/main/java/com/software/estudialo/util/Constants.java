@@ -117,5 +117,7 @@ public class Constants {
 	public static final String INCRIPCION_NO_CONFIRMADA_POR_DOCENTE = "El freelancer no ha confirmado la inscripcion, no puede calificar";
 	
 	public static final String INCRIPCION_YA_CONFIRMADA_POR_DOCENTE = "El freelancer ya confirmo la inscripcion ya puedes calificar";
-	
+
+
+
 }

@@ -665,8 +665,10 @@ public class OfertaServiceImpl implements OfertaService {
 		return listaOfertas;
 	}
 
-	
 
-	
+	@Override
+	public List<Oferta> getOfertasByInteligencia(int idIntelignencia, int limit, int offset) {
+		return ofertaDao.getOfertasByInteligencia(idIntelignencia, limit, offset);
+	}
 
 }

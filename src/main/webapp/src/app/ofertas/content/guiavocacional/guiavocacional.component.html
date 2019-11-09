@@ -106,12 +106,11 @@
                       <small class="small-10">{{search.municipio.nombre}}
                         - {{search.municipio.departamento.nombre}}</small>
                     </div>
-
+                  </div>
+                  <div class="row">
                     <div class="col">
-                      <small class="font-bold">Precio: {{search.precio}}</small>
+                      <small class="font-bold">Precio: {{search.precio | currency }}</small>
                     </div>
-
-
                   </div>
                   <div class="row">
                     <div class="col-5 text-right">

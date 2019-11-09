@@ -166,7 +166,22 @@ public interface OfertaDao {
 	public JSONRespuesta listarOfertas();
 	
 	
-	/**
+	/**  @Override
+    public List<Oferta> getOfertasByInteligencia(int idInteligencia, int limit, int offset) {
+		logger.debug(" DAO -- getOfertasByInteligencia ");
+
+		String sql = "SELECT * FROM oferta AS o " +
+				"INNER JOIN categoria AS c ON o.ofe_categoria = c.cat_id " +
+				"INNER JOIN subcategoria AS sc ON sc.sca_categoria = c.cat_id " +
+				"INNER JOIN subcategoria_inteligencia AS si ON si.sin_subcategoria = sc.sca_id " +
+				"INNER JOIN inteligencia AS i ON si.sin_inteligencia = i.int_id " +
+				"WHERE i.int_id = ? AND o.ofe_estado= ? ORDER BY c.cat_id LIMIT ? OFFSET ?";
+
+		List<Oferta> listaOfertasOfrecidas = jdbcTemplate.query(sql, new Object[] { idInteligencia, ID_ESTADO_ACTIVO_ENTIDADES_SECUNDARIAS, limit, offset }, new OfertaRowMapper());
+		logger.debug(" DAO -- getOfertasByInteligencia :: Success ");
+
+		return listaOfertasOfrecidas;
+    }
 	 * Listar oferta filtros.
 	 *
 	 * @param start the start
@@ -285,7 +300,7 @@ public interface OfertaDao {
 	public List<Oferta> getOfertasOfrecidasInstitucion(int idInstitucion);
 	
 	public List<Oferta> getOfertasOfrecidasFreelancer(int idFreelancer);
-	
-	
+
+	List<Oferta> getOfertasByInteligencia(int idInteligencia, int limit, int offset);
 
 }

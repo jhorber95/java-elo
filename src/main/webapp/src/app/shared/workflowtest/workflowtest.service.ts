@@ -12,7 +12,7 @@ export class WorkflowtestService {
     { step: STEPS.fase6, valid: false },
     { step: STEPS.fase7, valid: false },
     { step: STEPS.fase8, valid: false },
-    { step: STEPS.resultado, valid: false }
+    { step: STEPS.resultado, valid: true }
   ];
 
   constructor() { }
