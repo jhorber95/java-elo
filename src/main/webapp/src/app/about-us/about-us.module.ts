@@ -6,9 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 
 import { AboutUsComponent } from './about-us.component';
-import { HeaderComponent } from './header/header.component';
-import { PartnersComponent } from './partners/partners.component';
-import { FooterComponent } from './footer/footer.component';
+import {PartialsModule} from '../partials/partials.module';
 
 
 const routes: Routes = [{
@@ -19,12 +17,11 @@ const routes: Routes = [{
     CommonModule,
     FormsModule,
     NgbModule.forRoot(),
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PartialsModule
   ],
   declarations: [
     AboutUsComponent,
-    HeaderComponent,
-    PartnersComponent,
-    FooterComponent]
+  ]
 })
 export class AboutUsModule { }

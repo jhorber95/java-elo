@@ -3,11 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { FinancierasRoutingModule } from './financieras-routing.module';
 import { FinancierasComponent } from './financieras.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { PartnersComponent } from './partners/partners.component';
 
 import { FormsModule } from '@angular/forms';
+import {PartialsModule} from '../partials/partials.module';
 
 
 
@@ -15,13 +13,11 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FinancierasRoutingModule,
-    FormsModule
+    FormsModule,
+    PartialsModule
   ],
   declarations: [
     FinancierasComponent,
-    HeaderComponent,
-    FooterComponent,
-    PartnersComponent
   ]
 })
 export class FinancierasModule {

@@ -3,23 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { EventosRoutingModule } from './eventos-routing.module';
 import { EventosComponent } from './eventos.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { PartnersComponent } from './partners/partners.component';
 
 import { FormsModule } from '@angular/forms';
+import {PartialsModule} from '../partials/partials.module';
 
 @NgModule({
   imports: [
     CommonModule,
     EventosRoutingModule,
-    FormsModule
+    FormsModule,
+    PartialsModule
   ],
   declarations: [
     EventosComponent,
-    HeaderComponent,
-    FooterComponent,
-    PartnersComponent
   ]
 })
 export class EventosModule {
