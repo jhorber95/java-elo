@@ -45,7 +45,7 @@ public class NoticiaController {
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Noticia> updateNoticia(@Valid @RequestBody Noticia noticia) throws URISyntaxException {
         log.debug("REST request to update Noticia : {}", noticia);
-        if (noticia.getId() != null) {
+        if (noticia.getId() == null) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idnull");
         }
         Noticia result = service.save(noticia);
@@ -53,15 +53,15 @@ public class NoticiaController {
     }
 
     @GetMapping("/noticia")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<Page<Noticia>> getAllDepartments(Pageable pageable) {
+//    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Page<Noticia>> getAllNews(Pageable pageable) {
         log.debug("REST request to get a page of Noticia");
         Page<Noticia> page = service.findAll(pageable);
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     @GetMapping("/noticia/{id}")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+//    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Noticia> getNoticia(@PathVariable Long id) {
         log.debug("REST request to get Noticia : {}", id);
         Noticia entity = service.findOne(id);
@@ -76,6 +76,6 @@ public class NoticiaController {
     public ResponseEntity<Void> deleteNoticia(@PathVariable Long id) {
         log.debug("REST request to delete Noticia : {}", id);
         service.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.noContent().header(id.toString()).build();
     }
 }

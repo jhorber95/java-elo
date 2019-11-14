@@ -23,75 +23,47 @@
 
   </div>
   <div class="row">
-    <div class="col-md-6">
-      <div class="card wow zoomIn text-center">
-        <a href="{{Ad3.url}}" target="_blank">
-          <img src="{{Ad3.imagen}}" class="wow zoomIn">
-        </a>
 
+    <div class="col-md-4 col-12 wow bounceInUp animated text-center mt-5 ">
+      <div class="col-md-2 text-center cobre">
+        <span class="fa fa-trophy fa-4x"></span>
       </div>
+      <h3>{{resultTest.tercero.nombre}}</h3>
+      <p>
+        {{resultTest.tercero.descripcion}}
+      </p>
+      <button class="btn btn-success btn-rounded" >Ver ofertas</button>
     </div>
-    <div class="col-md-6">
-      <div class="col-md-12 p-t-30 ">
 
-        <div class="row wow zoomIn">
-          <div class="col-md-2 text-center yellow">
-            <span class="fa fa-trophy fa-4x"></span>
-          </div>
-          <div class="col-md-10 mytooltip">
-            <span class="tooltip-content5">
-              <span class="tooltip-text3">
-                <span class="tooltip-inner2">
-                  <h5 class="text-info font-bold">{{resultTest.primero.nombre}}</h5>
-                  <br/>{{resultTest.primero.descripcion}}
-                </span>
-              </span>
-            </span>
-            <h3 class="p-t-20">1 Inteligencia: {{resultTest.primero.nombre}}</h3>
-          </div>
-        </div>
+
+    <div class="col-md-4 col-12 wow bounceInUp animated text-center">
+      <div class="col-md-2 text-center yellow">
+        <span class="fa fa-trophy fa-4x"></span>
+      </div>s
+      <h3>{{resultTest.primero.nombre}}</h3>
+      <p>
+        {{resultTest.primero.descripcion}}
+      </p>
+      <button class="btn btn-success btn-rounded" >Ver ofertas</button>
+    </div>
+
+    <div class="col-md-4 col-12 wow bounceInUp animated text-center mt-3">
+      <div class="col-md-2 text-center grey">
+        <span class="fa fa-trophy fa-4x"></span>
       </div>
-      <div class="col-md-12">
-        <div class="row wow zoomIn">
-          <div class="col-md-2 text-center grey">
-            <span class="fa fa-trophy fa-4x"></span>
-          </div>
-          <div class="col-md-10 mytooltip">
-            <span class="tooltip-content5">
-              <span class="tooltip-text3">
-                <span class="tooltip-inner2">
-                  <h5 class="text-info font-bold">{{resultTest.segundo.nombre}}</h5>
-                  <br/>{{resultTest.segundo.descripcion}}
-                </span>
-              </span>
-            </span>
-            <h3 class="p-t-20">2 Inteligencia: {{resultTest.segundo.nombre}}</h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="row wow zoomIn">
-          <div class="col-md-2 text-center cobre">
-            <span class="fa fa-trophy fa-4x"></span>
-          </div>
-          <div class="col-md-10 mytooltip">
-            <span class="tooltip-content5">
-              <span class="tooltip-text3">
-                <span class="tooltip-inner2">
-                  <h5 class="text-info font-bold">{{resultTest.tercero.nombre}}</h5>
-                  <br/>{{resultTest.tercero.descripcion}}
-                </span>
-              </span>
-            </span>
-            <h3 class="p-t-20">3 Inteligencia: {{resultTest.tercero.nombre}}</h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 text-center">
-        <button class="btn btn-success btn-rounded" (click)="NextFase()"> Ver Ofertas Relacionadas
-          <span style="margin-left:10px;" class="fa fa-check"></span>
-        </button>
-      </div>
+      <h3>{{resultTest.segundo.nombre}}</h3>
+      <p>
+        {{resultTest.segundo.descripcion}}
+      </p>
+      <button class="btn btn-success btn-rounded" >Ver ofertas</button>
+
+    </div>
+
+
+    <div class="col-md-12 text-center">
+      <button class="btn btn-success btn-rounded" (click)="NextFase()"> Ver Ofertas Relacionadas
+        <span style="margin-left:10px;" class="fa fa-check"></span>
+      </button>
     </div>
   </div>
 </form>

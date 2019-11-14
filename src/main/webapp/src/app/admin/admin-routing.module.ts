@@ -76,7 +76,12 @@ const routes: Routes = [
             path: 'editar-evento/:id',
             loadChildren: './content/admin-eventos/editar-evento/editar-evento.module#EditarEventoModule' ,
             canActivateChild: [AuthGuard]
-        }
+        },
+          {
+            path: 'lista-noticias',
+            loadChildren: './content/noticia/noticia.module#NoticiaModule' ,
+            canActivateChild: [AuthGuard]
+          }
         ]
     }
 ];

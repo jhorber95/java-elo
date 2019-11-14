@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.Instant;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -20,16 +20,20 @@ public class Noticia implements Serializable {
 
     @NotNull
     private String titulo;
+
+    @Column(name = "descripcion")
     private String descripcion;
 
     @Column(name = "imagen_principal")
-    private String imagenPricipal;
+    private String imagenPrincipal;
 
+    @Column(name = "contenido")
     private String contenido;
 
     @Column(name = "created_at")
-    private Instant createdAt;
+    private Timestamp createdAt;
 
     @NotNull
-    private Integer autor;
+    private Long autor;
+
 }

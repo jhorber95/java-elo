@@ -41,7 +41,6 @@ export class Fase8Component implements OnInit, AfterViewInit {
 
   NextFase() {
     if(this.ValidateItems()){
-      debugger;
       // Validate Personal Step in Workflow
       this.workFlowTestService.validateStep(STEPS.fase8);
       this.formDataTestService.sendTest(this.formDataTest).subscribe(

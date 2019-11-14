@@ -155,6 +155,32 @@ public class ImagenRestController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename() + "\"")
 				.body(file);
 	}
-	
-	
+
+
+	@PostMapping(url + "/noticia")
+	public ResponseEntity<Respuesta> uploadImgNoticia(@RequestParam("file") MultipartFile file) {
+
+		String img = storageService.uploadNewsImage(file, Constants.NEWS_LOCATION);
+
+		Respuesta respuesta = new Respuesta();
+		respuesta.setExito(true);
+		respuesta.setMensaje(Constants.IMAGEN_SUBIDA_CORRECTAMENTE);
+		respuesta.setBody(img);
+		return new ResponseEntity<>(respuesta, HttpStatus.OK);
+	}
+
+	/** --------------------------  Test Vocacional **/
+	@GetMapping(url + "/news/{filename:.+}")
+	@ResponseBody
+	public ResponseEntity<Resource> getNewsImage(@PathVariable String filename) {
+		logger.debug("Request to get file: "+ filename);
+		Resource file = storageService.loadFile(filename, Constants.NEWS_LOCATION);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename() + "\"")
+				.body(file);
+	}
+
+
+
+
 }

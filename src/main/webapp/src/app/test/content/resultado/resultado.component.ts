@@ -78,7 +78,7 @@ export class ResultadoComponent implements OnInit, AfterViewInit, OnDestroy {
   NextFase() {
     console.log(this.resultTest);
     this.workFlowTestService.validateStep(STEPS.resultado);
-    this.workFlowTestService.resetSteps();
+    // this.workFlowTestService.resetSteps();
 
     console.log('get ofertas guia vocacional');
 
@@ -176,5 +176,6 @@ export class ResultadoComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     );
   }
+
 
 }

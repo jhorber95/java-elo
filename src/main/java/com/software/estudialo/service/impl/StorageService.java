@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import com.software.estudialo.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,425 +31,457 @@ import com.software.estudialo.util.Constants;
 @Service("storageService")
 public class StorageService {
 
-	@Autowired
-	UsuarioDao usuarioDao;
+    @Autowired
+    UsuarioDao usuarioDao;
 
-	@Autowired
-	InstitucionDao institucionDao;
+    @Autowired
+    InstitucionDao institucionDao;
 
-	@Autowired
-	EventoDao eventoDao;
+    @Autowired
+    EventoDao eventoDao;
 
-	@Autowired
-	OfertaDao ofertaDao;
-	
-	@Autowired
-	PublicidadDao publicidadDao;
+    @Autowired
+    OfertaDao ofertaDao;
 
-	Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-	private final Path rootLocation = Paths.get(Constants.ROOT_LOCATION);
-	private final Path usuarioFolderLocation = Paths.get(Constants.USUARIO_LOCATION);
-	private final Path institucionFolderLocation = Paths.get(Constants.INSTITUCION_LOCATION);
-	private final Path ofertaFolderLocation = Paths.get(Constants.OFERTA_LOCATION);
-	private final Path eventoFolderLocation = Paths.get(Constants.EVENTO_LOCATION);
-	private final Path testFolderLocation = Paths.get(Constants.TEST_LOCATION);
-	private final Path publicidadFolderLocation = Paths.get(Constants.PUBLICIDAD_LOCATION);
+    @Autowired
+    PublicidadDao publicidadDao;
 
-	public void cambiarImagenUsuario(MultipartFile file, String Stringlocation, int idUsuario) {
+    Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    private final Path rootLocation = Paths.get(Constants.ROOT_LOCATION);
+    private final Path usuarioFolderLocation = Paths.get(Constants.USUARIO_LOCATION);
+    private final Path institucionFolderLocation = Paths.get(Constants.INSTITUCION_LOCATION);
+    private final Path ofertaFolderLocation = Paths.get(Constants.OFERTA_LOCATION);
+    private final Path eventoFolderLocation = Paths.get(Constants.EVENTO_LOCATION);
+    private final Path noticiaFolderLocation = Paths.get(Constants.NEWS_LOCATION);
+    private final Path testFolderLocation = Paths.get(Constants.TEST_LOCATION);
+    private final Path publicidadFolderLocation = Paths.get(Constants.PUBLICIDAD_LOCATION);
 
-		String type = file.getContentType();
-		String extension = "";
+    public void cambiarImagenUsuario(MultipartFile file, String Stringlocation, int idUsuario) {
 
-		if (type.equalsIgnoreCase("image/jpeg")) {
-			extension = ".jpg";
-		} else if (type.equalsIgnoreCase("image/png")) {
-			extension = ".png";
-		} else {
-			throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png y jpg");
-		}
+        String type = file.getContentType();
+        String extension = "";
 
-		if (Stringlocation.equals(Constants.USUARIO_LOCATION)) {
+        if (type.equalsIgnoreCase("image/jpeg")) {
+            extension = ".jpg";
+        } else if (type.equalsIgnoreCase("image/png")) {
+            extension = ".png";
+        } else {
+            throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png y jpg");
+        }
 
-			Boolean existeUsuario = usuarioDao.buscarUsuario(idUsuario);
+        if (Stringlocation.equals(Constants.USUARIO_LOCATION)) {
 
-			if (!existeUsuario) {
-				throw new ObjectNotFoundException("El id de usuario no existe!");
-			} else {
-				try {
+            Boolean existeUsuario = usuarioDao.buscarUsuario(idUsuario);
 
-					// Eliminar todas las imagenes que tengan el nombre del id
-					// enviado
-					File op1 = new File(Constants.USUARIO_LOCATION + "//" + String.valueOf(idUsuario) + ".jpg");
+            if (!existeUsuario) {
+                throw new ObjectNotFoundException("El id de usuario no existe!");
+            } else {
+                try {
 
-					File op2 = new File(Constants.USUARIO_LOCATION + "//" + String.valueOf(idUsuario) + ".png");
+                    // Eliminar todas las imagenes que tengan el nombre del id
+                    // enviado
+                    File op1 = new File(Constants.USUARIO_LOCATION + "//" + String.valueOf(idUsuario) + ".jpg");
 
-					File op3 = new File(Constants.USUARIO_LOCATION + "//" + String.valueOf(idUsuario) + ".JPG");
+                    File op2 = new File(Constants.USUARIO_LOCATION + "//" + String.valueOf(idUsuario) + ".png");
 
-					deleteImage(op1);
-					deleteImage(op2);
-					deleteImage(op3);
+                    File op3 = new File(Constants.USUARIO_LOCATION + "//" + String.valueOf(idUsuario) + ".JPG");
 
-					CopyOption[] options = new CopyOption[] { StandardCopyOption.REPLACE_EXISTING };
-					String newFileName = String.valueOf(idUsuario) + extension;
+                    deleteImage(op1);
+                    deleteImage(op2);
+                    deleteImage(op3);
 
-					Files.copy(file.getInputStream(), this.usuarioFolderLocation.resolve(newFileName), options);
+                    CopyOption[] options = new CopyOption[]{StandardCopyOption.REPLACE_EXISTING};
+                    String newFileName = String.valueOf(idUsuario) + extension;
 
-					// Cambiar en la db
-					Boolean cambiado = usuarioDao.modificarImagenUsuario(idUsuario, newFileName);
+                    Files.copy(file.getInputStream(), this.usuarioFolderLocation.resolve(newFileName), options);
 
-					if (!cambiado) {
-						throw new DAOException("No se pudo cambiar el nombre en la db");
-					}
+                    // Cambiar en la db
+                    Boolean cambiado = usuarioDao.modificarImagenUsuario(idUsuario, newFileName);
 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+                    if (!cambiado) {
+                        throw new DAOException("No se pudo cambiar el nombre en la db");
+                    }
 
-		} else {
-			throw new ObjectNotFoundException("La ruta especificada no corresponde");
-		}
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
 
-	}
+        } else {
+            throw new ObjectNotFoundException("La ruta especificada no corresponde");
+        }
 
-	public void cambiarImagenInstitucion(MultipartFile file, String Stringlocation, int idInstitucion) {
+    }
 
-		String type = file.getContentType();
-		String extension = "";
+    public void cambiarImagenInstitucion(MultipartFile file, String Stringlocation, int idInstitucion) {
 
-		if (type.equalsIgnoreCase("image/jpeg")) {
-			extension = ".jpg";
-		} else if (type.equalsIgnoreCase("image/png")) {
-			extension = ".png";
-		} else {
-			throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png y jpg");
-		}
+        String type = file.getContentType();
+        String extension = "";
 
-		if (Stringlocation.equals(Constants.INSTITUCION_LOCATION)) {
+        if (type.equalsIgnoreCase("image/jpeg")) {
+            extension = ".jpg";
+        } else if (type.equalsIgnoreCase("image/png")) {
+            extension = ".png";
+        } else {
+            throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png y jpg");
+        }
 
-			Boolean existeInstitucion = institucionDao.buscarInstitucion(idInstitucion);
+        if (Stringlocation.equals(Constants.INSTITUCION_LOCATION)) {
 
-			if (!existeInstitucion) {
-				throw new ObjectNotFoundException("El id de institucion no existe!");
-			} else {
-				try {
+            Boolean existeInstitucion = institucionDao.buscarInstitucion(idInstitucion);
 
-					// Eliminar todas las imagenes que tengan el nombre del id
-					// enviado
-					File op1 = new File(Constants.INSTITUCION_LOCATION + "//" + String.valueOf(idInstitucion) + ".jpg");
+            if (!existeInstitucion) {
+                throw new ObjectNotFoundException("El id de institucion no existe!");
+            } else {
+                try {
 
-					File op2 = new File(Constants.INSTITUCION_LOCATION + "//" + String.valueOf(idInstitucion) + ".png");
+                    // Eliminar todas las imagenes que tengan el nombre del id
+                    // enviado
+                    File op1 = new File(Constants.INSTITUCION_LOCATION + "//" + String.valueOf(idInstitucion) + ".jpg");
 
-					File op3 = new File(Constants.INSTITUCION_LOCATION + "//" + String.valueOf(idInstitucion) + ".JPG");
+                    File op2 = new File(Constants.INSTITUCION_LOCATION + "//" + String.valueOf(idInstitucion) + ".png");
 
-					deleteImage(op1);
-					deleteImage(op2);
-					deleteImage(op3);
+                    File op3 = new File(Constants.INSTITUCION_LOCATION + "//" + String.valueOf(idInstitucion) + ".JPG");
 
-					CopyOption[] options = new CopyOption[] { StandardCopyOption.REPLACE_EXISTING };
-					String newFileName = String.valueOf(idInstitucion) + extension;
+                    deleteImage(op1);
+                    deleteImage(op2);
+                    deleteImage(op3);
 
-					Files.copy(file.getInputStream(), this.institucionFolderLocation.resolve(newFileName), options);
+                    CopyOption[] options = new CopyOption[]{StandardCopyOption.REPLACE_EXISTING};
+                    String newFileName = String.valueOf(idInstitucion) + extension;
 
-					// Cambiar en la db
-					Boolean cambiado = institucionDao.modificarImagenInstitucion(idInstitucion, newFileName);
+                    Files.copy(file.getInputStream(), this.institucionFolderLocation.resolve(newFileName), options);
 
-					if (!cambiado) {
-						throw new DAOException("No se pudo cambiar el nombre en la db");
-					}
+                    // Cambiar en la db
+                    Boolean cambiado = institucionDao.modificarImagenInstitucion(idInstitucion, newFileName);
 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+                    if (!cambiado) {
+                        throw new DAOException("No se pudo cambiar el nombre en la db");
+                    }
 
-		} else {
-			throw new ObjectNotFoundException("La ruta especificada no corresponde");
-		}
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
 
-	}
+        } else {
+            throw new ObjectNotFoundException("La ruta especificada no corresponde");
+        }
 
-	public void cambiarImagenEvento(MultipartFile file, String Stringlocation, int idEvento) {
+    }
 
-		String type = file.getContentType();
-		String extension = "";
+    public void cambiarImagenEvento(MultipartFile file, String Stringlocation, int idEvento) {
 
-		if (type.equalsIgnoreCase("image/jpeg")) {
-			extension = ".jpg";
-		} else if (type.equalsIgnoreCase("image/png")) {
-			extension = ".png";
-		} else {
-			throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png y jpg");
-		}
+        String type = file.getContentType();
+        String extension = "";
 
-		if (Stringlocation.equals(Constants.EVENTO_LOCATION)) {
+        if (type.equalsIgnoreCase("image/jpeg")) {
+            extension = ".jpg";
+        } else if (type.equalsIgnoreCase("image/png")) {
+            extension = ".png";
+        } else {
+            throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png y jpg");
+        }
 
-			Boolean existeEvento = eventoDao.buscarEvento(idEvento);
+        if (Stringlocation.equals(Constants.EVENTO_LOCATION)) {
 
-			if (!existeEvento) {
-				throw new ObjectNotFoundException("El id de evento no existe!");
-			} else {
-				try {
+            Boolean existeEvento = eventoDao.buscarEvento(idEvento);
 
-					// Eliminar todas las imagenes que tengan el nombre del id
-					// enviado
-					File op1 = new File(Constants.EVENTO_LOCATION + "//" + String.valueOf(idEvento) + ".jpg");
+            if (!existeEvento) {
+                throw new ObjectNotFoundException("El id de evento no existe!");
+            } else {
+                try {
 
-					File op2 = new File(Constants.EVENTO_LOCATION + "//" + String.valueOf(idEvento) + ".png");
+                    // Eliminar todas las imagenes que tengan el nombre del id
+                    // enviado
+                    File op1 = new File(Constants.EVENTO_LOCATION + "//" + String.valueOf(idEvento) + ".jpg");
 
-					File op3 = new File(Constants.EVENTO_LOCATION + "//" + String.valueOf(idEvento) + ".JPG");
+                    File op2 = new File(Constants.EVENTO_LOCATION + "//" + String.valueOf(idEvento) + ".png");
 
-					deleteImage(op1);
-					deleteImage(op2);
-					deleteImage(op3);
+                    File op3 = new File(Constants.EVENTO_LOCATION + "//" + String.valueOf(idEvento) + ".JPG");
 
-					CopyOption[] options = new CopyOption[] { StandardCopyOption.REPLACE_EXISTING };
-					String newFileName = String.valueOf(idEvento) + extension;
+                    deleteImage(op1);
+                    deleteImage(op2);
+                    deleteImage(op3);
 
-					Files.copy(file.getInputStream(), this.eventoFolderLocation.resolve(newFileName), options);
+                    CopyOption[] options = new CopyOption[]{StandardCopyOption.REPLACE_EXISTING};
+                    String newFileName = String.valueOf(idEvento) + extension;
 
-					// Cambiar en la db
-					Boolean cambiado = eventoDao.modificarImagenEvento(idEvento, newFileName);
+                    Files.copy(file.getInputStream(), this.eventoFolderLocation.resolve(newFileName), options);
 
-					if (!cambiado) {
-						throw new DAOException("No se pudo cambiar el nombre en la db");
-					}
+                    // Cambiar en la db
+                    Boolean cambiado = eventoDao.modificarImagenEvento(idEvento, newFileName);
 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+                    if (!cambiado) {
+                        throw new DAOException("No se pudo cambiar el nombre en la db");
+                    }
 
-		} else {
-			throw new ObjectNotFoundException("La ruta especificada no corresponde");
-		}
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
 
-	}
+        } else {
+            throw new ObjectNotFoundException("La ruta especificada no corresponde");
+        }
 
-	public void cambiarImagenOferta(MultipartFile file, String Stringlocation, int idOferta) {
+    }
 
-		String type = file.getContentType();
-		String extension = "";
+    public void cambiarImagenOferta(MultipartFile file, String Stringlocation, int idOferta) {
 
-		if (type.equalsIgnoreCase("image/jpeg")) {
-			extension = ".jpg";
-		} else if (type.equalsIgnoreCase("image/png")) {
-			extension = ".png";
-		} else {
-			throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png y jpg");
-		}
+        String type = file.getContentType();
+        String extension = "";
 
-		if (Stringlocation.equals(Constants.OFERTA_LOCATION)) {
+        if (type.equalsIgnoreCase("image/jpeg")) {
+            extension = ".jpg";
+        } else if (type.equalsIgnoreCase("image/png")) {
+            extension = ".png";
+        } else {
+            throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png y jpg");
+        }
 
-			Boolean existeOferta = ofertaDao.buscarOferta(idOferta);
+        if (Stringlocation.equals(Constants.OFERTA_LOCATION)) {
 
-			if (!existeOferta) {
-				throw new ObjectNotFoundException("El id de evento no existe!");
-			} else {
-				try {
+            Boolean existeOferta = ofertaDao.buscarOferta(idOferta);
 
-					// Eliminar todas las imagenes que tengan el nombre del id
-					// enviado
-					File op1 = new File(Constants.OFERTA_LOCATION + "//" + String.valueOf(idOferta) + ".jpg");
+            if (!existeOferta) {
+                throw new ObjectNotFoundException("El id de evento no existe!");
+            } else {
+                try {
 
-					File op2 = new File(Constants.OFERTA_LOCATION + "//" + String.valueOf(idOferta) + ".png");
+                    // Eliminar todas las imagenes que tengan el nombre del id
+                    // enviado
+                    File op1 = new File(Constants.OFERTA_LOCATION + "//" + String.valueOf(idOferta) + ".jpg");
 
-					File op3 = new File(Constants.OFERTA_LOCATION + "//" + String.valueOf(idOferta) + ".JPG");
+                    File op2 = new File(Constants.OFERTA_LOCATION + "//" + String.valueOf(idOferta) + ".png");
 
-					deleteImage(op1);
-					deleteImage(op2);
-					deleteImage(op3);
+                    File op3 = new File(Constants.OFERTA_LOCATION + "//" + String.valueOf(idOferta) + ".JPG");
 
-					CopyOption[] options = new CopyOption[] { StandardCopyOption.REPLACE_EXISTING };
-					String newFileName = String.valueOf(idOferta) + extension;
+                    deleteImage(op1);
+                    deleteImage(op2);
+                    deleteImage(op3);
 
-					Files.copy(file.getInputStream(), this.ofertaFolderLocation.resolve(newFileName), options);
+                    CopyOption[] options = new CopyOption[]{StandardCopyOption.REPLACE_EXISTING};
+                    String newFileName = String.valueOf(idOferta) + extension;
 
-					// Cambiar en la db
-					Boolean cambiado = ofertaDao.modificarImagenOferta(idOferta, newFileName);
+                    Files.copy(file.getInputStream(), this.ofertaFolderLocation.resolve(newFileName), options);
 
-					if (!cambiado) {
-						throw new DAOException("No se pudo cambiar el nombre en la db");
-					}
+                    // Cambiar en la db
+                    Boolean cambiado = ofertaDao.modificarImagenOferta(idOferta, newFileName);
 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+                    if (!cambiado) {
+                        throw new DAOException("No se pudo cambiar el nombre en la db");
+                    }
 
-		} else {
-			throw new ObjectNotFoundException("La ruta especificada no corresponde");
-		}
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
 
-	}
+        } else {
+            throw new ObjectNotFoundException("La ruta especificada no corresponde");
+        }
 
-	public void cambiarImagenBanner(MultipartFile file, String Stringlocation, int idBanner, String url) {
+    }
 
-		String type = file.getContentType();
-		String extension = "";
+    public void cambiarImagenBanner(MultipartFile file, String Stringlocation, int idBanner, String url) {
 
-		if (type.equalsIgnoreCase("image/jpeg")) {
-			extension = ".jpg";
-		} else if (type.equalsIgnoreCase("image/png")) {
-			extension = ".png";
-		} else if (type.equalsIgnoreCase("image/gif")) {
-			extension = ".gif";
-		} else {
-			throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png, jpg y gif");
-		}
+        String type = file.getContentType();
+        String extension = "";
 
-		if (Stringlocation.equals(Constants.PUBLICIDAD_LOCATION)) {
+        if (type.equalsIgnoreCase("image/jpeg")) {
+            extension = ".jpg";
+        } else if (type.equalsIgnoreCase("image/png")) {
+            extension = ".png";
+        } else if (type.equalsIgnoreCase("image/gif")) {
+            extension = ".gif";
+        } else {
+            throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png, jpg y gif");
+        }
 
-			try {
+        if (Stringlocation.equals(Constants.PUBLICIDAD_LOCATION)) {
 
-				// Eliminar todas las imagenes que tengan el nombre del id
-				// enviado
-				File op1 = new File(Constants.PUBLICIDAD_LOCATION + "//" + String.valueOf(idBanner) + ".jpg");
+            try {
 
-				File op2 = new File(Constants.PUBLICIDAD_LOCATION + "//" + String.valueOf(idBanner) + ".png");
+                // Eliminar todas las imagenes que tengan el nombre del id
+                // enviado
+                File op1 = new File(Constants.PUBLICIDAD_LOCATION + "//" + String.valueOf(idBanner) + ".jpg");
 
-				File op3 = new File(Constants.PUBLICIDAD_LOCATION + "//" + String.valueOf(idBanner) + ".JPG");
-				
-				File op4 = new File(Constants.PUBLICIDAD_LOCATION + "//" + String.valueOf(idBanner) + ".gif");
+                File op2 = new File(Constants.PUBLICIDAD_LOCATION + "//" + String.valueOf(idBanner) + ".png");
 
-				deleteImage(op1);
-				deleteImage(op2);
-				deleteImage(op3);
-				deleteImage(op4);
-
-				CopyOption[] options = new CopyOption[] { StandardCopyOption.REPLACE_EXISTING };
-				String newFileName = String.valueOf(idBanner) + extension;
-
-				Files.copy(file.getInputStream(), this.publicidadFolderLocation.resolve(newFileName), options);
-
-				// Cambiar en la db
-				Boolean cambiado = publicidadDao.modificarPublicidad(idBanner, newFileName, url);
-
-				if (!cambiado) {
-					throw new DAOException("No se pudo cambiar el nombre en la db");
-				}
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		} else {
-			throw new ObjectNotFoundException("La ruta especificada no corresponde");
-		}
-
-	}
-
-	private void deleteImage(File file) {
-		boolean success = false;
-		// if (file.isDirectory()) {
-		// for (File deleteMe : file.listFiles()) {
-		// // recursive delete
-		// deleteImage(deleteMe);
-		// }
-		// }
-
-		if (file.exists()) {
-			success = file.delete();
-			if (success) {
-				logger.debug("Se elimino = " + file.getAbsoluteFile() + " Deleted");
-			} else {
-				logger.debug("Algo sucedio, no elimino = " + file.getAbsoluteFile() + " Deletion failed!!!");
-			}
-		}
-
-	}
-
-	public Resource loadFile(String filename, String Stringlocation) {
-		try {
-
-			Path file = null;
-
-			if (Stringlocation.equals(Constants.USUARIO_LOCATION)) {
-				file = usuarioFolderLocation.resolve(filename);
-			} else if (Stringlocation.equals(Constants.INSTITUCION_LOCATION)) {
-				file = institucionFolderLocation.resolve(filename);
-			} else if (Stringlocation.equals(Constants.OFERTA_LOCATION)) {
-				file = ofertaFolderLocation.resolve(filename);
-			} else if (Stringlocation.equals(Constants.EVENTO_LOCATION)) {
-				file = eventoFolderLocation.resolve(filename);
-			} else if (Stringlocation.equals(Constants.TEST_LOCATION)) {
-				file = testFolderLocation.resolve(filename);
-			} else if (Stringlocation.equals(Constants.PUBLICIDAD_LOCATION)) {
-				file = publicidadFolderLocation.resolve(filename);
-			} else {
-				throw new ObjectNotFoundException("La ruta especificada no corresponde");
-			}
-
-			Resource resource = new UrlResource(file.toUri());
-			if (resource.exists() || resource.isReadable()) {
-				return resource;
-			} else {
-				throw new ObjectNotFoundException("La imagen no existe o esta en malas condiciones!");
-				// throw new RuntimeException("FAIL!");
-			}
-		} catch (MalformedURLException e) {
-			// throw new RuntimeException("FAIL!");
-			throw new ObjectNotFoundException("Problema con la URL");
-		}
-	}
-
-	public void init() {
-
-		File rootFolder = new File("C://imagenes-estudialo");
-		File usuarioFolder = new File("C://imagenes-estudialo//usuario");
-		File institucionFolder = new File("C://imagenes-estudialo//institucion");
-		File ofertaFolder = new File("C://imagenes-estudialo//oferta");
-		File eventoFolder = new File("C://imagenes-estudialo//evento");
-
-		if (!rootFolder.exists()) {
-			try {
-				logger.debug("Creando Carpeta ROOT");
-				Files.createDirectory(rootLocation);
-			} catch (IOException e) {
-				throw new RuntimeException("No se pudo crear la carpeta ROOT!");
-			}
-		}
-
-		if (!usuarioFolder.exists()) {
-			try {
-				logger.debug("Creando Carpeta USUARIOS");
-				Files.createDirectory(usuarioFolderLocation);
-			} catch (IOException e) {
-				throw new RuntimeException("No se pudo crear la carpeta usuario!");
-			}
-		}
-
-		if (!institucionFolder.exists()) {
-			try {
-				logger.debug("Creando Carpeta INSTITUCIONES");
-				Files.createDirectory(institucionFolderLocation);
-			} catch (IOException e) {
-				throw new RuntimeException("No se pudo crear la carpeta institucion");
-			}
-		}
-
-		if (!ofertaFolder.exists()) {
-			try {
-				logger.debug("Creando Carpeta OFERTAS");
-				Files.createDirectory(ofertaFolderLocation);
-			} catch (IOException e) {
-				throw new RuntimeException("No se pudo crear la carpeta oferta");
-			}
-		}
-
-		if (!eventoFolder.exists()) {
-			try {
-				logger.debug("Creando Carpeta EVENTOS");
-				Files.createDirectory(eventoFolderLocation);
-			} catch (IOException e) {
-				throw new RuntimeException("No se pudo crear la carpeta evento");
-			}
-		}
-
-	}
+                File op3 = new File(Constants.PUBLICIDAD_LOCATION + "//" + String.valueOf(idBanner) + ".JPG");
+
+                File op4 = new File(Constants.PUBLICIDAD_LOCATION + "//" + String.valueOf(idBanner) + ".gif");
+
+                deleteImage(op1);
+                deleteImage(op2);
+                deleteImage(op3);
+                deleteImage(op4);
+
+                CopyOption[] options = new CopyOption[]{StandardCopyOption.REPLACE_EXISTING};
+                String newFileName = String.valueOf(idBanner) + extension;
+
+                Files.copy(file.getInputStream(), this.publicidadFolderLocation.resolve(newFileName), options);
+
+                // Cambiar en la db
+                Boolean cambiado = publicidadDao.modificarPublicidad(idBanner, newFileName, url);
+
+                if (!cambiado) {
+                    throw new DAOException("No se pudo cambiar el nombre en la db");
+                }
+
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        } else {
+            throw new ObjectNotFoundException("La ruta especificada no corresponde");
+        }
+
+    }
+
+    private void deleteImage(File file) {
+        boolean success = false;
+        // if (file.isDirectory()) {
+        // for (File deleteMe : file.listFiles()) {
+        // // recursive delete
+        // deleteImage(deleteMe);
+        // }
+        // }
+
+        if (file.exists()) {
+            success = file.delete();
+            if (success) {
+                logger.debug("Se elimino = " + file.getAbsoluteFile() + " Deleted");
+            } else {
+                logger.debug("Algo sucedio, no elimino = " + file.getAbsoluteFile() + " Deletion failed!!!");
+            }
+        }
+
+    }
+
+    public Resource loadFile(String filename, String Stringlocation) {
+        try {
+
+            Path file = null;
+
+            if (Stringlocation.equals(Constants.USUARIO_LOCATION)) {
+                file = usuarioFolderLocation.resolve(filename);
+            } else if (Stringlocation.equals(Constants.INSTITUCION_LOCATION)) {
+                file = institucionFolderLocation.resolve(filename);
+            } else if (Stringlocation.equals(Constants.OFERTA_LOCATION)) {
+                file = ofertaFolderLocation.resolve(filename);
+            } else if (Stringlocation.equals(Constants.EVENTO_LOCATION)) {
+                file = eventoFolderLocation.resolve(filename);
+            } else if (Stringlocation.equals(Constants.TEST_LOCATION)) {
+                file = testFolderLocation.resolve(filename);
+            } else if (Stringlocation.equals(Constants.PUBLICIDAD_LOCATION)) {
+                file = publicidadFolderLocation.resolve(filename);
+            } else if (Stringlocation.equals(Constants.NEWS_LOCATION)) {
+                file = noticiaFolderLocation.resolve(filename);
+            }  else {
+                throw new ObjectNotFoundException("La ruta especificada no corresponde");
+            }
+
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new ObjectNotFoundException("La imagen no existe o esta en malas condiciones!");
+                // throw new RuntimeException("FAIL!");
+            }
+        } catch (MalformedURLException e) {
+            // throw new RuntimeException("FAIL!");
+            throw new ObjectNotFoundException("Problema con la URL");
+        }
+    }
+
+    public void init() {
+
+        File rootFolder = new File("C://imagenes-estudialo");
+        File usuarioFolder = new File("C://imagenes-estudialo//usuario");
+        File institucionFolder = new File("C://imagenes-estudialo//institucion");
+        File ofertaFolder = new File("C://imagenes-estudialo//oferta");
+        File eventoFolder = new File("C://imagenes-estudialo//evento");
+
+        if (!rootFolder.exists()) {
+            try {
+                logger.debug("Creando Carpeta ROOT");
+                Files.createDirectory(rootLocation);
+            } catch (IOException e) {
+                throw new RuntimeException("No se pudo crear la carpeta ROOT!");
+            }
+        }
+
+        if (!usuarioFolder.exists()) {
+            try {
+                logger.debug("Creando Carpeta USUARIOS");
+                Files.createDirectory(usuarioFolderLocation);
+            } catch (IOException e) {
+                throw new RuntimeException("No se pudo crear la carpeta usuario!");
+            }
+        }
+
+        if (!institucionFolder.exists()) {
+            try {
+                logger.debug("Creando Carpeta INSTITUCIONES");
+                Files.createDirectory(institucionFolderLocation);
+            } catch (IOException e) {
+                throw new RuntimeException("No se pudo crear la carpeta institucion");
+            }
+        }
+
+        if (!ofertaFolder.exists()) {
+            try {
+                logger.debug("Creando Carpeta OFERTAS");
+                Files.createDirectory(ofertaFolderLocation);
+            } catch (IOException e) {
+                throw new RuntimeException("No se pudo crear la carpeta oferta");
+            }
+        }
+
+        if (!eventoFolder.exists()) {
+            try {
+                logger.debug("Creando Carpeta EVENTOS");
+                Files.createDirectory(eventoFolderLocation);
+            } catch (IOException e) {
+                throw new RuntimeException("No se pudo crear la carpeta evento");
+            }
+        }
+
+    }
+
+    public String uploadNewsImage(MultipartFile file, String Stringlocation) {
+
+        String type = file.getContentType();
+        String extension = "";
+
+        if (type.equalsIgnoreCase("image/jpeg")) {
+            extension = ".jpeg";
+        } else if (type.equalsIgnoreCase("image/png")) {
+            extension = ".png";
+        } else if (type.equalsIgnoreCase("image/jpg")) {
+            extension = ".jpg";
+        } else {
+            throw new ValueNotPermittedException("No se permiten imagenes de ese tipo, solo de tipo png y jpg");
+        }
+
+        CopyOption[] options = new CopyOption[]{StandardCopyOption.REPLACE_EXISTING};
+        String newFileName = RandomUtil.generateString() + extension;
+
+        try {
+            Files.copy(file.getInputStream(), this.noticiaFolderLocation.resolve(newFileName), options);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return newFileName;
+
+    }
 }
