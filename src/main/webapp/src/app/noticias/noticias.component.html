@@ -1,6 +1,3 @@
-
-
-
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
@@ -12,12 +9,38 @@
 
   <div class="page-wrappe">
 
-    <!-- ============================================================== -->
+    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Bread crumb and right sidebar toggle -->
+      <!-- ============================================================== -->
+      <div class="row page-titles m-t-80">
+        <div class="col-md-12 align-self-center">
+          <h3 class="text-themecolor">Noticias Estudialo</h3>
+        </div>
+      </div>
+
+        <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
-    <p>
-      noticias works!
-    </p>
+
+    <div class="row">
+      <div class="col-lg-3" *ngFor="let item of noticias">
+        <div class="card">
+          <img alt="Card image cap" class="card-img-top img-responsive"
+                               src="/api/imagen/news/{{item.imagenPrincipal}}">
+          <div class="card-body">
+            <ul class="list-inline font-14">
+              <li class="p-l-0">{{ item.createdAt | date: 'fullDate'}}</li>
+              <li><a class="link" href="javascript:void(0)">3 Comment</a></li>
+            </ul>
+            <h3 class="font-normal">{{ item.titulo}}</h3>
+            <p class="m-b-0 m-t-10">{{ item.descripcion }}</p>
+            <button class="btn btn-success btn-rounded waves-effect waves-light m-t-20">Leer más</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
 
     <app-partners></app-partners>
     <app-footer></app-footer>
