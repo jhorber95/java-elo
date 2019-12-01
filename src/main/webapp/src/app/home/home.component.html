@@ -2,53 +2,56 @@
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
 <div id="main-wrapper">
-	<!-- ============================================================== -->
-    <!-- Topbar header - style you can find in pages.scss -->
+  <!-- ============================================================== -->
+  <!-- Topbar header - style you can find in pages.scss -->
+  <!-- ============================================================== -->
+  <app-header-home></app-header-home>
+  <ng-template #modalEstudialo let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="row">
+        <a routerLink="/eventos/detalle/17" (click)="d('Cross click')" class="img-responsive">
+          <img class="img-fluid" src="/assets/images/eventos/pop-up-evento-estudialo.jpg">
+        </a>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </ng-template>
+
+  <div class="page-wrapper2">
     <!-- ============================================================== -->
-    <app-header-home></app-header-home>
-    <ng-template #modalEstudialo let-c="close" let-d="dismiss">
-        <div class="modal-header">
-            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+    <!-- Inicio page Content -->
+    <!-- ============================================================== -->
 
-          <div class="modal-body">
-              <div class="row">
-                <a routerLink="/eventos/detalle/17" (click)="d('Cross click')" class="img-responsive" >
-                  <img class="img-fluid" src="/assets/images/eventos/pop-up-evento-estudialo.jpg">
-                </a>
-              </div>
-          </div>
-          <div class="modal-footer">
-          </div>
-    </ng-template>
-
-    <div class="page-wrapper2">
-      <!-- ============================================================== -->
-      <!-- Inicio page Content -->
-      <!-- ============================================================== -->
-
-      <div class="notice-streamer2">
-        <div class="button-position row bg-transparent-gray p-t-30 p-b-30 p-l-30 p-r-30 wow zoomIn">
-          <div class="col-md-9">
-            <form #formSearch="ngForm"
-                  (ngSubmit)="clickBuscador()"
-                  id="formSearch"
-                  name="formSearch">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="¿Qué quieres aprender?" name="search" [(ngModel)]="inputbuscador.search">
-                <span class="input-group-btn">
+    <div class="notice-streamer2">
+      <div class="button-position row bg-transparent-gray p-t-30 p-b-30 p-l-30 p-r-30 wow zoomIn">
+        <div class="col-md-9">
+          <form #formSearch="ngForm"
+                (ngSubmit)="clickBuscador()"
+                id="formSearch"
+                name="formSearch">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="¿Qué quieres aprender?" name="search"
+                     [(ngModel)]="inputbuscador.search">
+              <span class="input-group-btn">
                 <button class="btn btn-info" type="submit">Buscar</button>
               </span>
-              </div>
-            </form>
-          </div>
-          <div class="col-md-3 text-right woo zoomIn">
-            <button class="btn btn-secondary btn-rounded animated infinite pulse" (click)="testVocacional()" >Guia vocacional</button>
-          </div>
+            </div>
+          </form>
         </div>
-        <div class="row">
+        <div class="col-md-3 text-right woo zoomIn">
+          <button class="btn btn-secondary btn-rounded animated infinite pulse" (click)="testVocacional()">Guia
+            vocacional
+          </button>
+        </div>
+      </div>
+      <div class="row">
         <div id="carouselExampleIndicators3" class="carousel slide ancho-100" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators3" data-slide-to="0" class="active"></li>
@@ -96,27 +99,28 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-        </div>
       </div>
+    </div>
 
-		<div class="container-fluid estudialo-background-1 p-t-20">
+    <div class="container-fluid estudialo-background-1 p-t-20">
       <br>
-			<div class="fix-width">
-				<div class="align-self-center">
+      <div class="fix-width">
+        <div class="align-self-center">
           <h2 class="text-themecolor wow zoomIn">Ofertas Destacadas </h2>
         </div>
-				<!-- HTML to write -->
-                        <!-- Row -->
-                <div class="card">
-                        </div>
-                        <div class="row" *ngIf="cursos">
-                            <!-- column -->
-                            <div class="col-lg-3 col-md-6" *ngFor="let curso of (cursos ? cursos.slice(0,8): []); let i = index">
-                                <!-- Card -->
-                                <div class="card card-shadow wow bounceIn" data-wow-delay="0.3s">
+        <!-- HTML to write -->
+        <!-- Row -->
+        <div class="card">
+        </div>
+        <div class="row" *ngIf="cursos">
+          <!-- column -->
+          <div class="col-lg-3 col-md-6" *ngFor="let curso of (cursos ? cursos.slice(0,8): []); let i = index">
+            <!-- Card -->
+            <div class="card card-shadow wow bounceIn" data-wow-delay="0.3s">
 
-                                    <img class="card-img-top img-responsive-ofertas-home" src="/api/imagen/oferta/{{curso.imagenUrl}}" alt="Card image cap">
-                                    <div class="card-body mytooltip">
+              <img class="card-img-top img-responsive-ofertas-home" src="/api/imagen/oferta/{{curso.imagenUrl}}"
+                   alt="Card image cap">
+              <div class="card-body mytooltip">
 	                                    <span class="tooltip-content5">
 	                            			    <span class="tooltip-text3">
 	                            				    <span class="tooltip-inner2">
@@ -129,277 +133,279 @@
 	                            							    <small class="text-info">{{curso.tipoOferta.nombre}}</small>
 	                            						    </div>
 	                            					    </div>
-	                            					    <br />{{curso.descripcion}}
+	                            					    <br/>{{curso.descripcion}}
 	                            				    </span>
 	                            			    </span>
 	                            		    </span>
-                                        <h5 class="card-title minus titulo-2-line font-bold">{{curso.titulo}}</h5>
-                                        <div class="row">
-                                        	<div class="col-md">
-                                        		<div class="stars-outer">
-													<div class="stars-inner"  [ngStyle]="{'width':curso.calificacion.porcentaje+'%'}"></div>
-												</div>
-												<small> ({{curso.calificacion.puntaje}})</small>
-                                        	</div>
-                                        </div>
-                                       	<div class="row">
-                                       		<div class="col">
-                                        		<small class="small-10">{{curso.categoria.nombre}} |</small>
-                                        		<small class="small-10">{{curso.municipio.nombre}} - {{curso.municipio.departamento.nombre}}</small>
-                                        	</div>
+                <h5 class="card-title minus titulo-2-line font-bold">{{curso.titulo}}</h5>
+                <div class="row">
+                  <div class="col-md">
+                    <div class="stars-outer">
+                      <div class="stars-inner" [ngStyle]="{'width':curso.calificacion.porcentaje+'%'}"></div>
+                    </div>
+                    <small> ({{curso.calificacion.puntaje}})</small>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <small class="small-10">{{curso.categoria.nombre}} |</small>
+                    <small class="small-10">{{curso.municipio.nombre}} - {{curso.municipio.departamento.nombre}}</small>
+                  </div>
 
-                                       	</div>
-                                       	<div class="row">
-                                       		<div *ngIf="curso.precio=='N/A' || curso.precio==0  || curso.precio==null; then gratis else precio">
-                                       		</div>
-                                       		<ng-template #precio>
-                                       			<div class="col-12">
-                                               <div *ngIf="isLoged">
-                                                  <p class="font-bold">Precio Aprox. $ {{curso.precio}}</p>
-                                               </div>
-                                               <div *ngIf="!isLoged">
-                                                  <small class="text-info">Inicia Sesión para ver los precios</small>
-                                               </div>
-                                            </div>
-                                       		</ng-template>
-                                       		<ng-template  #gratis>
-                                       			
-                                             <div class="col-12">
-                                                <div *ngIf="isLoged">
-                                                   <p class="font-bold">¡¡Gratis!!</p>
-                                                </div>
-                                                <div *ngIf="!isLoged">
-                                                   <small class="text-info">Inicia Sesión para ver los precios</small>
-                                                </div>
-                                             </div>
-                                       		</ng-template>
-                                       		<div class="col-5 text-right">
-                                       			<a [routerLink]="['/ofertas/detalle', curso.id]" class="btn btn-xs btn-outline-primary">Ver Oferta</a>
-                                       		</div>
-                                       	</div>
+                </div>
+                <div class="row">
+                  <div *ngIf="curso.precio=='N/A' || curso.precio==0  || curso.precio==null; then gratis else precio">
+                  </div>
+                  <ng-template #precio>
+                    <div class="col-12">
+                      <div *ngIf="isLoged">
+                        <p class="font-bold">Precio Aprox. $ {{curso.precio}}</p>
+                      </div>
+                      <div *ngIf="!isLoged">
+                        <small class="text-info">Inicia Sesión para ver los precios</small>
+                      </div>
+                    </div>
+                  </ng-template>
+                  <ng-template #gratis>
 
-                                    </div>
-                                </div>
+                    <div class="col-12">
+                      <div *ngIf="isLoged">
+                        <p class="font-bold">¡¡Gratis!!</p>
+                      </div>
+                      <div *ngIf="!isLoged">
+                        <small class="text-info">Inicia Sesión para ver los precios</small>
+                      </div>
+                    </div>
+                  </ng-template>
+                  <div class="col-5 text-right">
+                    <a [routerLink]="['/ofertas/detalle', curso.id]" class="btn btn-xs btn-outline-primary">Ver
+                      Oferta</a>
+                  </div>
+                </div>
 
-                                <!-- Card -->
-                            </div>
-                            <!-- column -->
-                        </div>
-                        <!-- Row -->
-						<div class="row col-md-12 m-t-50 m-b-40" *ngIf="!cursos">
-
-							<div class="loader">
-									<div class="loader__figure"></div>
-									<p class="loader__label">estúdialo</p>
-							</div>
-
-						</div>
-
-
-						<div class="text-center">
-              <a [routerLink]="['/ofertas/busqueda']" class="btn btn-info m-t-40"> Ver Todas las ofertas </a>
+              </div>
             </div>
 
-				</div>
-				<br>
-
-				<!-- fin fix-width -->
-    </div>
-      <!----acerca de---->
-      <div id="row acercade" class="acercade">
-        <div class="fix-width">
-          <div class="col-md-12 text-center wow bounceInDown animated p-t-40">
-            <h1 class="color-estudialo">¿Cómo lo hacemos?</h1>
+            <!-- Card -->
           </div>
-          <div class="row p-t-20">
-            <div class="col-md-4 col-12 wow bounceInUp animated text-center">
-                <img src="/assets/images/icon/3.png">
-                <h3 class="white">Orientamos</h3>
-                <p>
-                  Mediante nuestra guía vocacional basada en las múltiples inteligencias del ser humano
-                  orientamos hacia la oferta educativa ideal.
-                </p>
-            </div>
-            <div class="col-md-4 col-12 wow bounceInUp animated text-center">
+          <!-- column -->
+        </div>
+        <!-- Row -->
+        <div class="row col-md-12 m-t-50 m-b-40" *ngIf="!cursos">
+
+          <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">estúdialo</p>
+          </div>
+
+        </div>
+
+
+        <div class="text-center">
+          <a [routerLink]="['/ofertas/busqueda']" class="btn btn-info m-t-40"> Ver Todas las ofertas </a>
+        </div>
+
+      </div>
+      <br>
+
+      <!-- fin fix-width -->
+    </div>
+    <!----acerca de---->
+    <div id="row acercade" class="acercade">
+      <div class="fix-width">
+        <div class="col-md-12 text-center wow bounceInDown animated p-t-40">
+          <h1 class="color-estudialo">¿Cómo lo hacemos?</h1>
+        </div>
+        <div class="row p-t-20">
+          <div class="col-md-4 col-12 wow bounceInUp animated text-center">
+            <img src="/assets/images/icon/3.png">
+            <h3 class="white">Orientamos</h3>
+            <p>
+              Mediante nuestra guía vocacional basada en las múltiples inteligencias del ser humano
+              orientamos hacia la oferta educativa ideal.
+            </p>
+          </div>
+          <div class="col-md-4 col-12 wow bounceInUp animated text-center">
             <img src="/assets/images/icon/4.png">
             <h3 class="white">Encontramos</h3>
             <p>
               Buscamos en cualquier nivel o área del conocimiento las distintas ofertas académicas disponibles.
             </p>
-            </div>
-            <div class="col-md-4 col-12 wow bounceInUp animated text-center">
-              <img src="/assets/images/icon/1.png">
-              <h3 class="white">Conectamos</h3>
-              <p>
-                Brindamos información, precio, jornada, ubicación de las distintas entidades y
-                personas que ofertan diversos tipos de formación o capacitación.
-              </p>
-            </div>
-
           </div>
-          <div class="row p-t-10 p-b-20">
-            <div class="col-md-8 col-12 offset-md-2 wow bounceInUp animated text-center">
-              <img src="/assets/images/icon/2.png">
-                <p>
-                  Ó si ya sabes qué estudiar y conoces cuál es tu pasión, usa nuestro buscador y encuentra talleres,
-                  cursos, carreras técnicas, carreras profesionales, postgrados, clubes interdisciplinarios y como si
-                  fuera poco, profesores personalizados.
-                </p>
-            </div>
+          <div class="col-md-4 col-12 wow bounceInUp animated text-center">
+            <img src="/assets/images/icon/1.png">
+            <h3 class="white">Conectamos</h3>
+            <p>
+              Brindamos información, precio, jornada, ubicación de las distintas entidades y
+              personas que ofertan diversos tipos de formación o capacitación.
+            </p>
+          </div>
+
+        </div>
+        <div class="row p-t-10 p-b-20">
+          <div class="col-md-8 col-12 offset-md-2 wow bounceInUp animated text-center">
+            <img src="/assets/images/icon/2.png">
+            <p>
+              Ó si ya sabes qué estudiar y conoces cuál es tu pasión, usa nuestro buscador y encuentra talleres,
+              cursos, carreras técnicas, carreras profesionales, postgrados, clubes interdisciplinarios y como si
+              fuera poco, profesores personalizados.
+            </p>
           </div>
         </div>
       </div>
+    </div>
 
-		<!-- ============================================================== -->
-		<!-- eventos  -->
-		<!-- ============='2================================================= -->
-      <div class="row p-t-50 p-b-50">
-        <div class="col-md-12">
-          <div class="col-md-12 fix-width icon-section">
-            <h2 class="text-success">Aliados</h2>
+    <!-- ============================================================== -->
+    <!-- eventos  -->
+    <!-- ============='2================================================= -->
+    <div class="row p-t-50 p-b-50">
+      <div class="col-md-12">
+        <div class="col-md-12 fix-width icon-section">
+          <h2 class="text-success">Aliados</h2>
 
-            <!-- carousel -->
+          <!-- carousel -->
 
-            <ngx-carousel
-              [inputs]="carousetTileEventos"
-              (carouselLoad)="carouselTileLoadEventos($event)">
+          <ngx-carousel
+            [inputs]="carousetTileEventos"
+            (carouselLoad)="carouselTileLoadEventos($event)">
 
-              <ngx-tile NgxCarouselItem *ngFor="let eventos of Eventos">
-                <!-- Card -->
-                <div class="card wow zoomInDown">
-                  <img class="card-img-top img-responsive-ofertas-home" src="/api/imagen/evento/{{eventos.imagenUrl}}" alt="Card image cap">
-                  <div class="card-body">
-                    <ul class="list-inline m-b-0 text-center">
-                      <li class="p-0 font-14">{{eventos.fecha}}</li>
-                    </ul>
-                    <div class="titulo-3-line">
-                      <small class="font-bold">{{eventos.titulo}}</small><br>
-                    </div>
-                    <div class="info-corta text-left">
-                      <small class="m-b-0 m-t-10 font-12" [innerHtml]="eventos.descripcion" ></small>
-                    </div>
-                    <button [routerLink]="['/eventos/detalle', eventos.id]" class="btn btn-success btn-rounded waves-effect waves-light m-t-5">Leer Más</button>
+            <ngx-tile NgxCarouselItem *ngFor="let eventos of Eventos">
+              <!-- Card -->
+              <div class="card wow zoomInDown">
+                <img class="card-img-top img-responsive-ofertas-home" src="/api/imagen/evento/{{eventos.imagenUrl}}"
+                     alt="Card image cap">
+                <div class="card-body">
+                  <ul class="list-inline m-b-0 text-center">
+                    <li class="p-0 font-14">{{eventos.fecha}}</li>
+                  </ul>
+                  <div class="titulo-3-line">
+                    <small class="font-bold">{{eventos.titulo}}</small><br>
                   </div>
+                  <div class="info-corta text-left">
+                    <small class="m-b-0 m-t-10 font-12" [innerHtml]="eventos.descripcion"></small>
+                  </div>
+                  <button [routerLink]="['/eventos/detalle', eventos.id]"
+                          class="btn btn-success btn-rounded waves-effect waves-light m-t-5">Leer Más
+                  </button>
                 </div>
-                <!-- Card -->
-              </ngx-tile>
+              </div>
+              <!-- Card -->
+            </ngx-tile>
 
-              <button NgxCarouselPrev class='leftRsE btn btn-success btn-circle'>
-                <i class="fa fa-angle-left"></i>
-              </button>
-              <button NgxCarouselNext class='rightRsE btn btn-success btn-circle'>
-                <i class="fa fa-angle-right"></i>
-              </button>
-            </ngx-carousel>
+            <button NgxCarouselPrev class='leftRsE btn btn-success btn-circle'>
+              <i class="fa fa-angle-left"></i>
+            </button>
+            <button NgxCarouselNext class='rightRsE btn btn-success btn-circle'>
+              <i class="fa fa-angle-right"></i>
+            </button>
+          </ngx-carousel>
 
-            <!-- fin carousel -->
+          <!-- fin carousel -->
 
-            <div class="text-center">
-              <a [routerLink]="['/eventos/todos']" class="btn btn-success"> Ver Todos los eventos</a>
-            </div>
+          <div class="text-center">
+            <a [routerLink]="['/eventos/todos']" class="btn btn-success"> Ver Todos los eventos</a>
           </div>
         </div>
       </div>
+    </div>
 
-		 		<div class="row col-md-12 m-t-50 m-b-40" *ngIf="!Eventos">
+    <div class="row col-md-12 m-t-50 m-b-40" *ngIf="!Eventos">
 
-					<div class="loader">
-						<div class="loader__figure"></div>
-						<p class="loader__label">estúdialo</p>
-					</div>
-
-				</div>
-		<!-- ============================================================== -->
-        <!-- Financiamientos -->
-        <!-- ============================================================== -->
-
-                <div class="row white-space">
-                    <div class="col-md-12">
-                        <div class="col-md-12 fix-width icon-section">
-                            <h2 class="text-themecolor">Financiamiento</h2>
-
-                          <!-- carousel -->
-
-                          <ngx-carousel
-                            [inputs]="carouselTile"
-                            (carouselLoad)="carouselTileLoad($event)">
-
-                            <ngx-tile NgxCarouselItem *ngFor="let financiera of Financieras">
-                                <!-- Card -->
-                              <a [routerLink]="['/financieras/detalle', financiera.id]">
-                                <div class="card wow lightSpeedIn">
-                                  <div class="card-body text-center">
-                                    <img class="logo-responsive-financiera m-b-10" src="/api/imagen/institucion/{{financiera.urlImagen}}" alt="Card image cap">
-                                    <h5 class="card-title minus titulo-2-line font-bold">{{financiera.nombre}}</h5>
-                                    <div class="info-corta text-left">
-                                      <small>{{financiera.descripcion}}</small>
-                                    </div>
-                                  </div>
-                                </div>
-                              </a>
-                                <!-- Card -->
-                            </ngx-tile>
-
-                            <button NgxCarouselPrev class='leftRsF btn btn-info btn-circle'>
-                              <i class="fa fa-angle-left"></i>
-                            </button>
-                            <button NgxCarouselNext class='rightRsF btn btn-info btn-circle'>
-                              <i class="fa fa-angle-right"></i>
-                            </button>
-                          </ngx-carousel>
-
-                          <!-- fin carousel -->
-
-                            <div class="text-center">
-                              <a [routerLink]="['/financieras/todas']" class="btn btn-info"> Ver Todos los financiamientos</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-     			 <!-- ============================================================== -->
-                <!-- mobile -->
-                <!-- ============================================================== -->
-
-		<section id="appmovil">
-			<div class="container p-t-40">
-				<div class="row col-md-12">
-					<div class="col-md">
-						<h1>Estúdialo App</h1>
-						<p>Descarga completamente GRATIS nuestra aplicación
-							móvil para iPhone o para Android y encuentra las mejores ofertas
-							y eventos que necesitas para ampliar tus conocimientos...</p>
-						<h4>Descargar ahora:</h4>
-						<a href=""><img class="logo-responsive-financiera" alt="" src="../assets/images/googleplay.png"></a>
-						<a href=""><img class="logo-responsive-financiera" alt="" src="../assets/images/appstore.png"></a>
-					</div>
-					<div class="col-md">
-						<img class="bannermobile" alt="" src="../assets/images/background/BannerCelulares.png">
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- ============================================================== -->
-                <!-- Partners -->
-                <!-- ============================================================== -->
-               <app-partners></app-partners>
-
-				<!-- ============================================================== -->
-                <!-- footer -->
-                <!-- ============================================================== -->
-
-                <app-footer></app-footer>
-                <!-- ============================================================== -->
-                <!-- End footer -->
-                <!-- ============================================================== -->
-
-
+      <div class="loader">
+        <div class="loader__figure"></div>
+        <p class="loader__label">estúdialo</p>
+      </div>
 
     </div>
+    <!-- ============================================================== -->
+    <!-- Financiamientos -->
+    <!-- ============================================================== -->
+
+    <div class="row white-space">
+      <div class="col-md-12">
+        <div class="col-md-12 fix-width icon-section">
+          <h2 class="text-themecolor">Financiamiento</h2>
+
+          <!-- carousel -->
+
+          <ngx-carousel
+            [inputs]="carouselTile"
+            (carouselLoad)="carouselTileLoad($event)">
+
+            <ngx-tile NgxCarouselItem *ngFor="let financiera of Financieras">
+              <!-- Card -->
+              <a [routerLink]="['/financieras/detalle', financiera.id]">
+                <div class="card wow lightSpeedIn">
+                  <div class="card-body text-center">
+                    <img class="logo-responsive-financiera m-b-10"
+                         src="/api/imagen/institucion/{{financiera.urlImagen}}" alt="Card image cap">
+                    <h5 class="card-title minus titulo-2-line font-bold">{{financiera.nombre}}</h5>
+                    <div class="info-corta text-left">
+                      <small>{{financiera.descripcion}}</small>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <!-- Card -->
+            </ngx-tile>
+
+            <button NgxCarouselPrev class='leftRsF btn btn-info btn-circle'>
+              <i class="fa fa-angle-left"></i>
+            </button>
+            <button NgxCarouselNext class='rightRsF btn btn-info btn-circle'>
+              <i class="fa fa-angle-right"></i>
+            </button>
+          </ngx-carousel>
+
+          <!-- fin carousel -->
+
+          <div class="text-center">
+            <a [routerLink]="['/financieras/todas']" class="btn btn-info"> Ver Todos los financiamientos</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- mobile -->
+    <!-- ============================================================== -->
+
+    <section id="appmovil">
+      <div class="container p-t-40">
+        <div class="row col-md-12">
+          <div class="col-md">
+            <h1>Estúdialo App</h1>
+            <p>Descarga completamente GRATIS nuestra aplicación
+              móvil para iPhone o para Android y encuentra las mejores ofertas
+              y eventos que necesitas para ampliar tus conocimientos...</p>
+            <h4>Descargar ahora:</h4>
+            <a href=""><img class="logo-responsive-financiera" alt="" src="../assets/images/googleplay.png"></a>
+            <a href=""><img class="logo-responsive-financiera" alt="" src="../assets/images/appstore.png"></a>
+          </div>
+          <div class="col-md">
+            <img class="bannermobile" alt="" src="../assets/images/background/BannerCelulares.png">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- Partners -->
+    <!-- ============================================================== -->
+    <app-partners></app-partners>
+
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+
+    <app-footer></app-footer>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+
+
+  </div>
 
 </div>
 <!-- ============================================================== -->

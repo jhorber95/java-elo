@@ -33,10 +33,8 @@ export class DetalleofertaComponent implements OnInit, AfterViewInit {
 
     this.user = JSON.parse(localStorage.getItem('user'));
 
-    this.isLoged = false;
-    if (localStorage.getItem('token') && this.authService.isAuthenticated()) {
-        this.isLoged = true;
-    }
+
+    this.isLoged = localStorage.getItem('token') && this.authService.isAuthenticated();
 
   }
 

@@ -7,7 +7,7 @@
   <!-- ============================================================== -->
   <app-header-home></app-header-home>
 
-  <div class="page-wrappe">
+  <div class="page-wrapper2">
 
     <div class="container-fluid">
       <!-- ============================================================== -->
@@ -19,34 +19,35 @@
         </div>
       </div>
 
-        <!-- ============================================================== -->
-    <!-- Start Page Content -->
-    <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- Start Page Content -->
+      <!-- ============================================================== -->
 
-    <div class="row">
-      <div class="col-lg-3" *ngFor="let item of noticias">
-        <div class="card">
-          <img alt="Card image cap" class="card-img-top img-responsive"
-                               src="/api/imagen/news/{{item.imagenPrincipal}}">
-          <div class="card-body">
-            <ul class="list-inline font-14">
-              <li class="p-l-0">{{ item.createdAt | date: 'fullDate'}}</li>
-              <li><a class="link" href="javascript:void(0)">3 Comment</a></li>
-            </ul>
-            <h3 class="font-normal">{{ item.titulo}}</h3>
-            <p class="m-b-0 m-t-10">{{ item.descripcion }}</p>
-            <button class="btn btn-success btn-rounded waves-effect waves-light m-t-20">Leer más</button>
+      <div class="row">
+        <div class="col-lg-3" *ngFor="let item of noticias">
+          <div class="card">
+            <img alt="Card image cap" class="card-img-top img-responsive"
+                 src="/api/imagen/news/{{item.imagenPrincipal}}">
+            <div class="card-body">
+              <ul class="list-inline font-14">
+                <li class="p-l-0">{{ item.createdAt | date: 'fullDate'}}</li>
+                <li><a class="link" href="javascript:void(0)">3 Comment</a></li>
+              </ul>
+              <h3 class="font-normal">{{ item.titulo}}</h3>
+              <p class="m-b-0 m-t-10">{{ item.descripcion }}</p>
+              <a routerLink="/noticias/detalle-noticia/{{item.id}}"
+                 class="btn btn-success btn-rounded waves-effect waves-light m-t-20">Leer más</a>
+            </div>
           </div>
         </div>
       </div>
+      <router-outlet></router-outlet>
+
     </div>
-    <router-outlet></router-outlet>
 
     <app-partners></app-partners>
     <app-footer></app-footer>
-
   </div>
-
 </div>
 <!-- ============================================================== -->
 <!-- End Page wrapper  -->
