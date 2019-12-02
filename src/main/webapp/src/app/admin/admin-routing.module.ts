@@ -28,7 +28,6 @@ const routes: Routes = [
           loadChildren: './content/admin-ofertas/editar-oferta/editar-oferta.module#EditarOfertaModule',
           canActivateChild: [AuthGuard]
           },
-
           // INSTITUCIONES
 
           { path: 'admin-instituciones',
