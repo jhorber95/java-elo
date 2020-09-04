@@ -38,7 +38,7 @@
     "ngx-pagination": "^3.1.1",
     "ngx-toastr": "^8.7.3",
     "ngx-wow": "^1.0.2",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "owl.carousel": "^2.2.0",
     "pace-js": "^1.0.2",
     "perfect-scrollbar": "^0.8.1",
